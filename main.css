@@ -425,8 +425,8 @@ html {
     --accent-color: rgb(32, 70, 167);
     --accent-color-faded: rgba(32, 70, 167, 0.5);
     --accent-color-darkened: #171fad;
-    --dark-mode-body-bg: #2a2d2f;
-    --dark-mode-border-color: #363a3d;
+    --dark-mode-body-bg: #1c242a;
+    --dark-mode-border-color: #2c3842;
 }
 
 main {
@@ -1024,6 +1024,7 @@ button {
 
 .btn-sm {
     padding: .25rem .5rem;
+    margin-right: .4rem;
     font-size: 0.833rem;
     line-height: 1.75;
     border-radius: .25rem;
@@ -1568,4 +1569,6 @@ h3, .h4 {
     .layout-resume .screen-only{display:none;}
 }
 
-
+#toggle{
+    width: 4rem;
+}

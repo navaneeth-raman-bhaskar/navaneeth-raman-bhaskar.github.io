@@ -43,6 +43,12 @@
 .icon-bubbles:before {
   content: "\e96c";
 }
+.icon-dark-sun:before {
+  content: '\2600';
+}
+.icon-light-sun:before {
+  content: '\263C';
+}
 .icon-quotes-right:before {
   content: "\e978";
 }
