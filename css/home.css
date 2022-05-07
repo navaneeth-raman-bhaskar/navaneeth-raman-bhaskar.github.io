@@ -1,0 +1,197 @@
+/*Video Text Blend*/
+@font-face {
+    font-family: Biko;
+    src: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/biko-black.woff");
+}
+body {
+    background: white;
+    margin: 2rem;
+    margin-top: 0;
+}
+.header {
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+    max-width: 1200px;
+}
+.header video {
+    width: 100%;
+}
+.header svg {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0; /*  needed for FF, Safari, Edge */
+    height: 100%;
+}
+.header svg text {
+    font-family: Biko, sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+.header svg rect {
+    fill: white;
+}
+.header svg > rect {
+    -webkit-mask: url(#mask);
+    mask: url(#mask);
+}
+
+
+/*Text Pop Up*/
+:root {
+    --offset: 15px;
+}
+
+.animate {
+    display: flex;
+    justify-content: space-around;
+    align-items: start;
+    user-select: none;
+}
+
+.animate h2 {
+    width: 980px;
+    font-family: Helvetica;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #1d1d1f;
+    margin-top: -10px;
+    z-index: 1;
+}
+
+@media (min-width: 600px) {
+    .animate h2  {
+       font-size: clamp(1rem,10vh,3rem);
+    }
+}
+
+.animate .mask {
+    font-size: 4rem;
+    height: 106px;
+    position: relative;
+    overflow: hidden;
+    margin-top: var(--offset);
+}
+
+.animate .mask span {
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    top: 100px;
+    padding-bottom: var(--offset);
+
+    background-size: 100% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-repeat: no-repeat;
+}
+
+.animate .mask span[data-show] {
+    transform: translateY(-100%);
+    transition: 0.5s transform ease-in-out;
+}
+
+.animate .mask span[data-up] {
+    transform: translateY(-200%);
+    transition: 0.5s transform ease-in-out;
+}
+
+.animate .mask span:nth-child(1) {
+    background-image: linear-gradient(45deg, #0ecffe 50%, #07a6f1);
+}
+
+.animate .mask span:nth-child(2) {
+    background-image: linear-gradient(45deg, #18e198 50%, #0ec15d);
+}
+
+.animate .mask span:nth-child(3) {
+    background-image: linear-gradient(45deg, #8a7cfb 50%, #633e9c);
+}
+
+.animate .mask span:nth-child(4) {
+    background-image: linear-gradient(45deg, #fa7671 50%, #f45f7f);
+}
+
+.animate .mask span:nth-child(5) {
+    background-image: linear-gradient(45deg, #f5ec52 50%, #e5cd04);
+}
+
+
+/*Text Typing*/
+.typing {
+    width: 22ch;
+    animation: typing 2s steps(22), blink 0.5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    font-family: monospace;
+}
+
+@keyframes typing {
+    from {
+        width: 0;
+    }
+}
+
+@keyframes blink {
+    50% {
+        border-color: transparent;
+    }
+}
+
+
+
+.menu__container {
+    max-width: 500px;
+    height: 100px;
+    margin: 50px auto;
+    border-radius: 5px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+    transform: perspective(1000px) rotateX(-45deg) rotateY(0deg) rotateZ(0deg);
+    transform-origin: center center 0;
+    transition: all 0.5s ease-out;
+}
+.menu__container:hover {
+    transform: perspective(1000px) rotateX(355deg) rotateY(0deg) rotateZ(0deg);
+    box-shadow: 0 10px 40px rgba(0,0,0,0);
+}
+.menu__container .menu {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 100%;
+    height: 100%;
+}
+.menu__container .menu a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 17px;
+    transition: all 0.1s linear;
+}
+.menu__container .menu a:hover {
+    transform: scale(1.1, 1.1);
+}
+
+.menu__container--extra {
+    background-image: linear-gradient(-20deg, #ddd6f3 0%, #faaca8 100%, #faaca8 100%);
+    transform: perspective(1000px) rotateX(45deg) rotateY(5deg) rotateZ(-15deg);
+}
+.menu__container--extra:hover {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+}
+
+.resume  {
+    display: none;
+}
+@media (min-width: 600px) {
+    .menu__container .menu a  {
+        font-size: 25px;
+    }
+    .resume  {
+        display: block;
+    }
+}
