@@ -166,7 +166,7 @@ body {
 .menu__container {
     max-width: 500px;
     height: 100px;
-    margin: 0 auto;
+    margin: 50px auto;
     border-radius: 5px;
     box-shadow: 0 10px 40px rgba(0,0,0,0.1);
     background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
@@ -207,6 +207,10 @@ body {
     display: none;
 }
 @media (min-width: 600px) {
+    .menu__container {
+        margin: 0 auto;
+    }
+
     .menu__container .menu a  {
         font-size: 25px;
     }
