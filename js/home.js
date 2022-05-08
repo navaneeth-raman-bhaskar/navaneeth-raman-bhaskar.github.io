@@ -1,6 +1,6 @@
-setTimeout(function (){
-    window.scrollTo(0, document.body.scrollHeight);
-},1000)
+setTimeout(function () {
+    document.getElementById('me').scrollIntoView()
+}, 1000)
 
 setInterval(function () {
     const show = document.querySelector("span[data-show]");
