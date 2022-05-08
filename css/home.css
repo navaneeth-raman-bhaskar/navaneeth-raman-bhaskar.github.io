@@ -5,6 +5,7 @@
 }
 html{
     scroll-behavior: smooth;
+    cursor: url('../files/cursor.png'), auto
 }
 body::-webkit-scrollbar {
     width: 10px;
@@ -193,6 +194,7 @@ body {
 }
 .menu__container .menu a:hover {
     transform: scale(1.1, 1.1);
+    cursor: url('../files/link.png'), auto
 }
 
 .menu__container--extra {
