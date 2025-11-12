@@ -692,6 +692,10 @@
                 font-size: 36px;
             }
 
+            .section-title {
+                font-size: 28px;
+            }
+
             .subtitle {
                 font-size: 18px;
             }
@@ -746,6 +750,537 @@
             }
         }
     </style>
+    <style>
+        /** Gallery, Modal*/
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .gallery-item {
+            position: relative;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            aspect-ratio: 4/3;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: var(--accent);
+            box-shadow: 0 20px 50px var(--accent-glow);
+        }
+
+        .gallery-image, .gallery-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-image,
+        .gallery-item:hover .gallery-video {
+            transform: scale(1.1);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 20px;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .gallery-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .media-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            z-index: 1;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            position: relative;
+            animation: modalZoom 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            margin: auto;
+        }
+
+        @keyframes modalZoom {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-image, .modal-video {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+            display: block;
+        }
+
+        .modal-video {
+            background: black;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover {
+            transform: rotate(90deg) scale(1.1);
+            background: #ff5f56;
+        }
+
+        .modal-info {
+            margin-top: 20px;
+            text-align: center;
+            padding: 0 20px;
+            max-width: 800px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 10px;
+            word-wrap: break-word;
+        }
+
+        .modal-description {
+            font-size: 16px;
+            color: var(--text-secondary);
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 15px;
+            }
+        }
+    </style>
+    <style>
+        /** Award, Certificates, References**/
+        /* Certification List Styles */
+        .certification-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .certification-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 25px 30px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certification-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .certification-item:hover {
+            border-color: var(--accent);
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .certification-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .certification-badge {
+            font-size: 40px;
+            min-width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-glass);
+            border-radius: 12px;
+        }
+
+        .certification-details {
+            flex: 1;
+        }
+
+        .certification-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .certification-issuer {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .certification-checkmark {
+            font-size: 24px;
+            color: var(--accent);
+            font-weight: bold;
+            min-width: 30px;
+        }
+
+        /* Awards Timeline Styles */
+        .awards-timeline {
+            position: relative;
+            padding-left: 0;
+        }
+
+        .award-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .award-item::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 60px;
+            bottom: -40px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent), transparent);
+        }
+
+        .award-item:last-child::before {
+            display: none;
+        }
+
+        .award-year {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent);
+            text-align: right;
+            padding-top: 10px;
+        }
+
+        .award-content {
+            display: flex;
+            gap: 25px;
+            align-items: start;
+            padding: 25px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .award-content:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--accent-glow);
+        }
+
+        .award-medal {
+            font-size: 50px;
+            min-width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .award-medal.gold {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .award-medal.silver {
+            background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+            box-shadow: 0 8px 25px rgba(192, 192, 192, 0.4);
+        }
+
+        .award-medal.bronze {
+            background: linear-gradient(135deg, #cd7f32, #d4a574);
+            box-shadow: 0 8px 25px rgba(205, 127, 50, 0.4);
+        }
+
+        .award-medal.special {
+            background: linear-gradient(135deg, var(--accent), #2dd4bf);
+            box-shadow: 0 8px 25px var(--accent-glow);
+        }
+
+        .award-info {
+            flex: 1;
+        }
+
+        .award-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .award-institution {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .award-achievement {
+            display: inline-block;
+            padding: 6px 14px;
+            background: var(--bg-glass);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .award-achievement.winner {
+            background: linear-gradient(135deg, var(--accent), #2dd4bf);
+            color: white;
+            border: none;
+        }
+
+        /* References Styles */
+        .references-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .reference-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            padding: 30px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reference-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #2dd4bf);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .reference-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px var(--accent-glow);
+        }
+
+        .reference-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .reference-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .reference-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), #2dd4bf);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .reference-avatar svg {
+            width: 32px;
+            height: 32px;
+            stroke: white;
+        }
+
+        .reference-identity {
+            flex: 1;
+        }
+
+        .reference-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .reference-role {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .reference-quote {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .quote-mark {
+            position: absolute;
+            left: -5px;
+            top: -10px;
+            font-size: 60px;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .reference-quote p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 15px;
+            font-style: italic;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .award-item {
+                grid-template-columns: 80px 1fr;
+                gap: 15px;
+            }
+
+            .award-item::before {
+                left: 40px;
+            }
+
+            .award-year {
+                font-size: 16px;
+            }
+
+            .award-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .award-medal {
+                font-size: 40px;
+                min-width: 60px;
+                height: 60px;
+            }
+
+            .certification-item {
+                flex-wrap: wrap;
+                padding: 20px;
+            }
+
+            .certification-badge {
+                font-size: 32px;
+                min-width: 50px;
+                height: 50px;
+            }
+
+            .references-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D32039T5VP"></script>
 
@@ -784,7 +1319,7 @@
                 <div class="window-control control-minimize"></div>
                 <div class="window-control control-maximize"></div>
             </div>
-            <div class="window-title">About.app</div>
+            <div class="window-title">👤 About.app</div>
             <div style="width: 50px;"></div>
         </div>
         <div class="window-content">
@@ -807,12 +1342,12 @@
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
                     </svg>
                 </a>
-                <a href="https://instagram.com/v_navaneeth" class="social-icon" target="_blank">
+                <a href="https://instagram.com/navaneeth_raman_bhaskar/" class="social-icon" target="_blank">
                     <svg viewBox="0 0 24 24">
                         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                     </svg>
                 </a>
-                <a href="https://navaneeth.co.in/resume.html" class="social-icon" target="_blank">
+                <a href="./files/resume.pdf" class="social-icon" target="_blank">
                     <svg viewBox="0 0 24 24">
                         <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
                     </svg>
@@ -829,7 +1364,7 @@
                     <div class="window-control control-minimize"></div>
                     <div class="window-control control-maximize"></div>
                 </div>
-                <div class="window-title">Experience.app</div>
+                <div class="window-title">💼 Experience.app</div>
                 <div style="width: 50px;"></div>
             </div>
             <div class="window-content">
@@ -841,7 +1376,7 @@
                                 <div class="timeline-title">VP (Technical Lead)</div>
                                 <div class="timeline-company">Agribazaar</div>
                             </div>
-                            <div class="timeline-date">Current</div>
+                            <div class="timeline-date">June 2022 - Current</div>
                         </div>
                         <div class="timeline-content">
                             <ul>
@@ -869,6 +1404,7 @@
                                 <div class="timeline-title">PHP/Project Lead</div>
                                 <div class="timeline-company">Webandcrafts</div>
                             </div>
+                            <div class="timeline-date">Dec 2020 - Apr 2022</div>
                         </div>
                         <div class="timeline-content">
                             <ul>
@@ -893,6 +1429,7 @@
                                 <div class="timeline-title">PHP/Team Lead</div>
                                 <div class="timeline-company">Lilac Infotech</div>
                             </div>
+                            <div class="timeline-date">May 2020 - Nov 2020</div>
                         </div>
                         <div class="timeline-content">
                             <ul>
@@ -914,8 +1451,9 @@
                         <div class="timeline-header">
                             <div>
                                 <div class="timeline-title">PHP/Project Lead</div>
-                                <div class="timeline-company">Glaubetech Inventions</div>
+                                <div class="timeline-company">Glaubetech</div>
                             </div>
+                            <div class="timeline-date">Jul 2018 - Mar 2020</div>
                         </div>
                         <div class="timeline-content">
                             <ul>
@@ -931,6 +1469,33 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <div>
+                                <div class="timeline-title">PHP/Software Trainee</div>
+                                <div class="timeline-company">Quest innovative</div>
+                            </div>
+                            <div class="timeline-date">Jul 2018 - Mar 2020</div>
+                        </div>
+                        <div class="timeline-content">
+                            <ul>
+                                <li>Received training & certification in PHP, CodeIgniter, Wordpress and Zend Framework</li>
+                            </ul>
+                            <div class="tech-tags">
+                                <span class="tag">PHP</span>
+                                <span class="tag">CodeIgniter</span>
+                                <span class="tag">Zend Framework</span>
+                                <span class="tag">Wordpress</span>
+                                <span class="tag">MySQL</span>
+                                <span class="tag">Javascript</span>
+                                <span class="tag">MongoDB</span>
+                                <span class="tag">HTML</span>
+                                <span class="tag">CSS</span>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -942,7 +1507,7 @@
                     <div class="window-control control-minimize"></div>
                     <div class="window-control control-maximize"></div>
                 </div>
-                <div class="window-title">Skills.app</div>
+                <div class="window-title">💻 Skills.app</div>
                 <div style="width: 50px;"></div>
             </div>
             <div class="window-content">
@@ -1065,6 +1630,340 @@
             </div>
         </div>
 
+        <!-- Education Section - Add this after the Skills window in your grid-container -->
+        <div class="window full-width" data-window="education">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control control-close"></div>
+                    <div class="window-control control-minimize"></div>
+                    <div class="window-control control-maximize"></div>
+                </div>
+                <div class="window-title">🎓 Education.app</div>
+                <div style="width: 50px;"></div>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title">Education</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <div>
+                                <div class="timeline-title">B.Tech Computer Science & Engineering</div>
+                                <div class="timeline-company">Mar Athanasius College of Engineering</div>
+                            </div>
+                            <div class="timeline-date">2012-2017</div>
+                        </div>
+                        <div class="timeline-content">
+                            <ul>
+                                <li>Course completed</li>
+                                <li>College volleyball Team Captain: 2015-2017</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <div>
+                                <div class="timeline-title">Higher secondary (+2 in Science)</div>
+                                <div class="timeline-company">Pavandoor Higher Secondary School</div>
+                            </div>
+                            <div class="timeline-date">2009-2011</div>
+                        </div>
+                        <div class="timeline-content">
+                            <ul>
+                                <li>85%</li>
+                                <li>Chairman: 2009-2011</li>
+                                <li>Secured 1st position in IT GENIUS TALENT HUNT EXAMINATION conducted by C-DIT</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-header">
+                            <div>
+                                <div class="timeline-title">High school (SSLC)</div>
+                                <div class="timeline-company">Pavandoor High School</div>
+                            </div>
+                            <div class="timeline-date">2007-2009</div>
+                        </div>
+                        <div class="timeline-content">
+                            <ul>
+                                <li>Full A+</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Licenses & Certifications Section -->
+        <!-- Licenses & Certifications Section -->
+        <div class="window full-width" data-window="certifications">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control control-close"></div>
+                    <div class="window-control control-minimize"></div>
+                    <div class="window-control control-maximize"></div>
+                </div>
+                <div class="window-title">📜 Certifications.app</div>
+                <div style="width: 50px;"></div>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title">Licenses & Certifications</h2>
+
+                <div class="certification-list">
+                    <div class="certification-item">
+                        <div class="certification-badge">📚</div>
+                        <div class="certification-details">
+                            <div class="certification-name">Programming Foundations: Data Structures</div>
+                            <div class="certification-issuer">LinkedIn</div>
+                        </div>
+                        <div class="certification-checkmark">✓</div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-badge">🔢</div>
+                        <div class="certification-details">
+                            <div class="certification-name">Programming Foundations: Algorithms</div>
+                            <div class="certification-issuer">LinkedIn</div>
+                        </div>
+                        <div class="certification-checkmark">✓</div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-badge">📋</div>
+                        <div class="certification-details">
+                            <div class="certification-name">JSON Essential Training</div>
+                            <div class="certification-issuer">LinkedIn</div>
+                        </div>
+                        <div class="certification-checkmark">✓</div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-badge">🐘</div>
+                        <div class="certification-details">
+                            <div class="certification-name">Advanced PHP Certification</div>
+                            <div class="certification-issuer">Cutshort</div>
+                        </div>
+                        <div class="certification-checkmark">✓</div>
+                    </div>
+
+                    <div class="certification-item">
+                        <div class="certification-badge">☁️</div>
+                        <div class="certification-details">
+                            <div class="certification-name">Baseline: Infrastructure</div>
+                            <div class="certification-issuer">Qwiklabs</div>
+                        </div>
+                        <div class="certification-checkmark">✓</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Honors & Awards Section -->
+        <!-- Honors & Awards Section -->
+        <div class="window full-width" data-window="awards">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control control-close"></div>
+                    <div class="window-control control-minimize"></div>
+                    <div class="window-control control-maximize"></div>
+                </div>
+                <div class="window-title">🏆 Awards.app</div>
+                <div style="width: 50px;"></div>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title">Honors & Awards</h2>
+
+                <div class="awards-timeline">
+                    <div class="award-item">
+                        <div class="award-year">2017</div>
+                        <div class="award-content">
+                            <div class="award-medal bronze">🥉</div>
+                            <div class="award-info">
+                                <div class="award-title">All Kerala Inter Engineering College Volleyball Championship</div>
+                                <div class="award-institution">Mar Athanasius College of Engineering</div>
+                                <div class="award-achievement">2nd Runner up</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="award-item">
+                        <div class="award-year">2016</div>
+                        <div class="award-content">
+                            <div class="award-medal silver">🥈</div>
+                            <div class="award-info">
+                                <div class="award-title">All Kerala Inter Engineering College Volleyball Championship</div>
+                                <div class="award-institution">Mar Athanasius College of Engineering</div>
+                                <div class="award-achievement">Runner up</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="award-item">
+                        <div class="award-year">2015</div>
+                        <div class="award-content">
+                            <div class="award-medal gold">🥇</div>
+                            <div class="award-info">
+                                <div class="award-title">All Kerala Inter Engineering College Volleyball Championship</div>
+                                <div class="award-institution">Mar Athanasius College of Engineering</div>
+                                <div class="award-achievement winner">Winner 🏆</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="award-item">
+                        <div class="award-year">2011</div>
+                        <div class="award-content">
+                            <div class="award-medal special">🏅</div>
+                            <div class="award-info">
+                                <div class="award-title">IT GENIUS 2011 - Talent Hunt Examination</div>
+                                <div class="award-institution">C-DIT Kerala</div>
+                                <div class="award-achievement winner">Secured 1st Position</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="award-item">
+                        <div class="award-year">2010</div>
+                        <div class="award-content">
+                            <div class="award-medal gold">🥇</div>
+                            <div class="award-info">
+                                <div class="award-title">Sub District School Volleyball Championship</div>
+                                <div class="award-institution">Sub District School Games Association</div>
+                                <div class="award-achievement winner">Winner 🏆</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="award-item">
+                        <div class="award-year">2008</div>
+                        <div class="award-content">
+                            <div class="award-medal silver">🥈</div>
+                            <div class="award-info">
+                                <div class="award-title">State Level Volleyball Championship</div>
+                                <div class="award-institution">Kerala State Sports Council</div>
+                                <div class="award-achievement">Runner up</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- References Section -->
+        <div class="window full-width" data-window="references">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control control-close"></div>
+                    <div class="window-control control-minimize"></div>
+                    <div class="window-control control-maximize"></div>
+                </div>
+                <div class="window-title">💬 References.app</div>
+                <div style="width: 50px;"></div>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title">References</h2>
+
+                <div class="references-container">
+                    <div class="reference-card">
+                        <div class="reference-header">
+                            <div class="reference-avatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </div>
+                            <div class="reference-identity">
+                                <div class="reference-name">Poornima S</div>
+                                <div class="reference-role">Former Colleague</div>
+                            </div>
+                        </div>
+                        <div class="reference-quote">
+                            <div class="quote-mark">"</div>
+                            <p>Navaneeth is conscientious and dedicated to his work. He took the time to spearhead the initiative to improve the quality of code and do outstanding works. He is extremely talented to solve complex logical problems, simplify and explain it to the teammates. He was always ready to experiment with new technology and understand it at the core level.</p>
+                            <p style="margin-top: 15px;">Our team benefited a lot from his strong and deep knowledge of Laravel and javascript. Hard work, intelligence, deep and broad technical experience are the key factors that make Navaneeth an outstanding software engineer.</p>
+                        </div>
+                    </div>
+
+                    <div class="reference-card">
+                        <div class="reference-header">
+                            <div class="reference-avatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </div>
+                            <div class="reference-identity">
+                                <div class="reference-name">Sam John</div>
+                                <div class="reference-role">Project Manager</div>
+                            </div>
+                        </div>
+                        <div class="reference-quote">
+                            <div class="quote-mark">"</div>
+                            <p>Navaneeth worked on one of my projects and he has been consistently a good performer. His technical and management skills enable us to send him to client meetings and he always made sure that when it come to the Technical part, he always made the Customer comfortable. He is passionate and always comes with new ideas to solve complex and critical issues.</p>
+                            <p style="margin-top: 15px;">I appreciate his dedication and commitment. I awe his passion for Technology and the genuine Management Skills that he displays!!</p>
+                        </div>
+                    </div>
+
+                    <div class="reference-card">
+                        <div class="reference-header">
+                            <div class="reference-avatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </div>
+                            <div class="reference-identity">
+                                <div class="reference-name">Deepak P Wilson</div>
+                                <div class="reference-role">Project Manager</div>
+                            </div>
+                        </div>
+                        <div class="reference-quote">
+                            <div class="quote-mark">"</div>
+                            <p>I had the pleasure of working with Navaneeth on a PHP Laravel project, and I am consistently impressed by expertise and dedication. Navaneeth’s strong problem-solving skills and attention to detail significantly contributed to the success of our project.</p>
+                            <p style="margin-top: 15px;">I highly recommend Navaneeth as a skilled PHP Laravel developer.</p>
+                        </div>
+                    </div>
+
+                    <div class="reference-card">
+                        <div class="reference-header">
+                            <div class="reference-avatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </div>
+                            <div class="reference-identity">
+                                <div class="reference-name">Ahammed Jasim</div>
+                                <div class="reference-role">Project Manager</div>
+                            </div>
+                        </div>
+                        <div class="reference-quote">
+                            <div class="quote-mark">"</div>
+                            <p>Navaneeth is an excellent resource, and master in web application development and programming. He make sure all the deadlines meet and that also with highest coding standards. Also, Navaneeth is very tech savvy and interested to share and teach peers at office. He is hardworking and dedicated person.</p>
+                            <p style="margin-top: 15px;">I would like to recommend and endorse Navaneeth.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="window full-width" data-window="gallery">
+            <div class="window-header">
+                <div class="window-controls">
+                    <div class="window-control control-close"></div>
+                    <div class="window-control control-minimize"></div>
+                    <div class="window-control control-maximize"></div>
+                </div>
+                <div class="window-title">🖼️ Gallery.app</div>
+                <div style="width: 50px;"></div>
+            </div>
+            <div class="window-content">
+                <h2 class="section-title">Gallery</h2>
+                <div class="gallery-grid" id="galleryGrid"></div>
+            </div>
+        </div>
+
         <div class="window full-width" data-window="contact">
             <div class="window-header">
                 <div class="window-controls">
@@ -1072,7 +1971,7 @@
                     <div class="window-control control-minimize"></div>
                     <div class="window-control control-maximize"></div>
                 </div>
-                <div class="window-title">Contact.app</div>
+                <div class="window-title">☎️ Contact.app</div>
                 <div style="width: 50px;"></div>
             </div>
             <div class="window-content">
@@ -1093,7 +1992,7 @@
                     </div>
 
                     <div class="contact-card">
-                        <div class="contact-icon">✉️</div>
+                        <div class="contact-icon">📧</div>
                         <div class="contact-label">Email</div>
                         <div class="contact-value">
                             <a href="mailto:navaneeth.raman.bhaskar@gmail.com">Portfolio</a>
@@ -1107,6 +2006,7 @@
     </div>
 </div>
 
+<!-- UPDATED DOCK - Replace your existing dock with this -->
 <div class="dock">
     <div class="dock-item active" data-section="about" title="About">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1127,14 +2027,208 @@
             <polyline points="2 12 12 17 22 12"/>
         </svg>
     </div>
+    <div class="dock-item" data-section="education" title="Education">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+    </div>
+    <div class="dock-item" data-section="certifications" title="Certifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+            <polyline points="10 9 9 9 8 9"/>
+        </svg>
+    </div>
+    <div class="dock-item" data-section="awards" title="Awards">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/>
+            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/>
+            <path d="M4 22h16"/>
+            <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/>
+            <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/>
+            <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>
+        </svg>
+    </div>
+    <div class="dock-item" data-section="references" title="References">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+    </div>
+    <div class="dock-item" data-section="gallery" title="Gallery">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7"/>
+            <rect x="14" y="3" width="7" height="7"/>
+            <rect x="14" y="14" width="7" height="7"/>
+            <rect x="3" y="14" width="7" height="7"/>
+        </svg>
+    </div>
     <div class="dock-item" data-section="contact" title="Contact">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-            <polyline points="22,6 12,13 2,6"/>
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
         </svg>
     </div>
 </div>
 
+<!-- Modal for full media view -->
+<div class="modal" id="mediaModal">
+    <div class="modal-content">
+        <div class="modal-close" id="modalClose">×</div>
+        <div id="modalMediaContainer"></div>
+        <div class="modal-info">
+            <div class="modal-title" id="modalTitle"></div>
+            <div class="modal-description" id="modalDescription"></div>
+        </div>
+    </div>
+</div>
+<script>
+    // Gallery data - Replace URLs with your own images/videos
+    const galleryData = [
+        {
+            type: 'image',
+            thumbnail: '/gallery/google.jfif',
+            fullMedia: '/gallery/google.jfif',
+            title: 'Me',
+            description: 'Wearing Google Cloud Quest Master T-Shirt'
+        },
+        {
+            type: 'video',
+            thumbnail: '/gallery/gcp_champ.mp4',
+            fullMedia: '/gallery/gcp_champ.mp4',
+            title: 'GCP Champ',
+            description: 'Little love from google, GCP champ swag box unboxing'
+        },
+        {
+            type: 'image',
+            thumbnail: '/gallery/dummy.jpg',
+            fullMedia: '',
+            title: 'Coming soon',
+            description: 'Coming soon...'
+        },
+        {
+            type: 'video',
+            thumbnail: '/gallery/video_dummy.avif',
+            fullMedia: '',
+            title: 'Coming soon',
+            description: 'Coming soon...'
+        },
+        {
+            type: 'image',
+            thumbnail: '/gallery/dummy.jpg',
+            fullMedia: '',
+            title: 'Coming soon',
+            description: 'Coming soon...'
+        },
+        {
+            type: 'video',
+            thumbnail: '/gallery/video_dummy.avif',
+            fullMedia: '',
+            title: 'Coming soon',
+            description: 'Coming soon...'
+        },
+        {
+            type: 'image',
+            thumbnail: '/gallery/dummy.jpg',
+            fullMedia: '',
+            title: 'Coming soon',
+            description: 'Coming soon...'
+        },
+        {
+            type: 'image',
+            thumbnail: '/gallery/dummy.jpg',
+            fullMedia: '',
+            title: 'Coming soon',
+            description: 'Coming soon...'
+        },
+    ];
+
+    // Generate gallery items
+    const galleryGrid = document.getElementById('galleryGrid');
+
+    galleryData.forEach((item, index) => {
+        const galleryItem = document.createElement('div');
+        galleryItem.className = 'gallery-item';
+        galleryItem.dataset.index = index;
+
+        const mediaElement = item.type === 'video'
+            ? `<video class="gallery-video" src="${item.thumbnail}" muted loop autoplay playsinline></video>`
+            : `<img class="gallery-image" src="${item.thumbnail}" alt="${item.title}">`;
+
+        const badge = item.type === 'video' ? '<div class="media-badge">▶ VIDEO</div>' : '';
+
+        galleryItem.innerHTML = `
+                ${badge}
+                ${mediaElement}
+                <div class="gallery-overlay">
+                    <div class="gallery-title">${item.title}</div>
+                    <div class="gallery-description">${item.description}</div>
+                </div>
+            `;
+
+        galleryGrid.appendChild(galleryItem);
+    });
+
+    // Modal functionality
+    const modal = document.getElementById('mediaModal');
+    const modalMediaContainer = document.getElementById('modalMediaContainer');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalClose = document.getElementById('modalClose');
+
+    // Add click event to gallery items
+    document.querySelectorAll('.gallery-item').forEach(item => {
+        item.addEventListener('click', () => {
+            const index = item.dataset.index;
+            const mediaData = galleryData[index];
+
+            // Clear previous content
+            modalMediaContainer.innerHTML = '';
+
+            // Create appropriate media element
+            if (mediaData.type === 'video') {
+                const video = document.createElement('video');
+                video.className = 'modal-video';
+                video.src = mediaData.fullMedia;
+                video.controls = true;
+                video.autoplay = true;
+                modalMediaContainer.appendChild(video);
+            } else {
+                const img = document.createElement('img');
+                img.className = 'modal-image';
+                img.src = mediaData.fullMedia;
+                img.alt = mediaData.title;
+                modalMediaContainer.appendChild(img);
+            }
+
+            modalTitle.textContent = mediaData.title;
+            modalDescription.textContent = mediaData.description;
+            modal.classList.add('active');
+            document.body.classList.add('modal-open');
+        });
+    });
+
+    // Close modal
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeModal();
+    });
+
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.classList.remove('modal-open');
+        // Stop any playing videos
+        const video = modalMediaContainer.querySelector('video');
+        if (video) {
+            video.pause();
+            video.currentTime = 0;
+        }
+    }
+</script>
 <script>
     // Theme Toggle
     const themeToggle = document.getElementById('themeToggle');
