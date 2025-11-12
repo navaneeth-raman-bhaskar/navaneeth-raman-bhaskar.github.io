@@ -751,6 +751,7 @@
         }
     </style>
     <style>
+        /** Gallery, Modal*/
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -932,6 +933,351 @@
             .gallery-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
                 gap: 15px;
+            }
+        }
+    </style>
+    <style>
+        /** Award, Certificates, References**/
+        /* Certification List Styles */
+        .certification-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .certification-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 25px 30px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .certification-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--accent);
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+
+        .certification-item:hover {
+            border-color: var(--accent);
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .certification-item:hover::before {
+            transform: scaleY(1);
+        }
+
+        .certification-badge {
+            font-size: 40px;
+            min-width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-glass);
+            border-radius: 12px;
+        }
+
+        .certification-details {
+            flex: 1;
+        }
+
+        .certification-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .certification-issuer {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .certification-checkmark {
+            font-size: 24px;
+            color: var(--accent);
+            font-weight: bold;
+            min-width: 30px;
+        }
+
+        /* Awards Timeline Styles */
+        .awards-timeline {
+            position: relative;
+            padding-left: 0;
+        }
+
+        .award-item {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .award-item::before {
+            content: '';
+            position: absolute;
+            left: 50px;
+            top: 60px;
+            bottom: -40px;
+            width: 2px;
+            background: linear-gradient(180deg, var(--accent), transparent);
+        }
+
+        .award-item:last-child::before {
+            display: none;
+        }
+
+        .award-year {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--accent);
+            text-align: right;
+            padding-top: 10px;
+        }
+
+        .award-content {
+            display: flex;
+            gap: 25px;
+            align-items: start;
+            padding: 25px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .award-content:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px var(--accent-glow);
+        }
+
+        .award-medal {
+            font-size: 50px;
+            min-width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .award-medal.gold {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .award-medal.silver {
+            background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+            box-shadow: 0 8px 25px rgba(192, 192, 192, 0.4);
+        }
+
+        .award-medal.bronze {
+            background: linear-gradient(135deg, #cd7f32, #d4a574);
+            box-shadow: 0 8px 25px rgba(205, 127, 50, 0.4);
+        }
+
+        .award-medal.special {
+            background: linear-gradient(135deg, var(--accent), #2dd4bf);
+            box-shadow: 0 8px 25px var(--accent-glow);
+        }
+
+        .award-info {
+            flex: 1;
+        }
+
+        .award-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .award-institution {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .award-achievement {
+            display: inline-block;
+            padding: 6px 14px;
+            background: var(--bg-glass);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .award-achievement.winner {
+            background: linear-gradient(135deg, var(--accent), #2dd4bf);
+            color: white;
+            border: none;
+        }
+
+        /* References Styles */
+        .references-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .reference-card {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            padding: 30px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reference-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #2dd4bf);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .reference-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px var(--accent-glow);
+        }
+
+        .reference-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .reference-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .reference-avatar {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), #2dd4bf);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .reference-avatar svg {
+            width: 32px;
+            height: 32px;
+            stroke: white;
+        }
+
+        .reference-identity {
+            flex: 1;
+        }
+
+        .reference-name {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .reference-role {
+            font-size: 14px;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .reference-quote {
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .quote-mark {
+            position: absolute;
+            left: -5px;
+            top: -10px;
+            font-size: 60px;
+            color: var(--accent);
+            opacity: 0.3;
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .reference-quote p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 15px;
+            font-style: italic;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .award-item {
+                grid-template-columns: 80px 1fr;
+                gap: 15px;
+            }
+
+            .award-item::before {
+                left: 40px;
+            }
+
+            .award-year {
+                font-size: 16px;
+            }
+
+            .award-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .award-medal {
+                font-size: 40px;
+                min-width: 60px;
+                height: 60px;
+            }
+
+            .certification-item {
+                flex-wrap: wrap;
+                padding: 20px;
+            }
+
+            .certification-badge {
+                font-size: 32px;
+                min-width: 50px;
+                height: 50px;
+            }
+
+            .references-container {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -1350,6 +1696,7 @@
         </div>
 
         <!-- Licenses & Certifications Section -->
+        <!-- Licenses & Certifications Section -->
         <div class="window full-width" data-window="certifications">
             <div class="window-header">
                 <div class="window-controls">
@@ -1363,50 +1710,56 @@
             <div class="window-content">
                 <h2 class="section-title">Licenses & Certifications</h2>
 
-                <div class="skills-container">
-                    <div class="skill-card">
-                        <div class="skill-icon">📚</div>
-                        <div class="skill-title">Programming Foundations: Data Structures</div>
-                        <div class="timeline-content">
-                            <div class="timeline-company" style="margin-top: 10px;">LinkedIn</div>
+                <div class="certification-list">
+                    <div class="certification-item">
+                        <div class="certification-badge">📚</div>
+                        <div class="certification-details">
+                            <div class="certification-name">Programming Foundations: Data Structures</div>
+                            <div class="certification-issuer">LinkedIn</div>
                         </div>
+                        <div class="certification-checkmark">✓</div>
                     </div>
 
-                    <div class="skill-card">
-                        <div class="skill-icon">🔢</div>
-                        <div class="skill-title">Programming Foundations: Algorithms</div>
-                        <div class="timeline-content">
-                            <div class="timeline-company" style="margin-top: 10px;">LinkedIn</div>
+                    <div class="certification-item">
+                        <div class="certification-badge">🔢</div>
+                        <div class="certification-details">
+                            <div class="certification-name">Programming Foundations: Algorithms</div>
+                            <div class="certification-issuer">LinkedIn</div>
                         </div>
+                        <div class="certification-checkmark">✓</div>
                     </div>
 
-                    <div class="skill-card">
-                        <div class="skill-icon">📋</div>
-                        <div class="skill-title">JSON Essential Training</div>
-                        <div class="timeline-content">
-                            <div class="timeline-company" style="margin-top: 10px;">LinkedIn</div>
+                    <div class="certification-item">
+                        <div class="certification-badge">📋</div>
+                        <div class="certification-details">
+                            <div class="certification-name">JSON Essential Training</div>
+                            <div class="certification-issuer">LinkedIn</div>
                         </div>
+                        <div class="certification-checkmark">✓</div>
                     </div>
 
-                    <div class="skill-card">
-                        <div class="skill-icon">🐘</div>
-                        <div class="skill-title">Advanced PHP Certification</div>
-                        <div class="timeline-content">
-                            <div class="timeline-company" style="margin-top: 10px;">Cutshort</div>
+                    <div class="certification-item">
+                        <div class="certification-badge">🐘</div>
+                        <div class="certification-details">
+                            <div class="certification-name">Advanced PHP Certification</div>
+                            <div class="certification-issuer">Cutshort</div>
                         </div>
+                        <div class="certification-checkmark">✓</div>
                     </div>
 
-                    <div class="skill-card">
-                        <div class="skill-icon">☁️</div>
-                        <div class="skill-title">Baseline: Infrastructure</div>
-                        <div class="timeline-content">
-                            <div class="timeline-company" style="margin-top: 10px;">Qwiklabs</div>
+                    <div class="certification-item">
+                        <div class="certification-badge">☁️</div>
+                        <div class="certification-details">
+                            <div class="certification-name">Baseline: Infrastructure</div>
+                            <div class="certification-issuer">Qwiklabs</div>
                         </div>
+                        <div class="certification-checkmark">✓</div>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Honors & Awards Section -->
         <!-- Honors & Awards Section -->
         <div class="window full-width" data-window="awards">
             <div class="window-header">
@@ -1421,64 +1774,76 @@
             <div class="window-content">
                 <h2 class="section-title">Honors & Awards</h2>
 
-                <div class="skills-container">
-                    <div class="skill-card">
-                        <div class="skill-icon">🥉</div>
-                        <div class="skill-title">All Kerala Inter Engineering College Volleyball Championship</div>
-                        <div class="timeline-content">
-                            <div class="timeline-company" style="margin-top: 10px;">Mar Athanasius College of Engineering</div>
-                            <p style="color: var(--text-secondary); margin-top: 10px; font-weight: 600;">2nd Runner up</p>
-                            <div class="timeline-date" style="margin-top: 10px; display: inline-block;">Jan 2017</div>
+                <div class="awards-timeline">
+                    <div class="award-item">
+                        <div class="award-year">2017</div>
+                        <div class="award-content">
+                            <div class="award-medal bronze">🥉</div>
+                            <div class="award-info">
+                                <div class="award-title">All Kerala Inter Engineering College Volleyball Championship</div>
+                                <div class="award-institution">Mar Athanasius College of Engineering</div>
+                                <div class="award-achievement">2nd Runner up</div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="skill-card">
-                        <div class="skill-icon">🥈</div>
-                        <div class="skill-title">All Kerala Inter Engineering College Volleyball Championship</div>
-                        <div class="timeline-content">
-                            <div class="timeline-company" style="margin-top: 10px;">Mar Athanasius College of Engineering</div>
-                            <p style="color: var(--text-secondary); margin-top: 10px; font-weight: 600;">Runner up</p>
-                            <div class="timeline-date" style="margin-top: 10px; display: inline-block;">Jan 2016</div>
+                    <div class="award-item">
+                        <div class="award-year">2016</div>
+                        <div class="award-content">
+                            <div class="award-medal silver">🥈</div>
+                            <div class="award-info">
+                                <div class="award-title">All Kerala Inter Engineering College Volleyball Championship</div>
+                                <div class="award-institution">Mar Athanasius College of Engineering</div>
+                                <div class="award-achievement">Runner up</div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="skill-card">
-                        <div class="skill-icon">🥇</div>
-                        <div class="skill-title">All Kerala Inter Engineering College Volleyball Championship</div>
-                        <div class="timeline-content">
-                            <div class="timeline-company" style="margin-top: 10px;">Mar Athanasius College of Engineering</div>
-                            <p style="color: var(--accent); margin-top: 10px; font-weight: 700;">Winner 🏆</p>
-                            <div class="timeline-date" style="margin-top: 10px; display: inline-block;">Jan 2015</div>
+                    <div class="award-item">
+                        <div class="award-year">2015</div>
+                        <div class="award-content">
+                            <div class="award-medal gold">🥇</div>
+                            <div class="award-info">
+                                <div class="award-title">All Kerala Inter Engineering College Volleyball Championship</div>
+                                <div class="award-institution">Mar Athanasius College of Engineering</div>
+                                <div class="award-achievement winner">Winner 🏆</div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="skill-card">
-                        <div class="skill-icon">🏅</div>
-                        <div class="skill-title">IT GENIUS 2011 - Talent Hunt Examination</div>
-                        <div class="timeline-content">
-                            <div class="timeline-company" style="margin-top: 10px;">C-DIT Kerala</div>
-                            <p style="color: var(--accent); margin-top: 10px; font-weight: 700;">Secured 1st Position</p>
-                            <div class="timeline-date" style="margin-top: 10px; display: inline-block;">2011</div>
+                    <div class="award-item">
+                        <div class="award-year">2011</div>
+                        <div class="award-content">
+                            <div class="award-medal special">🏅</div>
+                            <div class="award-info">
+                                <div class="award-title">IT GENIUS 2011 - Talent Hunt Examination</div>
+                                <div class="award-institution">C-DIT Kerala</div>
+                                <div class="award-achievement winner">Secured 1st Position</div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="skill-card">
-                        <div class="skill-icon">🏐</div>
-                        <div class="skill-title">Sub District School Volleyball Championship</div>
-                        <div class="timeline-content">
-                            <div class="timeline-company" style="margin-top: 10px;">Sub District School Games Association</div>
-                            <p style="color: var(--accent); margin-top: 10px; font-weight: 700;">Winner 🏆</p>
-                            <div class="timeline-date" style="margin-top: 10px; display: inline-block;">2010-11</div>
+                    <div class="award-item">
+                        <div class="award-year">2010</div>
+                        <div class="award-content">
+                            <div class="award-medal gold">🥇</div>
+                            <div class="award-info">
+                                <div class="award-title">Sub District School Volleyball Championship</div>
+                                <div class="award-institution">Sub District School Games Association</div>
+                                <div class="award-achievement winner">Winner 🏆</div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="skill-card">
-                        <div class="skill-icon">⭐</div>
-                        <div class="skill-title">State Level Volleyball Championship</div>
-                        <div class="timeline-content">
-                            <div class="timeline-company" style="margin-top: 10px;">Kerala State Sports Council</div>
-                            <p style="color: var(--text-secondary); margin-top: 10px; font-weight: 600;">Runner up</p>
-                            <div class="timeline-date" style="margin-top: 10px; display: inline-block;">2008-09</div>
+                    <div class="award-item">
+                        <div class="award-year">2008</div>
+                        <div class="award-content">
+                            <div class="award-medal silver">🥈</div>
+                            <div class="award-info">
+                                <div class="award-title">State Level Volleyball Championship</div>
+                                <div class="award-institution">Kerala State Sports Council</div>
+                                <div class="award-achievement">Runner up</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1499,40 +1864,64 @@
             <div class="window-content">
                 <h2 class="section-title">References</h2>
 
-                <div class="skills-container">
-                    <div class="skill-card" style="grid-column: span 1;">
-                        <div class="skill-icon">👤</div>
-                        <div class="timeline-content">
-                            <p style="color: var(--text-secondary); line-height: 1.7; margin-top: 15px;">
-                                "Navaneeth is conscientious and dedicated to his work. He took the time to spearhead the initiative to improve the quality of code and do outstanding works. He is extremely talented to solve complex logical problems, simplify and explain it to the teammates. He was always ready to experiment with new technology and understand it at the core level."
-                            </p>
-                            <p style="color: var(--text-secondary); line-height: 1.7; margin-top: 15px;">
-                                "Our team benefited a lot from his strong and deep knowledge of Laravel and javascript. Hard work, intelligence, deep and broad technical experience are the key factors that make Navaneeth an outstanding software engineer."
-                            </p>
+                <div class="references-container">
+                    <div class="reference-card">
+                        <div class="reference-header">
+                            <div class="reference-avatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </div>
+                            <div class="reference-identity">
+                                <div class="reference-name">Poornima S</div>
+                                <div class="reference-role">Former Colleague</div>
+                            </div>
+                        </div>
+                        <div class="reference-quote">
+                            <div class="quote-mark">"</div>
+                            <p>Navaneeth is conscientious and dedicated to his work. He took the time to spearhead the initiative to improve the quality of code and do outstanding works. He is extremely talented to solve complex logical problems, simplify and explain it to the teammates. He was always ready to experiment with new technology and understand it at the core level.</p>
+                            <p style="margin-top: 15px;">Our team benefited a lot from his strong and deep knowledge of Laravel and javascript. Hard work, intelligence, deep and broad technical experience are the key factors that make Navaneeth an outstanding software engineer.</p>
                         </div>
                     </div>
 
-                    <div class="skill-card" style="grid-column: span 1;">
-                        <div class="skill-icon">👤</div>
-                        <div class="timeline-content">
-                            <p style="color: var(--text-secondary); line-height: 1.7; margin-top: 15px;">
-                                "Navaneeth worked on one of my projects and he has been consistently a good performer. His technical and management skills enable us to send him to client meetings and he always made sure that when it come to the Technical part, he always made the Customer comfortable. He is passionate and always comes with new ideas to solve complex and critical issues."
-                            </p>
-                            <p style="color: var(--text-secondary); line-height: 1.7; margin-top: 15px;">
-                                "I appreciate his dedication and commitment. I awe his passion for Technology and the genuine Management Skills that he displays!!"
-                            </p>
+                    <div class="reference-card">
+                        <div class="reference-header">
+                            <div class="reference-avatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </div>
+                            <div class="reference-identity">
+                                <div class="reference-name">Sam John</div>
+                                <div class="reference-role">Project Manager</div>
+                            </div>
+                        </div>
+                        <div class="reference-quote">
+                            <div class="quote-mark">"</div>
+                            <p>Navaneeth worked on one of my projects and he has been consistently a good performer. His technical and management skills enable us to send him to client meetings and he always made sure that when it come to the Technical part, he always made the Customer comfortable. He is passionate and always comes with new ideas to solve complex and critical issues.</p>
+                            <p style="margin-top: 15px;">I appreciate his dedication and commitment. I awe his passion for Technology and the genuine Management Skills that he displays!!</p>
                         </div>
                     </div>
 
-                    <div class="skill-card" style="grid-column: span 1;">
-                        <div class="skill-icon">👤</div>
-                        <div class="timeline-content">
-                            <p style="color: var(--text-secondary); line-height: 1.7; margin-top: 15px;">
-                                "Navaneeth is an excellent resource, and master in web application development and programming. He make sure all the deadlines meet and that also with highest coding standards. Also, Navaneeth is very tech savvy and interested to share and teach peers at office. He is hardworking and dedicated person."
-                            </p>
-                            <p style="color: var(--text-secondary); line-height: 1.7; margin-top: 15px;">
-                                "I would like to recommend and endorse Navaneeth."
-                            </p>
+                    <div class="reference-card">
+                        <div class="reference-header">
+                            <div class="reference-avatar">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                    <circle cx="12" cy="7" r="4"/>
+                                </svg>
+                            </div>
+                            <div class="reference-identity">
+                                <div class="reference-name">Ahammed Jasim</div>
+                                <div class="reference-role">Project Manager</div>
+                            </div>
+                        </div>
+                        <div class="reference-quote">
+                            <div class="quote-mark">"</div>
+                            <p>Navaneeth is an excellent resource, and master in web application development and programming. He make sure all the deadlines meet and that also with highest coding standards. Also, Navaneeth is very tech savvy and interested to share and teach peers at office. He is hardworking and dedicated person.</p>
+                            <p style="margin-top: 15px;">I would like to recommend and endorse Navaneeth.</p>
                         </div>
                     </div>
                 </div>
