@@ -286,8 +286,8 @@
         }
 
         .hero-window {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
+            opacity: 1 ;
+            transform: translateY(0);
         }
 
         @keyframes windowOpen {
@@ -720,15 +720,55 @@
                 left: -43px;
             }
 
+            .timeline-item {
+                padding: 20px 15px;
+            }
+
+            .timeline-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .timeline-date {
+                align-self: flex-end;
+                white-space: normal;
+            }
+
+            .timeline-title {
+                font-size: 18px;
+                line-height: 1.3;
+            }
+
+            .timeline-company {
+                font-size: 15px;
+            }
+
+            .timeline-content li {
+                font-size: 14px;
+                line-height: 1.5;
+                padding-left: 20px;
+                margin-bottom: 12px;
+            }
+
             .dock {
-                bottom: 10px;
+                width: calc(100% - 20px);
+                max-width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+                justify-content: flex-start;
                 padding: 8px 12px;
-                gap: 8px;
+                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none; /* IE/Edge */
+            }
+
+            .dock::-webkit-scrollbar {
+                display: none; /* Chrome/Safari/Opera */
             }
 
             .dock-item {
-                width: 45px;
-                height: 45px;
+                flex-shrink: 0; /* Prevent items from shrinking */
+                min-width: 45px;
             }
 
             .top-bar {
@@ -1507,7 +1547,7 @@
                     <div class="window-control control-minimize"></div>
                     <div class="window-control control-maximize"></div>
                 </div>
-                <div class="window-title">💻 Skills.app</div>
+                <div class="window-title">📚 Skills.app</div>
                 <div style="width: 50px;"></div>
             </div>
             <div class="window-content">
@@ -2340,19 +2380,17 @@
             const window = control.closest('.window');
 
             if (control.classList.contains('control-close')) {
-                window.style.opacity = '0';
-                window.style.transform = 'scale(0.9)';
-                setTimeout(() => {
+                window.style.opacity = '0.5';
+                window.style.transform = 'scale(0.3)';
+
+                window.addEventListener('click', (e) => {
+                    window.style.transform = 'scale(1)';
                     window.style.opacity = '1';
-                    window.style.transform = 'scale(1)';
-                }, 300);
+                },{once: true});
             } else if (control.classList.contains('control-minimize')) {
-                window.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    window.style.transform = 'scale(1)';
-                }, 200);
+                window.style.transform = 'scale(0.8)';
             } else if (control.classList.contains('control-maximize')) {
-                window.classList.toggle('maximized');
+                window.style.transform = 'scale(1)';
             }
         });
     });
