@@ -286,8 +286,8 @@
         }
 
         .hero-window {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
+            opacity: 1 ;
+            transform: translateY(0);
         }
 
         @keyframes windowOpen {
@@ -1507,7 +1507,7 @@
                     <div class="window-control control-minimize"></div>
                     <div class="window-control control-maximize"></div>
                 </div>
-                <div class="window-title">💻 Skills.app</div>
+                <div class="window-title">📚 Skills.app</div>
                 <div style="width: 50px;"></div>
             </div>
             <div class="window-content">
@@ -2340,19 +2340,17 @@
             const window = control.closest('.window');
 
             if (control.classList.contains('control-close')) {
-                window.style.opacity = '0';
-                window.style.transform = 'scale(0.9)';
-                setTimeout(() => {
+                window.style.opacity = '0.5';
+                window.style.transform = 'scale(0.3)';
+
+                window.addEventListener('click', (e) => {
+                    window.style.transform = 'scale(1)';
                     window.style.opacity = '1';
-                    window.style.transform = 'scale(1)';
-                }, 300);
+                },{once: true});
             } else if (control.classList.contains('control-minimize')) {
-                window.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    window.style.transform = 'scale(1)';
-                }, 200);
+                window.style.transform = 'scale(0.8)';
             } else if (control.classList.contains('control-maximize')) {
-                window.classList.toggle('maximized');
+                window.style.transform = 'scale(1)';
             }
         });
     });
