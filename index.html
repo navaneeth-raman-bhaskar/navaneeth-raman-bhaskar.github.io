@@ -154,14 +154,26 @@
 
         .dock-item:hover {
             transform: translateY(-8px) scale(1.1);
-            background: var(--accent);
+            border: 2px solid var(--accent);
             box-shadow: 0 8px 20px var(--accent-glow);
+        }
+
+        .dock-item.active {
+            transform: translateY(-16px) scale(1.15);
+            background: var(--accent);
+            box-shadow: 0 12px 30px var(--accent-glow);
+            border-color: var(--accent);
+        }
+
+        .dock-item.active:hover {
+            transform: translateY(-20px) scale(1.2);
+            box-shadow: 0 15px 35px var(--accent-glow);
         }
 
         .dock-item.active::before {
             content: '';
             position: absolute;
-            bottom: -8px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
             width: 4px;
@@ -752,12 +764,12 @@
             }
 
             .dock {
-                width: calc(100% - 20px);
+                width: calc(100% - 40px);
                 max-width: 100%;
-                overflow-x: auto;
-                overflow-y: hidden;
+                overflow-x: auto !important;
+                overflow-y: visible;
                 justify-content: flex-start;
-                padding: 8px 12px;
+                padding: 12px;
                 scrollbar-width: none; /* Firefox */
                 -ms-overflow-style: none; /* IE/Edge */
             }
@@ -769,6 +781,29 @@
             .dock-item {
                 flex-shrink: 0; /* Prevent items from shrinking */
                 min-width: 45px;
+                width: 45px; /* Slightly smaller on mobile */
+                height: 45px;
+            }
+
+            /* Adjusted popup values for mobile */
+            .dock-item.active {
+                transform: translateY(-18px) scale(1.12) !important;
+                background: var(--accent) !important;
+                box-shadow: 0 10px 28px var(--accent-glow) !important;
+                border-color: var(--accent) !important;
+                z-index: 10 !important;
+            }
+
+            .dock-item.active:hover {
+                transform: translateY(-16px) scale(1.15) !important;
+            }
+
+            .dock-item:hover {
+                transform: translateY(-6px) scale(1.08); /* Reduced hover effect */
+            }
+
+            .dock-item.active::before {
+                bottom: -11px; /* Adjusted dot position */
             }
 
             .top-bar {
@@ -2339,6 +2374,8 @@
                         if (item.getAttribute('data-section') === windowType) {
                             dockItems.forEach(i => i.classList.remove('active'));
                             item.classList.add('active');
+
+                            scrollDockToActiveItem(item);
                         }
                     });
                 }
@@ -2420,6 +2457,24 @@
             }
         });
     });
+
+    // Smoothly scrolls dock to show active item
+    function scrollDockToActiveItem(activeItem) {
+        const dock = document.querySelector('.dock');
+        const itemRect = activeItem.getBoundingClientRect();
+        const dockRect = dock.getBoundingClientRect();
+
+        // Calculate if item is outside visible area
+        const itemCenter = itemRect.left + (itemRect.width / 2);
+        const dockCenter = dockRect.left + (dockRect.width / 2);
+
+        // Scroll dock to center the active item
+        const scrollOffset = itemCenter - dockCenter;
+        dock.scrollBy({
+            left: scrollOffset,
+            behavior: 'smooth'
+        });
+    }
 </script>
 </body>
 </html>
