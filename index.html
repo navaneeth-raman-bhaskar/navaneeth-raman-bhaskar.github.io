@@ -721,14 +721,23 @@
             }
 
             .dock {
-                bottom: 10px;
+                width: calc(100% - 20px);
+                max-width: 100%;
+                overflow-x: auto;
+                overflow-y: hidden;
+                justify-content: flex-start;
                 padding: 8px 12px;
-                gap: 8px;
+                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none; /* IE/Edge */
+            }
+
+            .dock::-webkit-scrollbar {
+                display: none; /* Chrome/Safari/Opera */
             }
 
             .dock-item {
-                width: 45px;
-                height: 45px;
+                flex-shrink: 0; /* Prevent items from shrinking */
+                min-width: 45px;
             }
 
             .top-bar {
