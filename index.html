@@ -44,7 +44,10 @@
             --accent-glow: rgba(20, 184, 166, 0.5);
             --border: rgba(148, 163, 184, 0.1);
             --shadow: rgba(0, 0, 0, 0.5);
+            --terminal-bg: #0a0a0a;
+            --terminal-text: #00ff00;
         }
+
 
         [data-theme="light"] {
             --bg-primary: #f1f5f9;
@@ -1356,6 +1359,133 @@
             }
         }
     </style>
+    <style>
+        /* Terminal Specific Styles */
+        .terminal-container {
+            background: var(--terminal-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            height: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .terminal-header {
+            background: #1e1e1e;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #333;
+        }
+
+        .terminal-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .terminal-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .terminal-btn.close { background: #ff5f56; }
+        .terminal-btn.minimize { background: #ffbd2e; }
+        .terminal-btn.maximize { background: #27c93f; }
+
+        .terminal-title {
+            color: #888;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .terminal-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .terminal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terminal-content::-webkit-scrollbar-track {
+            background: #1a1a1a;
+        }
+
+        .terminal-content::-webkit-scrollbar-thumb {
+            background: #444;
+            border-radius: 4px;
+        }
+
+        .terminal-line {
+            margin-bottom: 8px;
+            white-space: pre;
+        }
+
+        .terminal-command {
+            color: #00d9ff;
+        }
+
+        .terminal-output {
+            color: var(--terminal-text);
+        }
+
+        .terminal-error {
+            color: #ff5555;
+        }
+
+        .terminal-input-line {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .terminal-prompt {
+            color: #00d9ff;
+            margin-right: 8px;
+        }
+
+        .terminal-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--terminal-text);
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .terminal-footer {
+            background: #1a1a1a;
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #333;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: var(--terminal-text);
+            animation: blink 1s infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+    </style>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D32039T5VP"></script>
 
@@ -1394,7 +1524,7 @@
                 <div class="window-control control-minimize"></div>
                 <div class="window-control control-maximize"></div>
             </div>
-            <div class="window-title">👤 About.app</div>
+            <div class="window-title">🖥️ Desktop.app</div>
             <div style="width: 50px;"></div>
         </div>
         <div class="window-content">
@@ -2078,15 +2208,48 @@
                 </div>
             </div>
         </div>
+        <!-- Terminal Window -->
+        <div class="window full-width visible" data-window="terminal">
+            <div class="window-header">
+                <div style="display: flex; gap: 8px;">
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56;"></div>
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e;"></div>
+                    <div style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f;"></div>
+                </div>
+                <div style="font-weight: 600; font-size: 14px; color: var(--text-secondary);">👨🏻‍💻 Terminal.app</div>
+                <div style="width: 50px;"></div>
+            </div>
+            <div class="window-content" style="padding: 0;">
+                <div class="terminal-container">
+                    <div class="terminal-content" id="terminalContent">
+                        <div class="terminal-line terminal-output">╔════════════════════════════════════════════════════════╗</div>
+                        <div class="terminal-line terminal-output">║   Welcome to Navaneeth V's Portfolio Terminal v1.0     ║</div>
+                        <div class="terminal-line terminal-output">╚════════════════════════════════════════════════════════╝</div>
+                        <div class="terminal-line terminal-output"></div>
+                        <div class="terminal-line terminal-output">Type "help" to see available commands.</div>
+                        <div class="terminal-line terminal-output"></div>
+                    </div>
+                    <div class="terminal-input-line" style="padding: 0 20px 20px;">
+                        <span class="terminal-prompt">$</span>
+                        <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" autofocus>
+                    </div>
+                    <div class="terminal-footer">
+                        <span>Press TAB for autocomplete | ↑↓ for history | Enter to execute</span>
+                        <span>guest@navaneeth.co.in</span>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
 <!-- UPDATED DOCK - Replace your existing dock with this -->
 <div class="dock">
-    <div class="dock-item active" data-section="about" title="About">
+    <div class="dock-item active" data-section="desktop" title="Desktop">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-            <circle cx="12" cy="7" r="4"/>
+            <rect x="2" y="3" width="20" height="14" rx="2"/>
+            <line x1="8" y1="21" x2="16" y2="21"/>
+            <line x1="12" y1="17" x2="12" y2="21"/>
         </svg>
     </div>
     <div class="dock-item" data-section="experience" title="Experience">
@@ -2143,6 +2306,18 @@
     <div class="dock-item" data-section="contact" title="Contact">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+        </svg>
+    </div>
+    <div class="dock-item" data-section="terminal" title="Terminal">
+        <svg viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.6"
+             stroke-linecap="round" stroke-linejoin="round">
+            <!-- angled > shape (two strokes, like your screenshot) -->
+            <line x1="6" y1="6" x2="14" y2="12" />
+            <line x1="6" y1="18" x2="14" y2="12" />
+
+            <!-- cursor (rounded underscore) -->
+            <line x1="15" y1="18" x2="21" y2="18" />
         </svg>
     </div>
 </div>
@@ -2336,7 +2511,7 @@
             item.classList.add('active');
 
             // Scroll to section
-            if (section === 'about') {
+            if (section === 'desktop') {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             } else {
                 const targetWindow = document.querySelector(`[data-window="${section}"]`);
@@ -2398,10 +2573,10 @@
                 window.classList.remove('visible');
             });
             dockItems.forEach(i => i.classList.remove('active'));
-            dockItems[0].classList.add('active'); // Activate "about" dock item
+            dockItems[0].classList.add('active'); // Activate "desktop" dock item
         }
 
-        // Activate about dock when hero is in view
+        // Activate desktop dock when hero is in view
         if (heroRect.top >= 0 && heroRect.top < window.innerHeight / 2) {
             dockItems.forEach(i => i.classList.remove('active'));
             dockItems[0].classList.add('active');
@@ -2475,6 +2650,556 @@
             behavior: 'smooth'
         });
     }
+</script>
+<script>
+    // Terminal functionality
+    const terminalContent = document.getElementById('terminalContent');
+    const terminalInput = document.getElementById('terminalInput');
+    let commandHistory = [];
+    let historyIndex = -1;
+    let rootDirectory = '~';
+    let currentDirectory = '~';
+    let guestName = 'guest';
+    let guestDirPath = `/home/${guestName}`;
+
+    const commands = {
+        help: {
+            description: 'Show available commands',
+            usage: 'help [command]',
+            examples: [
+                'help          - Show all commands',
+                'help cd       - Show help for cd command',
+                'help cat      - Show help for cat command'
+            ],
+            action: (args) => {
+                const targetCmd = args[0]?.toLowerCase();
+
+                // If specific command requested
+                if (targetCmd) {
+                    if (!commands[targetCmd]) {
+                        return `\x1b[31mError:\x1b[0m Command '${targetCmd}' not found.\nType '\x1b[32mhelp\x1b[0m' to see all available commands.`;
+                    }
+
+                    const cmd = commands[targetCmd];
+                    let output = `\x1b[36m╔════════════════════════════════════════════════════════╗\x1b[0m\n`;
+                    output += `\x1b[36m║\x1b[0m  HELP: \x1b[33m${targetCmd.toUpperCase().padEnd(46)}\x1b[36m║\x1b[0m\n`;
+                    output += `\x1b[36m╚════════════════════════════════════════════════════════╝\x1b[0m\n\n`;
+
+                    output += `\x1b[36mDESCRIPTION:\x1b[0m\n`;
+                    output += `  ${cmd.description}\n\n`;
+
+                    if (cmd.usage) {
+                        output += `\x1b[36mUSAGE:\x1b[0m\n`;
+                        output += `  \x1b[32m${cmd.usage}\x1b[0m\n\n`;
+                    }
+
+                    if (cmd.examples && cmd.examples.length > 0) {
+                        output += `\x1b[36mEXAMPLES:\x1b[0m\n`;
+                        cmd.examples.forEach(ex => {
+                            output += `  ${ex}\n`;
+                        });
+                    }
+
+                    return output;
+                }
+
+                // Show all commands (default behavior)
+                const systemCommands = ['help', 'pwd', 'ls', 'll', 'cd', 'cat', 'clear', 'whoami', 'date', 'echo'];
+                const allCommands = Object.keys(commands);
+                const appCommands = allCommands.filter(cmd => !systemCommands.includes(cmd));
+
+                let html = '<div style="color: #00ff00;">╔════════════════════════════════════════════════════════╗</div>';
+                html += '<div style="color: #00ff00;">║             PORTFOLIO TERMINAL v1.0                    ║</div>';
+                html += '<div style="color: #00ff00;">╚════════════════════════════════════════════════════════╝</div>';
+                html += '<br>';
+
+                html += '<div style="color: #00d9ff;">SYSTEM COMMANDS:</div>';
+                html += '<table style="margin-left: 10px; border-spacing: 0;">';
+                systemCommands.forEach(cmd => {
+                    if (commands[cmd]) {
+                        const desc = commands[cmd].description;
+                        let usage = cmd;
+                        if (cmd === 'help') usage = 'help [command]';
+                        else if (cmd === 'cd') usage = 'cd <directory>';
+                        else if (cmd === 'cat') usage = 'cat <file>';
+                        else if (cmd === 'echo') usage = 'echo <text>';
+
+                        html += `<tr><td style="color: #00ff00; padding-right: 20px;">${usage}</td><td style="color: #888888;">${desc}</td></tr>`;
+                    }
+                });
+                html += '</table><br>';
+
+                html += '<div style="color: #00d9ff;">APP SHORTCUTS:</div>';
+                html += '<table style="margin-left: 10px; border-spacing: 0;">';
+                appCommands.forEach(cmd => {
+                    if (commands[cmd]) {
+                        const desc = commands[cmd].description;
+                        html += `<tr><td style="color: #ffff00; padding-right: 20px;">${cmd}</td><td style="color: #888888;">${desc}</td></tr>`;
+                    }
+                });
+                html += '</table><br>';
+
+                html += '<div style="color: #00d9ff;">USAGE EXAMPLES:</div>';
+                html += '<div style="margin-left: 10px;">  <span style="color: #00ff00;">cd experience</span>        Enter the experience directory</div>';
+                html += '<div style="margin-left: 10px;">  <span style="color: #00ff00;">ls</span>                   List files in current directory</div>';
+                html += '<div style="margin-left: 10px;">  <span style="color: #00ff00;">cat timeline.txt</span>     View contents of timeline.txt</div>';
+                html += '<div style="margin-left: 10px;">  <span style="color: #ffff00;">experience</span>           Navigate to experience app</div>';
+                html += '<div style="margin-left: 10px;">  <span style="color: #00ff00;">cd ~</span>                 Return to home directory</div>';
+                html += '<br>';
+
+                html += '<div style="color: #00d9ff;">TIPS:</div>';
+                html += '<div style="margin-left: 10px;">  • Use <span style="color: #00ff00;">help &lt;command&gt;</span> for detailed help on a specific command</div>';
+                html += '<div style="margin-left: 10px;">  • Use TAB for autocomplete</div>';
+                html += '<div style="margin-left: 10px;">  • Use ↑/↓ arrows for command history</div>';
+                html += '<div style="margin-left: 10px;">  • Type "<span style="color: #00ff00;">cd &lt;app&gt;</span>" to browse files, "<span style="color: #ffff00;">&lt;app&gt;</span>" to navigate</div>';
+                html += '<div style="margin-left: 10px;">  • Use "<span style="color: #00ff00;">ll</span>" for detailed file information</div>';
+
+                return html;
+            }
+        },
+        pwd: {
+            description: 'Print working directory',
+            action: () => {
+                if (currentDirectory === rootDirectory) {
+                    return guestDirPath;
+                }
+                return `${guestDirPath}/${currentDirectory}`;
+            }
+        },
+        desktop: {
+            description: 'Navigate to desktop',
+            action: () => navigateToApp('desktop')
+        },
+        experience: {
+            description: 'Navigate to experience app',
+            action: () => navigateToApp('experience')
+        },
+        skills: {
+            description: 'Navigate to skills app',
+            action: () => navigateToApp('skills')
+        },
+        education: {
+            description: 'Navigate to education app',
+            action: () => navigateToApp('education')
+        },
+        awards: {
+            description: 'Navigate to awards app',
+            action: () => navigateToApp('awards')
+        },
+        certifications: {
+            description: 'Navigate to certifications app',
+            action: () => navigateToApp('certifications')
+        },
+        references: {
+            description: 'Navigate to references app',
+            action: () => navigateToApp('references')
+        },
+        gallery: {
+            description: 'Navigate to gallery app',
+            action: () => navigateToApp('gallery')
+        },
+        contact: {
+            description: 'Navigate to contact app',
+            action: () => navigateToApp('contact')
+        },
+        terminal: {
+            description: 'Navigate to terminal app',
+            action: () => navigateToApp('terminal')
+        },
+        clear: {
+            description: 'Clear terminal screen',
+            action: () => null
+        },
+        ls: {
+            description: 'List directory contents',
+            usage: 'ls',
+            examples: [
+                'ls                - List files in current directory (simple)'
+            ],
+            action: () => {
+                const apps = getAvailableApps();
+
+                // If in home directory, show all apps
+                if (currentDirectory === rootDirectory) {
+                    const listing = ['.', '..'];
+                    apps.forEach(app => {
+                        listing.push(`${app}/`);
+                    });
+                    return listing.join('\n');
+                }
+
+                // If in a specific directory, show files
+                const listing = ['.', '..'];
+                const files = getAppFiles(currentDirectory);
+                files.forEach(file => {
+                    listing.push(file);
+                });
+
+                return listing.join('\n');
+            }
+        },
+        ll: {
+            description: 'List directory contents (detailed)',
+            usage: 'll',
+            examples: [
+                'll                - List files with permissions and details'
+            ],
+            action: () => {
+                const apps = getAvailableApps();
+                let permission = 'drwxr-xr-x navaneeth navaneeth';
+
+                // If in home directory, show all apps as directories
+                if (currentDirectory === rootDirectory) {
+                    const listing = [`${permission}  .`, `${permission}  ..`];
+                    apps.forEach(app => {
+                        listing.push(`${permission}  ${app}/`);
+                    });
+                    return `${guestDirPath}\n\n` + listing.join('\n');
+                }
+
+                // If in a specific directory, show files
+                const listing = [`${permission}  .`, `${permission}  ..`];
+                const files = getAppFiles(currentDirectory);
+                files.forEach(file => {
+                    listing.push(`-rw-r--r-- navaneeth navaneeth  ${file}`);
+                });
+
+                return `${guestDirPath}/${currentDirectory}\n\n` + listing.join('\n');
+            }
+        },
+        whoami: {
+            description: 'Show current user',
+            action: () => 'guest@navaneeth.co.in'
+        },
+        date: {
+            description: 'Show current date and time',
+            action: () => new Date().toString()
+        },
+        echo: {
+            description: 'Echo back the input',
+            usage: 'echo <text>',
+            examples: [
+                'echo Hello World  - Prints "Hello World"',
+                'echo $USER        - Prints the text "$USER"'
+            ],
+            action: (args) => args.join(' ')
+        },
+        cd: {
+            description: 'Change directory',
+            usage: 'cd <directory>',
+            examples: [
+                'cd experience     - Enter experience app directory',
+                'cd ..             - Go to parent directory',
+                'cd ~              - Go to home directory',
+                'cd /              - Go to home directory'
+            ],
+            action: (args) => {
+                const dir = args[0]?.toLowerCase();
+                const availableApps = getAvailableApps();
+
+                if (!dir) {
+                    return `Usage: cd <app>\nAvailable directories: ${availableApps.join(', ')}\nOr use 'cd ~' to return to home directory`;
+                }
+
+                // Stay in current directory
+                if (dir === '.' || dir === './') {
+                    if (currentDirectory === rootDirectory) {
+                        return guestDirPath;
+                    }
+                    return `${guestDirPath}/${currentDirectory}`;
+                }
+
+                // Go back to home
+                if (dir === '..' || dir === '../' || dir === '~' || dir === '/') {
+                    currentDirectory = rootDirectory;
+                    return `${guestDirPath}\n\n📁 Changed directory to home. Use 'ls' to list contents.`;
+                }
+
+                // If in an app directory, check if trying to cd into a file or invalid path
+                if (currentDirectory !== rootDirectory) {
+                    const files = getAppFiles(currentDirectory);
+                    if (files.includes(dir)) {
+                        return `cd: not a directory: ${dir}`;
+                    }
+                    // If not a file and not a valid app, it's just invalid
+                    if (!availableApps.includes(dir)) {
+                        return `cd: no such file or directory: ${dir}\nUse 'cd ..' to go back or 'cd ~' to go home`;
+                    }
+                }
+
+                // Check if app exists (when in home directory)
+                if (!availableApps.includes(dir)) {
+                    return `cd: no such file or directory: ${dir}\nAvailable directories: ${availableApps.join(', ')}`;
+                }
+
+                currentDirectory = dir;
+                return `📁 Changed directory to ${dir}\n\nUse 'ls' to list files in this app\nUse 'cat <filename>' to view file contents`;
+            }
+        },
+        cat: {
+            description: 'Display file contents',
+            usage: 'cat <file>',
+            examples: [
+                'cat timeline.txt  - View timeline.txt in current directory',
+                'cat bio.txt       - View bio.txt file'
+            ],
+            action: (args) => {
+                const filename = args[0]?.toLowerCase();
+
+                if (!filename) {
+                    return `Usage: cat <filename>\n\nUse 'ls' to see available files`;
+                }
+
+                // If in home directory
+                if (currentDirectory === rootDirectory) {
+                    // Check if it's an app directory
+                    const availableApps = getAvailableApps();
+                    if (availableApps.includes(filename)) {
+                        return `cat: ${filename}: Is a directory`;
+                    }
+                    // Not a directory, just doesn't exist
+                    return `cat: ${filename}: no such file or directory\nUse 'cd <app>' to enter an app first`;
+                }
+
+                // Check if trying to cat a directory
+                const availableApps = getAvailableApps();
+                if (availableApps.includes(filename)) {
+                    return `cat: ${filename}: Is a directory`;
+                }
+
+                // Check if file exists in current app
+                const files = getAppFiles(currentDirectory);
+                if (!files.includes(filename)) {
+                    return `cat: ${filename}: no such file or directory\nAvailable files: ${files.join(', ')}`;
+                }
+
+                // Get content based on filename
+                return getAppContent(currentDirectory, filename);
+            }
+        }
+    };
+
+    // Navigate to an app visually on the page
+    function navigateToApp(app) {
+        const appElement = document.querySelector(`[data-section="${app}"]`);
+        if (appElement) {
+            setTimeout(() => {
+                appElement.click();
+            }, 100);
+            return `🚀 Navigating to ${app} app...`;
+        }
+        return `App '${app}' not found`;
+    }
+
+    // Get list of "files" in an app directory
+    function getAppFiles(appName) {
+        // Map apps to their logical "files"
+        const fileMap = {
+            'desktop': ['profile.txt', 'bio.txt', 'social.txt'],
+            'experience': ['timeline.txt', 'positions.txt', 'technologies.txt'],
+            'skills': ['backend.txt', 'frontend.txt', 'devops.txt', 'database.txt'],
+            'education': ['degrees.txt', 'schools.txt'],
+            'certifications': ['licenses.txt', 'courses.txt'],
+            'awards': ['honors.txt', 'achievements.txt'],
+            'references': ['testimonials.txt', 'recommendations.txt'],
+            'gallery': ['images.txt', 'videos.txt'],
+            'contact': ['info.txt', 'social.txt'],
+            'terminal': ['readme.txt', 'help.txt']
+        };
+
+        return fileMap[appName] || ['readme.txt'];
+    }
+
+    // Get content for a specific file in an app
+    function getAppContent(appName, filename) {
+        const app = document.querySelector(`[data-window="${appName}"]`);
+        if (!app) {
+            return `Error: App '${appName}' not found`;
+        }
+
+        const content = app.querySelector('.window-content');
+        if (!content) {
+            return `Error: Content not found for app '${appName}'`;
+        }
+
+        // Clone the content to manipulate it
+        const clone = content.cloneNode(true);
+
+        // Remove script tags, style tags, and other non-text elements
+        clone.querySelectorAll('script, style, svg, img').forEach(el => el.remove());
+
+        // Get text content and clean it up
+        let text = clone.innerText || clone.textContent;
+
+        // Clean up excessive whitespace
+        text = text.replace(/\n\s*\n\s*\n/g, '\n\n').trim();
+
+        // Add file header
+        const header = `╔════════════════════════════════════════════════════════╗
+║  File: ${filename.padEnd(47)} ║
+║  App: ${appName.padEnd(48)} ║
+╚════════════════════════════════════════════════════════╝
+`;
+
+        // Limit the output for terminal display
+        if (text.length > 1500) {
+            text = text.substring(0, 1500) + '\n\n... (content truncated for terminal display)';
+        }
+
+        return header + '\n' + text;
+    }
+
+    // Get list of available apps dynamically
+    function getAvailableApps() {
+        const apps = document.querySelectorAll('[data-window]');
+        return Array.from(apps)
+            .map(s => s.getAttribute('data-window'))
+            .filter(s => s && s !== 'terminal');
+    }
+
+    function addLine(content, type = 'output') {
+        const line = document.createElement('div');
+        line.className = `terminal-line terminal-${type}`;
+
+        // Process ANSI color codes
+        const coloredHtml = content
+            .replace(/\x1b\[32m/g, '<span style="color: #00ff00;">')  // Green for system commands
+            .replace(/\x1b\[33m/g, '<span style="color: #ffff00;">')  // Yellow for app commands
+            .replace(/\x1b\[36m/g, '<span style="color: #00d9ff;">')  // Cyan for headers
+            .replace(/\x1b\[90m/g, '<span style="color: #888888;">')  // Gray for descriptions
+            .replace(/\x1b\[0m/g, '</span>');                          // Reset
+
+        line.innerHTML = coloredHtml;
+        terminalContent.appendChild(line);
+        terminalContent.scrollTop = terminalContent.scrollHeight;
+    }
+
+    function executeCommand(input) {
+        const trimmed = input.trim();
+        if (!trimmed) return;
+
+        commandHistory.push(trimmed);
+        historyIndex = -1;
+
+        addLine(`$ ${trimmed}`, 'command');
+
+        const parts = trimmed.split(' ');
+        const cmd = parts[0].toLowerCase();
+        const args = parts.slice(1);
+
+        if (cmd === 'clear') {
+            terminalContent.innerHTML = '';
+        } else if (commands[cmd]) {
+            const output = commands[cmd].action(args);
+            if (output !== null) {
+                output.split('\n').forEach(line => addLine(line, 'output'));
+            }
+        } else {
+            addLine(`Command not found: ${cmd}`, 'error');
+            addLine('Type "help" for available commands.', 'error');
+        }
+    }
+
+    terminalInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            executeCommand(terminalInput.value);
+            terminalInput.value = '';
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (commandHistory.length > 0) {
+                const newIndex = historyIndex + 1;
+                if (newIndex < commandHistory.length) {
+                    historyIndex = newIndex;
+                    terminalInput.value = commandHistory[commandHistory.length - 1 - historyIndex];
+                }
+            }
+        } else if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (historyIndex > 0) {
+                historyIndex--;
+                terminalInput.value = commandHistory[commandHistory.length - 1 - historyIndex];
+            } else if (historyIndex === 0) {
+                historyIndex = -1;
+                terminalInput.value = '';
+            }
+        } else if (e.key === 'Tab') {
+            e.preventDefault();
+            handleTabComplete();
+        }
+    });
+
+    function handleTabComplete() {
+        const input = terminalInput.value;
+        const parts = input.trim().split(' ');
+        const cmd = parts[0].toLowerCase();
+        const partial = parts[parts.length - 1].toLowerCase();
+
+        // If no command yet, autocomplete commands
+        if (parts.length === 1) {
+            const matches = Object.keys(commands).filter(c => c.startsWith(partial));
+            if (matches.length === 1) {
+                terminalInput.value = matches[0];
+            } else if (matches.length > 1) {
+                addLine('$ ' + input, 'command');
+                addLine(matches.join('  '), 'output');
+            }
+            return;
+        }
+
+        // Autocomplete for 'cd' command
+        if (cmd === 'cd') {
+            const apps = getAvailableApps();
+            const specialDirs = ['.', '..', '~', '/'];
+            const allOptions = [...specialDirs, ...apps];
+            const matches = allOptions.filter(s => s.startsWith(partial));
+
+            if (matches.length === 1) {
+                terminalInput.value = `cd ${matches[0]}`;
+            } else if (matches.length > 1) {
+                addLine('$ ' + input, 'command');
+                addLine(matches.join('  '), 'output');
+            }
+            return;
+        }
+
+        // Autocomplete for 'cat' command
+        if (cmd === 'cat') {
+            if (currentDirectory === rootDirectory) {
+                addLine('$ ' + input, 'command');
+                addLine('Not in an app directory. Use "cd <app>" first.', 'error');
+                return;
+            }
+
+            const files = getAppFiles(currentDirectory);
+            const matches = files.filter(f => f.startsWith(partial));
+
+            if (matches.length === 1) {
+                terminalInput.value = `cat ${matches[0]}`;
+            } else if (matches.length > 1) {
+                addLine('$ ' + input, 'command');
+                addLine(matches.join('  '), 'output');
+            }
+            return;
+        }
+
+        // For other commands, try to autocomplete app names as arguments
+        if (parts.length === 2) {
+            const apps = getAvailableApps();
+            const matches = apps.filter(s => s.startsWith(partial));
+
+            if (matches.length === 1) {
+                terminalInput.value = `${cmd} ${matches[0]}`;
+            } else if (matches.length > 1) {
+                addLine('$ ' + input, 'command');
+                addLine(matches.join('  '), 'output');
+            }
+        }
+    }
+
+    // Focus input when clicking terminal
+    terminalContent.addEventListener('click', () => {
+        terminalInput.focus();
+    });
 </script>
 </body>
 </html>
