@@ -1425,6 +1425,7 @@
 
         .terminal-line {
             margin-bottom: 8px;
+            white-space: pre;
         }
 
         .terminal-command {
@@ -2222,7 +2223,7 @@
                 <div class="terminal-container">
                     <div class="terminal-content" id="terminalContent">
                         <div class="terminal-line terminal-output">╔════════════════════════════════════════════════════════╗</div>
-                        <div class="terminal-line terminal-output">║   Welcome to Navaneeth V's Portfolio Terminal v1.0    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;║</div>
+                        <div class="terminal-line terminal-output">║   Welcome to Navaneeth V's Portfolio Terminal v1.0     ║</div>
                         <div class="terminal-line terminal-output">╚════════════════════════════════════════════════════════╝</div>
                         <div class="terminal-line terminal-output"></div>
                         <div class="terminal-line terminal-output">Type "help" to see available commands.</div>
@@ -3059,7 +3060,6 @@
     function addLine(content, type = 'output') {
         const line = document.createElement('div');
         line.className = `terminal-line terminal-${type}`;
-        line.style.whiteSpace = 'pre';
 
         // Process ANSI color codes
         const coloredHtml = content
