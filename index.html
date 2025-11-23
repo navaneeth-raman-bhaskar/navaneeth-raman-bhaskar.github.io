@@ -1835,7 +1835,7 @@
             </div>
         </div>
 
-        <!-- Education Section - Add this after the Skills window in your grid-container -->
+        <!-- Education Section -->
         <div class="window full-width" data-window="education">
             <div class="window-header">
                 <div class="window-controls">
@@ -1901,7 +1901,6 @@
         </div>
 
         <!-- Licenses & Certifications Section -->
-        <!-- Licenses & Certifications Section -->
         <div class="window full-width" data-window="certifications">
             <div class="window-header">
                 <div class="window-controls">
@@ -1964,7 +1963,6 @@
             </div>
         </div>
 
-        <!-- Honors & Awards Section -->
         <!-- Honors & Awards Section -->
         <div class="window full-width" data-window="awards">
             <div class="window-header">
@@ -2209,7 +2207,7 @@
             </div>
         </div>
         <!-- Terminal Window -->
-        <div class="window full-width visible" data-window="terminal">
+        <div class="window full-width" data-window="terminal">
             <div class="window-header">
                 <div style="display: flex; gap: 8px;">
                     <div style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56;"></div>
@@ -2231,7 +2229,7 @@
                     </div>
                     <div class="terminal-input-line" style="padding: 0 20px 20px;">
                         <span class="terminal-prompt">$</span>
-                        <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false" autofocus>
+                        <input type="text" class="terminal-input" id="terminalInput" autocomplete="off" spellcheck="false">
                     </div>
                     <div class="terminal-footer">
                         <span>Press TAB for autocomplete | ↑↓ for history | Enter to execute</span>
@@ -2243,7 +2241,7 @@
     </div>
 </div>
 
-<!-- UPDATED DOCK - Replace your existing dock with this -->
+<!-- Docks -->
 <div class="dock">
     <div class="dock-item active" data-section="desktop" title="Desktop">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -2312,7 +2310,6 @@
         <svg viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2.6"
              stroke-linecap="round" stroke-linejoin="round">
-            <!-- angled > shape (two strokes, like your screenshot) -->
             <line x1="6" y1="6" x2="14" y2="12" />
             <line x1="6" y1="18" x2="14" y2="12" />
 
@@ -2334,7 +2331,7 @@
     </div>
 </div>
 <script>
-    // Gallery data - Replace URLs with your own images/videos
+    // Gallery data
     const galleryData = [
         {
             type: 'image',
@@ -2553,6 +2550,9 @@
                             scrollDockToActiveItem(item);
                         }
                     });
+                }
+                if (windowType === 'terminal') {
+                    document.getElementById('terminalInput').focus();
                 }
             }
         });
