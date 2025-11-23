@@ -2657,11 +2657,96 @@
     const commands = {
         help: {
             description: 'Show available commands',
-            action: () => {
-                const cmdList = Object.keys(commands).map(cmd =>
-                    `  ${cmd.padEnd(15)} - ${commands[cmd].description}`
-                ).join('\n');
-                return `Available commands:\n${cmdList}\n\nUse 'cd <app>' to enter an app directory\nUse '<app>' to navigate to that app\nUse 'cat <file>' to view file contents\nUse 'cd ~' to return to home directory`;
+            usage: 'help [command]',
+            examples: [
+                'help          - Show all commands',
+                'help cd       - Show help for cd command',
+                'help cat      - Show help for cat command'
+            ],
+            action: (args) => {
+                const targetCmd = args[0]?.toLowerCase();
+
+                // If specific command requested
+                if (targetCmd) {
+                    if (!commands[targetCmd]) {
+                        return `\x1b[31mError:\x1b[0m Command '${targetCmd}' not found.\nType '\x1b[32mhelp\x1b[0m' to see all available commands.`;
+                    }
+
+                    const cmd = commands[targetCmd];
+                    let output = `\x1b[36m╔════════════════════════════════════════════════════════╗\x1b[0m\n`;
+                    output += `\x1b[36m║\x1b[0m  HELP: \x1b[33m${targetCmd.toUpperCase().padEnd(46)}\x1b[36m║\x1b[0m\n`;
+                    output += `\x1b[36m╚════════════════════════════════════════════════════════╝\x1b[0m\n\n`;
+
+                    output += `\x1b[36mDESCRIPTION:\x1b[0m\n`;
+                    output += `  ${cmd.description}\n\n`;
+
+                    if (cmd.usage) {
+                        output += `\x1b[36mUSAGE:\x1b[0m\n`;
+                        output += `  \x1b[32m${cmd.usage}\x1b[0m\n\n`;
+                    }
+
+                    if (cmd.examples && cmd.examples.length > 0) {
+                        output += `\x1b[36mEXAMPLES:\x1b[0m\n`;
+                        cmd.examples.forEach(ex => {
+                            output += `  ${ex}\n`;
+                        });
+                    }
+
+                    return output;
+                }
+
+                // Show all commands (default behavior)
+                const systemCommands = ['help', 'pwd', 'ls', 'll', 'cd', 'cat', 'clear', 'whoami', 'date', 'echo'];
+                const allCommands = Object.keys(commands);
+                const appCommands = allCommands.filter(cmd => !systemCommands.includes(cmd));
+
+                let html = '<div style="color: #00ff00;">╔════════════════════════════════════════════════════════╗</div>';
+                html += '<div style="color: #00ff00;">║             PORTFOLIO TERMINAL v1.0                    ║</div>';
+                html += '<div style="color: #00ff00;">╚════════════════════════════════════════════════════════╝</div>';
+                html += '<br>';
+
+                html += '<div style="color: #00d9ff;">SYSTEM COMMANDS:</div>';
+                html += '<table style="margin-left: 10px; border-spacing: 0;">';
+                systemCommands.forEach(cmd => {
+                    if (commands[cmd]) {
+                        const desc = commands[cmd].description;
+                        let usage = cmd;
+                        if (cmd === 'help') usage = 'help [command]';
+                        else if (cmd === 'cd') usage = 'cd <directory>';
+                        else if (cmd === 'cat') usage = 'cat <file>';
+                        else if (cmd === 'echo') usage = 'echo <text>';
+
+                        html += `<tr><td style="color: #00ff00; padding-right: 20px;">${usage}</td><td style="color: #888888;">${desc}</td></tr>`;
+                    }
+                });
+                html += '</table><br>';
+
+                html += '<div style="color: #00d9ff;">APP SHORTCUTS:</div>';
+                html += '<table style="margin-left: 10px; border-spacing: 0;">';
+                appCommands.forEach(cmd => {
+                    if (commands[cmd]) {
+                        const desc = commands[cmd].description;
+                        html += `<tr><td style="color: #ffff00; padding-right: 20px;">${cmd}</td><td style="color: #888888;">${desc}</td></tr>`;
+                    }
+                });
+                html += '</table><br>';
+
+                html += '<div style="color: #00d9ff;">USAGE EXAMPLES:</div>';
+                html += '<div style="margin-left: 10px;">  <span style="color: #00ff00;">cd experience</span>        Enter the experience directory</div>';
+                html += '<div style="margin-left: 10px;">  <span style="color: #00ff00;">ls</span>                   List files in current directory</div>';
+                html += '<div style="margin-left: 10px;">  <span style="color: #00ff00;">cat timeline.txt</span>     View contents of timeline.txt</div>';
+                html += '<div style="margin-left: 10px;">  <span style="color: #ffff00;">experience</span>           Navigate to experience app</div>';
+                html += '<div style="margin-left: 10px;">  <span style="color: #00ff00;">cd ~</span>                 Return to home directory</div>';
+                html += '<br>';
+
+                html += '<div style="color: #00d9ff;">TIPS:</div>';
+                html += '<div style="margin-left: 10px;">  • Use <span style="color: #00ff00;">help &lt;command&gt;</span> for detailed help on a specific command</div>';
+                html += '<div style="margin-left: 10px;">  • Use TAB for autocomplete</div>';
+                html += '<div style="margin-left: 10px;">  • Use ↑/↓ arrows for command history</div>';
+                html += '<div style="margin-left: 10px;">  • Type "<span style="color: #00ff00;">cd &lt;app&gt;</span>" to browse files, "<span style="color: #ffff00;">&lt;app&gt;</span>" to navigate</div>';
+                html += '<div style="margin-left: 10px;">  • Use "<span style="color: #00ff00;">ll</span>" for detailed file information</div>';
+
+                return html;
             }
         },
         pwd: {
@@ -2674,7 +2759,7 @@
             }
         },
         desktop: {
-            description: 'Navigate to home',
+            description: 'Navigate to desktop',
             action: () => navigateToApp('about')
         },
         experience: {
@@ -2719,6 +2804,10 @@
         },
         ls: {
             description: 'List directory contents',
+            usage: 'ls',
+            examples: [
+                'ls                - List files in current directory (simple)'
+            ],
             action: () => {
                 const apps = getAvailableApps();
 
@@ -2743,6 +2832,10 @@
         },
         ll: {
             description: 'List directory contents (detailed)',
+            usage: 'll',
+            examples: [
+                'll                - List files with permissions and details'
+            ],
             action: () => {
                 const apps = getAvailableApps();
                 let permission = 'drwxr-xr-x navaneeth navaneeth';
@@ -2776,10 +2869,22 @@
         },
         echo: {
             description: 'Echo back the input',
+            usage: 'echo <text>',
+            examples: [
+                'echo Hello World  - Prints "Hello World"',
+                'echo $USER        - Prints the text "$USER"'
+            ],
             action: (args) => args.join(' ')
         },
         cd: {
             description: 'Change directory',
+            usage: 'cd <directory>',
+            examples: [
+                'cd experience     - Enter experience app directory',
+                'cd ..             - Go to parent directory',
+                'cd ~              - Go to home directory',
+                'cd /              - Go to home directory'
+            ],
             action: (args) => {
                 const dir = args[0]?.toLowerCase();
                 const availableApps = getAvailableApps();
@@ -2825,6 +2930,11 @@
         },
         cat: {
             description: 'Display file contents',
+            usage: 'cat <file>',
+            examples: [
+                'cat timeline.txt  - View timeline.txt in current directory',
+                'cat bio.txt       - View bio.txt file'
+            ],
             action: (args) => {
                 const filename = args[0]?.toLowerCase();
 
@@ -2945,7 +3055,17 @@
     function addLine(content, type = 'output') {
         const line = document.createElement('div');
         line.className = `terminal-line terminal-${type}`;
-        line.textContent = content;
+        line.style.whiteSpace = 'pre';
+
+        // Process ANSI color codes
+        const coloredHtml = content
+            .replace(/\x1b\[32m/g, '<span style="color: #00ff00;">')  // Green for system commands
+            .replace(/\x1b\[33m/g, '<span style="color: #ffff00;">')  // Yellow for app commands
+            .replace(/\x1b\[36m/g, '<span style="color: #00d9ff;">')  // Cyan for headers
+            .replace(/\x1b\[90m/g, '<span style="color: #888888;">')  // Gray for descriptions
+            .replace(/\x1b\[0m/g, '</span>');                          // Reset
+
+        line.innerHTML = coloredHtml;
         terminalContent.appendChild(line);
         terminalContent.scrollTop = terminalContent.scrollHeight;
     }
