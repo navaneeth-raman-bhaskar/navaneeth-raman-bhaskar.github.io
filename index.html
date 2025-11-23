@@ -2898,7 +2898,7 @@
                 const availableApps = getAvailableApps();
 
                 if (!dir) {
-                    return `Usage: cd <app>\nAvailable directories: ${availableApps.join(', ')}\nOr use 'cd ~' to return to home directory`;
+                    return `Usage: cd <directory>\nAvailable directories: ${availableApps.join(', ')}\nOr use 'cd ~' to return to home directory`;
                 }
 
                 // Stay in current directory
@@ -2933,7 +2933,7 @@
                 }
 
                 currentDirectory = dir;
-                return `📁 Changed directory to ${dir}\n\nUse 'ls' to list files in this app\nUse 'cat <filename>' to view file contents`;
+                return `📁 Changed directory to ${dir}\n\nUse 'ls' to list files in this directory\nUse 'cat <filename>' to view file contents`;
             }
         },
         cat: {
@@ -2958,7 +2958,7 @@
                         return `cat: ${filename}: Is a directory`;
                     }
                     // Not a directory, just doesn't exist
-                    return `cat: ${filename}: no such file or directory\nUse 'cd <app>' to enter an app first`;
+                    return `cat: ${filename}: no such file or directory\nUse 'cd <directory>' to enter a directory first`;
                 }
 
                 // Check if trying to cat a directory
@@ -3040,11 +3040,6 @@
 ║  App: ${appName.padEnd(48)} ║
 ╚════════════════════════════════════════════════════════╝
 `;
-
-        // Limit the output for terminal display
-        if (text.length > 1500) {
-            text = text.substring(0, 1500) + '\n\n... (content truncated for terminal display)';
-        }
 
         return header + '\n' + text;
     }
