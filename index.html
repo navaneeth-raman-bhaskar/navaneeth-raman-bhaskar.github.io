@@ -2768,8 +2768,8 @@
     // ============================================
 
     const observerOptions = {
-        threshold: 0.09,
-        rootMargin: '-20px 0px 0px 0px'
+        threshold: [ 0.1, 0.5],  // Multiple thresholds for better detection
+        rootMargin: '0px 0px 0px 0px'  // Top and bottom margins
     };
 
     const windowObserver = new IntersectionObserver((entries) => {
