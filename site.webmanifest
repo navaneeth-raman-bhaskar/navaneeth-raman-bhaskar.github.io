@@ -1,21 +1,24 @@
 {
   "name": "Navaneeth V",
   "short_name": "Navaneeth",
+  "description": "Navaneeth V – VP Technical Lead & System Architect",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#1e4262",
+  "theme_color": "#343645",
   "icons": [
     {
       "src": "/images/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     },
     {
       "src": "/images/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "maskable"
+      "purpose": "any maskable"
     }
-  ],
-  "theme_color": "#343645",
-  "background_color": "#1e4262",
-  "display": "standalone"
+  ]
 }
