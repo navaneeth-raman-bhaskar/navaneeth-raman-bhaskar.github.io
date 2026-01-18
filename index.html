@@ -51,7 +51,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
 
-    <link rel="stylesheet" href="/css/os.css">
+    <link rel="stylesheet" href="/css/os.css?v=1.0.0">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D32039T5VP"></script>
 
@@ -1272,14 +1272,6 @@
 
         isScrolling = true;
 
-        // Focus terminal input immediately if clicking terminal dock
-        if (section === 'terminal' && !isMobile) {
-            setTimeout(() => {
-                const terminalInput = document.getElementById('terminalInput');
-                if (terminalInput) terminalInput.focus();
-            }, 0);
-        }
-
         window.scrollTo({
             top: offsetPosition,
             behavior: 'smooth'
@@ -1362,11 +1354,6 @@
 
         if (mostVisibleSection) {
             updateActiveDockItem(mostVisibleSection);
-
-            if (mostVisibleSection === 'terminal' && !isMobile) {
-                const terminalInput = document.getElementById('terminalInput');
-                if (terminalInput) terminalInput.focus();
-            }
         }
     }
 
