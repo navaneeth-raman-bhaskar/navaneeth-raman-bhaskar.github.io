@@ -1,13 +1,5 @@
 User-agent: *
 Allow: /
 
-# Allow images and media
-Allow: /images/
-Allow: /gallery/
-
-# Block unnecessary internal assets if any are added later
-Disallow: /js/
-Disallow: /css/
-
 # Sitemap location
 Sitemap: https://navaneeth.co.in/sitemap.xml
