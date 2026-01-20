@@ -1,4 +1,4 @@
-if(! window.location.host.includes('.test')){
+if(window.location.host.includes('.co.in')){
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
