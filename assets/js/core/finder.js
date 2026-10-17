@@ -466,6 +466,21 @@ function initializeFinder({ body, homeScreen, homeIndicator, menuAppName, appWin
                 const extension = make("span", "", record.extension.toUpperCase());
                 icon.append(extension);
                 card.append(icon, make("span", "finder-visual-eyebrow", "DOCUMENT PREVIEW"), make("h3", "finder-visual-title", record.name), make("p", "finder-visual-copy", record.description || "Portfolio document"));
+                if (record.extension === "pdf") {
+                    const acrobatBtn = make("button", "finder-open-button", "View in Adobe Acrobat");
+                    acrobatBtn.type = "button";
+                    acrobatBtn.style.marginTop = "14px";
+                    acrobatBtn.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        const yearOrIssuer = record.date || record.issuer || "";
+                        if (typeof window.openPdfDocument === "function") {
+                            window.openPdfDocument(record.name, yearOrIssuer);
+                        } else if (openApp) {
+                            openApp("pdf");
+                        }
+                    });
+                    card.append(acrobatBtn);
+                }
                 target.append(card);
             }
 
@@ -484,7 +499,7 @@ function initializeFinder({ body, homeScreen, homeIndicator, menuAppName, appWin
             const open = document.createElement("button");
             open.className = "finder-open-button";
             open.type = "button";
-            open.textContent = record.kind === "folder" ? "Open Folder" : record.kind === "app" ? "Open " + record.name : record.fileType === "image" || record.fileType === "video" ? "Open in Gallery" : "Open File";
+            open.textContent = record.kind === "folder" ? "Open Folder" : record.kind === "app" ? "Open " + record.name : record.fileType === "image" || record.fileType === "video" ? "Open in Gallery" : record.extension === "pdf" ? "Open in Adobe Acrobat" : "Open File";
             open.addEventListener("click", () => openRecord(record));
             preview.append(previewTitle, previewMeta, previewContent, open);
         }
@@ -505,6 +520,11 @@ function initializeFinder({ body, homeScreen, homeIndicator, menuAppName, appWin
                 record.source.click();
                 lastFocusedElement = selectedFolderItem;
                 return;
+            }
+            if (record.extension === "pdf" && typeof window.openPdfDocument === "function") {
+                const yearOrIssuer = record.date || record.issuer || "";
+                const opened = window.openPdfDocument(record.name, yearOrIssuer);
+                if (opened) return;
             }
             listing.hidden = true;
             detail.hidden = false;

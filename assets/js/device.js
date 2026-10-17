@@ -23,6 +23,7 @@
         gallery: "Media",
         contact: "Contact",
         terminal: "Terminal",
+        pdf: "Adobe Acrobat",
     };
 
     // Portfolio sections are Finder folders. Their existing cards become files inside them.
@@ -254,12 +255,13 @@
 
     // Existing window dots become accessible controls: close/minimize return to desktop;
     // zoom toggles a larger app window.
-    document.querySelectorAll(".window-control").forEach((oldControl) => {
+    document.querySelectorAll(".window .window-controls .window-control").forEach((oldControl) => {
         const control = document.createElement("button");
         const className = [...oldControl.classList].find((name) => name.startsWith("control-"));
         const action = className?.replace("control-", "") || "window";
         control.type = "button";
         control.className = oldControl.className;
+        if (oldControl.id) control.id = oldControl.id;
         control.setAttribute("aria-label", action === "close" ? "Close app" : action === "minimize" ? "Minimize app" : "Zoom app window");
         control.title = control.getAttribute("aria-label");
         oldControl.replaceWith(control);
@@ -284,7 +286,7 @@
     const initialApp = window.location.hash.slice(1).toLowerCase();
     const initialOpenAsApp = history.state?.portfolioApp === initialApp
         ? history.state.openAsApp === true
-        : initialApp === "gallery";
+        : initialApp === "gallery" || initialApp === "pdf";
     if (initialApp === "about-me" || initialApp === "about") {
         openApp("files", false, null);
         finder.showAboutFile?.();
@@ -293,7 +295,7 @@
     }
 
     document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && !document.querySelector("#mediaModal.active") && body.dataset.activeApp) goHome();
+        if (event.key === "Escape" && !document.querySelector("#mediaModal.active, #pdfModal.active") && body.dataset.activeApp) goHome();
         if (event.altKey && event.key === "ArrowLeft" && body.dataset.activeApp) {
             event.preventDefault();
             goHome();
@@ -325,6 +327,9 @@
         setGalleryItems: finder.setGalleryItems,
     });
     initializeTerminal({ folderIds, labels, openApp });
+    if (typeof initializePdfViewer === "function") {
+        initializePdfViewer({ openApp });
+    }
 
     if ("serviceWorker" in navigator) {
         navigator.serviceWorker.register("./service-worker.js").catch(() => {});

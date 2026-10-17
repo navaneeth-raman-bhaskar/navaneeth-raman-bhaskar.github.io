@@ -8,14 +8,42 @@ function initializeTerminal({ folderIds, labels, openApp }) {
         experience: ["timeline.txt", "positions.txt", "technologies.txt"],
         skills: ["backend.txt", "frontend.txt", "devops.txt", "database.txt"],
         education: ["degrees.txt", "schools.txt"],
-        certifications: ["licenses.txt", "courses.txt"],
-        awards: ["honors.txt", "achievements.txt"],
+        certifications: [
+            "data-structures-cert.pdf",
+            "algorithms-cert.pdf",
+            "json-training-cert.pdf",
+            "advanced-php-cert.pdf",
+            "baseline-infrastructure-cert.pdf"
+        ],
+        awards: [
+            "it-genius-2011-award.pdf",
+            "volleyball-2015-gold-award.pdf",
+            "volleyball-2016-silver-award.pdf",
+            "volleyball-2017-bronze-award.pdf",
+            "volleyball-2010-gold-award.pdf",
+            "volleyball-2008-silver-award.pdf"
+        ],
         references: ["testimonials.txt", "recommendations.txt"],
         gallery: ["images.txt", "videos.txt"],
         media: ["images.txt", "videos.txt"],
+        pdf: [
+            "resume.pdf",
+            "cover-letter.pdf",
+            "data-structures-cert.pdf",
+            "algorithms-cert.pdf",
+            "json-training-cert.pdf",
+            "advanced-php-cert.pdf",
+            "baseline-infrastructure-cert.pdf",
+            "it-genius-2011-award.pdf",
+            "volleyball-2015-gold-award.pdf",
+            "volleyball-2016-silver-award.pdf",
+            "volleyball-2017-bronze-award.pdf",
+            "volleyball-2010-gold-award.pdf",
+            "volleyball-2008-silver-award.pdf"
+        ],
         contact: ["info.txt", "social.txt"],
     };
-    const appShortcuts = new Set([...Object.keys(labels), "media"]);
+    const appShortcuts = new Set([...Object.keys(labels), "media", "acrobat", "adobepdf"]);
 
     function printTerminalLine(value, kind = "output") {
         const line = document.createElement("div");
@@ -80,15 +108,25 @@ function initializeTerminal({ folderIds, labels, openApp }) {
         } else if (name === "echo") {
             result = args.join(" ");
         } else if (name === "open") {
-            const requested = argument === "finder" ? "files" : argument === "media" ? "gallery" : argument;
-            if (!requested || (!appShortcuts.has(requested) && requested !== "gallery")) {
-                result = "Usage: open <finder|terminal|experience|skills|education|certifications|awards|references|gallery|media|contact>";
+            if (argument && (argument.endsWith(".pdf") || argument.includes("cert") || argument.includes("award") || argument.includes("resume"))) {
+                if (typeof window.openPdfDocument === "function") {
+                    const opened = window.openPdfDocument(argument);
+                    if (opened) {
+                        result = `Opening ${argument} in Adobe Acrobat Reader…`;
+                        String(result).split("\n").forEach((line) => printTerminalLine(line));
+                        return;
+                    }
+                }
+            }
+            const requested = argument === "finder" ? "files" : argument === "media" ? "gallery" : (argument === "acrobat" || argument === "adobepdf") ? "pdf" : argument;
+            if (!requested || (!appShortcuts.has(requested) && requested !== "gallery" && requested !== "pdf")) {
+                result = "Usage: open <app|folder|file.pdf>";
             } else {
                 openApp(requested);
                 result = `Opening ${folderIds.has(requested) ? "Finder › " : ""}${labels[requested] || requested}…`;
             }
         } else if (appShortcuts.has(name)) {
-            const target = name === "media" ? "gallery" : name;
+            const target = name === "media" ? "gallery" : (name === "acrobat" || name === "adobepdf") ? "pdf" : name;
             openApp(target);
             result = `Opening ${folderIds.has(target) ? "Finder › " : ""}${labels[target] || target}…`;
         } else {

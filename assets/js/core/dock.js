@@ -32,7 +32,7 @@ function initializeDock(labels) {
         const separator = document.createElement("span");
         separator.className = "dock-separator";
         separator.setAttribute("aria-hidden", "true");
-        const lastAppDockItem = document.querySelector('.dock-item[data-open-app="gallery"]') || terminalDockItem;
+        const lastAppDockItem = document.querySelector('.dock-item[data-open-app="pdf"]') || document.querySelector('.dock-item[data-open-app="gallery"]') || terminalDockItem;
         lastAppDockItem.after(separator);
     }
     document.querySelector('.dock-item[data-open-app="files"]')?.classList.add("active");

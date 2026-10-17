@@ -51,8 +51,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
 
-    <link rel="stylesheet" href="./assets/css/os.css?v=1.0.5">
-    <link rel="stylesheet" href="./assets/css/device.css?v=2.3.8">
+    <link rel="stylesheet" href="./assets/css/os.css?v=1.0.7">
+    <link rel="stylesheet" href="./assets/css/device.css?v=2.3.17">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D32039T5VP"></script>
 
@@ -1001,6 +1001,105 @@
                 </div>
             </div>
         </div>
+
+        <div class="window full-width" data-window="pdf" id="pdf">
+            <div class="window-header acrobat-window-header">
+                <div class="window-controls">
+                    <div class="window-control control-close"></div>
+                    <div class="window-control control-minimize"></div>
+                    <div class="window-control control-maximize"></div>
+                </div>
+                <div class="window-title">Adobe Acrobat Reader</div>
+                <div class="window-version">v24.2</div>
+            </div>
+            <div class="window-content acrobat-content">
+                <aside class="acrobat-sidebar" aria-label="PDF storage locations">
+                    <div class="acrobat-sidebar-brand">
+                        <span class="acrobat-brand-icon">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#eb1000"/><path d="M17.2 13.9c-.6-.4-1.6-.7-2.9-.7-.5 0-1.1 0-1.6.2-.7-.7-1.5-1.7-2.1-2.9.5-1.6.8-3.1.8-4.2 0-1.2-.4-2-1.2-2-.5 0-1 .4-1.1 1.1-.3 1.4.1 3 1 4.8-.3 1.1-.8 2.3-1.4 3.6-1.7.9-3.8 2.2-4.6 3.5-.6 1-.5 2 .2 2.4.5.3 1.1.3 1.8.1 1.6-.5 3.3-2 4.8-4.4 1.2-.4 2.4-.7 3.6-1 1 1.1 2.2 1.8 3.3 2.1.6.1 1.1.1 1.5-.2.8-.5.8-1.6-.3-2.4z" fill="#fff"/></svg>
+                        </span>
+                        <div class="acrobat-brand-text">
+                            <strong>Acrobat Reader</strong>
+                            <small>Document Cloud</small>
+                        </div>
+                    </div>
+                    <div class="acrobat-sidebar-group">
+                        <h2 class="acrobat-sidebar-heading">Locations</h2>
+                        <button class="acrobat-sidebar-item selected" type="button" data-acrobat-location="all" aria-pressed="true">
+                            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="10" r="7.5"/><path d="M2.5 10h15M10 2.5a11 11 0 0 1 0 15 11 11 0 0 1 0-15"/></svg>
+                            <span>All Locations</span><small id="acrobatAllCount">13</small>
+                        </button>
+                        <button class="acrobat-sidebar-item" type="button" data-acrobat-location="desktop" aria-pressed="false">
+                            <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="2.5" y="3.5" width="15" height="10" rx="1.5"/><path d="M7 16.5h6M10 13.5v3"/></svg>
+                            <span>Desktop</span><small id="acrobatDesktopCount">1</small>
+                        </button>
+                        <button class="acrobat-sidebar-item" type="button" data-acrobat-location="documents" aria-pressed="false">
+                            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3 4.5A1.5 1.5 0 0 1 4.5 3h4l2 2h5A1.5 1.5 0 0 1 17 6.5v9a1.5 1.5 0 0 1-1.5 1.5h-11A1.5 1.5 0 0 1 3 15.5v-11Z"/></svg>
+                            <span>Documents / file</span><small id="acrobatDocCount">1</small>
+                        </button>
+                        <button class="acrobat-sidebar-item" type="button" data-acrobat-location="certifications" aria-pressed="false">
+                            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5a1.5 1.5 0 0 1 1.5-1.5h7A1.5 1.5 0 0 1 15 3.5v8l-5-2.5-5 2.5v-8Z"/><circle cx="10" cy="11.5" r="3.5"/></svg>
+                            <span>Certifications</span><small id="acrobatCertCount">5</small>
+                        </button>
+                        <button class="acrobat-sidebar-item" type="button" data-acrobat-location="awards" aria-pressed="false">
+                            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="7.5" r="4.5"/><path d="m6.5 12-2 6 5.5-2.5 5.5 2.5-2-6"/></svg>
+                            <span>Awards</span><small id="acrobatAwardCount">6</small>
+                        </button>
+                    </div>
+                    <div class="acrobat-sidebar-group">
+                        <h2 class="acrobat-sidebar-heading">Quick Access</h2>
+                        <button class="acrobat-sidebar-item" type="button" data-acrobat-quick="resume">
+                            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2.5h7l4 4V17a1.5 1.5 0 0 1-1.5 1.5h-9.5A1.5 1.5 0 0 1 3.5 17V4A1.5 1.5 0 0 1 5 2.5Z"/><path d="M12 2.5v4h4M6.5 10h7M6.5 13h7"/></svg>
+                            <span>Resume.pdf</span>
+                        </button>
+                        <button class="acrobat-sidebar-item" type="button" data-acrobat-quick="cover-letter">
+                            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 2.5h7l4 4V17a1.5 1.5 0 0 1-1.5 1.5h-9.5A1.5 1.5 0 0 1 3.5 17V4A1.5 1.5 0 0 1 5 2.5Z"/><path d="M12 2.5v4h4M6.5 10h7M6.5 13h5"/></svg>
+                            <span>cover-letter.pdf</span>
+                        </button>
+                        <button class="acrobat-sidebar-item" type="button" data-acrobat-quick="cert-ds">
+                            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5a1.5 1.5 0 0 1 1.5-1.5h7A1.5 1.5 0 0 1 15 3.5v8l-5-2.5-5 2.5v-8Z"/><circle cx="10" cy="11.5" r="3.5"/></svg>
+                            <span>Data Structures</span>
+                        </button>
+                        <button class="acrobat-sidebar-item" type="button" data-acrobat-quick="award-it-genius">
+                            <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="10" cy="7.5" r="4.5"/><path d="m6.5 12-2 6 5.5-2.5 5.5 2.5-2-6"/></svg>
+                            <span>IT Genius Award</span>
+                        </button>
+                    </div>
+                    <div class="acrobat-sidebar-footer">
+                        <span class="acrobat-status-dot" aria-hidden="true"></span>
+                        <span>Adobe PDF Engine 24.2</span>
+                    </div>
+                </aside>
+
+                <main class="acrobat-main">
+                    <!-- Explorer View -->
+                    <div class="acrobat-explorer-view" id="acrobatExplorerView">
+                        <div class="acrobat-toolbar">
+                            <div class="acrobat-toolbar-left">
+                                <h2 class="acrobat-view-title" id="acrobatViewTitle">All PDF Documents</h2>
+                                <span class="acrobat-view-badge" id="acrobatViewCount">13 files</span>
+                            </div>
+                            <div class="acrobat-toolbar-right">
+                                <label class="acrobat-search">
+                                    <svg viewBox="0 0 20 20" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m13 13 4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                                    <input id="acrobatSearch" type="search" placeholder="Search files…" aria-label="Search PDFs">
+                                </label>
+                                <div class="acrobat-view-toggle" role="group" aria-label="View layout">
+                                    <button class="acrobat-view-btn selected" id="acrobatViewListBtn" type="button" title="List View" aria-pressed="true">
+                                        <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 5.5h12M4 10h12M4 14.5h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                                    </button>
+                                    <button class="acrobat-view-btn" id="acrobatViewGridBtn" type="button" title="Grid View" aria-pressed="false">
+                                        <svg viewBox="0 0 20 20" aria-hidden="true"><rect x="3.5" y="3.5" width="5.5" height="5.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="11" y="3.5" width="5.5" height="5.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3.5" y="11" width="5.5" height="5.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="11" y="11" width="5.5" height="5.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="acrobat-files-container" id="acrobatFilesContainer"></div>
+                    </div>
+                </main>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -1132,6 +1231,32 @@
             <rect x="4" y="4" width="56" height="56" rx="17" fill="none" stroke="#fff" stroke-opacity=".82" stroke-width="1.2"/>
         </svg>
     </button>
+    <button class="dock-item dock-pdf" type="button" data-open-app="pdf" data-open-mode="app" aria-label="Adobe Acrobat" title="Adobe Acrobat">
+        <svg viewBox="0 0 64 64" aria-hidden="true">
+            <defs>
+                <linearGradient id="acrobatBg" x1="0" y1="0" x2="0" y2="1">
+                    <stop stop-color="#ff3b30"/>
+                    <stop offset=".45" stop-color="#e01212"/>
+                    <stop offset="1" stop-color="#a80707"/>
+                </linearGradient>
+                <linearGradient id="acrobatTopSheen" x1="0" y1="0" x2="0" y2="1">
+                    <stop stop-color="#ffffff" stop-opacity=".24"/>
+                    <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+                </linearGradient>
+                <clipPath id="acrobatIconClip">
+                    <rect x="3.5" y="3.5" width="57" height="57" rx="17.5"/>
+                </clipPath>
+            </defs>
+            <rect x="3.5" y="3.5" width="57" height="57" rx="17.5" fill="url(#acrobatBg)"/>
+            <g clip-path="url(#acrobatIconClip)">
+                <rect x="3.5" y="3.5" width="57" height="24" fill="url(#acrobatTopSheen)"/>
+                <g transform="translate(0.5 0)" fill="#ffffff">
+                    <path d="M43.8 35.8c-1.3-.9-3.5-1.4-6.4-1.4-1.2 0-2.4.1-3.6.3-1.6-1.5-3.3-3.7-4.8-6.4 1.1-3.6 1.8-6.9 1.8-9.4 0-2.6-.9-4.3-2.6-4.3-1.2 0-2.2.9-2.5 2.4-.6 3.1.2 6.6 2.1 10.7-.7 2.4-1.7 5.1-3 8-3.7 1.9-8.4 4.8-10.2 7.7-1.4 2.2-1.2 4.4.4 5.3 1.1.6 2.5.7 4 .2 3.6-1.1 7.4-4.5 10.6-9.8 2.6-.9 5.3-1.6 8-2.2 2.3 2.5 4.9 4.1 7.4 4.6 1.3.3 2.5.2 3.4-.4 1.7-1.1 1.7-3.6-.7-5.3zm-24.6 9c-.9 1-1.8 1.4-2.5 1.4-.4 0-.8-.1-1-.4-.3-.4-.3-1.1.2-2.1 1.1-2 3.9-4.5 6.7-6.2-1.7 3.5-2.7 6.1-3.4 7.3zm8.9-26.7c.3 0 .7.5.8 1.4 0 1.5-.4 3.7-1.1 6.3-1.1-2.9-1.6-5.3-1.4-6.7.2-.7.8-1 1.7-1zm-2.4 17.5c1-1.8 2-3.6 2.9-5.3 1.2 1.9 2.5 3.6 3.8 4.9-2.1.4-4.3.9-6.7 1.4v-1zm16.5 4.3c-.4.2-1.1.1-2.1-.2-1.5-.4-3.1-1.4-4.6-2.9 1.8-.1 3.4 0 4.6.4 1.8.6 2.6 1.7 2.1 2.7z"/>
+                </g>
+            </g>
+            <rect x="4" y="4" width="56" height="56" rx="17" fill="none" stroke="#fff" stroke-opacity=".34" stroke-width="1.2"/>
+        </svg>
+    </button>
     <a class="dock-item dock-link dock-linkedin" href="https://linkedin.com/in/navaneethramanbhaskar" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn">
         <svg viewBox="0 0 512 512" aria-hidden="true"><g transform="translate(32 32)"><path d="M100.28 448H7.4V148.9h92.88zm-46.44-339C24.7 109 1.2 84.3 1.2 53.8 1.2 24.1 25 0 53.8 0c28.9 0 52.6 24.1 52.6 53.8 0 29.4-23.5 55.2-52.6 55.2zM447.9 448h-92.7V302.4c0-34.7-.7-79.4-48.4-79.4-48.4 0-55.8 37.8-55.8 76.9V448h-92.8V148.9h89.1v40.8h1.3c12.4-23.5 42.6-48.4 87.7-48.4 93.8 0 111.2 61.8 111.2 142.3V448z"/></g></svg>
     </a>
@@ -1140,10 +1265,6 @@
     </a>
     <a class="dock-item dock-link dock-whatsapp" href="https://wa.me/917012853548" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" title="WhatsApp">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2a9.92 9.92 0 0 0-8.53 15l-1.3 4.75 4.86-1.28A9.94 9.94 0 1 0 12.04 2Zm0 18.08a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-2.88.76.77-2.8-.2-.31a8.11 8.11 0 1 1 6.74 3.66Zm4.45-6.08c-.24-.12-1.44-.71-1.66-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.95-1.2-.72-.64-1.21-1.44-1.35-1.68-.14-.24-.01-.37.1-.49.11-.1.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.54-1.3-.74-1.78-.2-.46-.4-.4-.54-.41h-.46c-.16 0-.42.06-.64.3-.22.24-.84.82-.84 2s.86 2.32.98 2.48c.12.16 1.69 2.58 4.09 3.62.57.25 1.02.4 1.37.51.58.18 1.1.16 1.52.1.46-.07 1.44-.59 1.64-1.16.2-.57.2-1.06.14-1.16-.06-.1-.22-.16-.46-.28Z"/></svg>
-    </a>
-    <a class="dock-item dock-link dock-resume" href="./file/resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Open resume PDF" title="Resume PDF">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 2.5h9l5 5v14H5z"/><path d="M14 2.5v5h5M7.5 12h9M7.5 15.5h9M7.5 19h6"/></svg>
-        <span class="dock-link-badge" aria-hidden="true">PDF</span>
     </a>
     <a class="dock-item dock-link dock-phone" href="tel:+917012853548" aria-label="Call Navaneeth" title="Phone">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3.5 10 3l1.7 4.2-2 1.6a15 15 0 0 0 5.5 5.5l1.6-2L21 14l-.5 3c-.3 1.7-1.8 2.8-3.5 2.5A17.5 17.5 0 0 1 4.5 7C4.2 5.3 5.3 3.8 7 3.5Z"/></svg>
@@ -1168,13 +1289,44 @@
         </div>
     </div>
 </div>
+
+<!-- Independent Adobe PDF Viewer Modal -->
+<div class="modal pdf-viewer-modal" id="pdfModal" role="dialog" aria-modal="true" aria-label="PDF Document Viewer" aria-hidden="true">
+    <div class="pdf-modal-container">
+        <div class="pdf-modal-header">
+            <div class="window-controls pdf-modal-controls">
+                <button class="window-control control-close" id="pdfModalClose" type="button" aria-label="Close"></button>
+                <button class="window-control control-minimize" id="pdfModalMinimize" type="button" aria-label="Minimize"></button>
+                <button class="window-control control-maximize" id="pdfModalMaximize" type="button" aria-label="Maximize"></button>
+            </div>
+            <div class="pdf-modal-info">
+                <span class="pdf-modal-badge" aria-hidden="true">PDF</span>
+                <div class="pdf-modal-title-wrap">
+                    <h3 class="pdf-modal-title" id="pdfModalTitle">Resume.pdf</h3>
+                    <p class="pdf-modal-location" id="pdfModalLocation">~/Desktop/Resume.pdf</p>
+                </div>
+            </div>
+            <div class="pdf-modal-actions">
+                <a class="pdf-modal-btn" id="pdfModalDownload" href="" download title="Download PDF">
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 3v9m0 0 3.5-3.5M10 12 6.5 8.5M3.5 15.5h13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Download</span>
+                </a>
+                <a class="pdf-modal-btn primary" id="pdfModalExternal" href="" target="_blank" rel="noopener noreferrer" title="Open in new tab">
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M11 3h6v6M10 10l6.5-6.5M7 4H4a1 1 0 0 0-1 1v11a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <span>Open in New Tab</span>
+                </a>
+            </div>
+        </div>
+        <div class="pdf-modal-body" id="pdfModalBody">
+            <iframe class="pdf-modal-iframe" id="pdfModalFrame" src="" title="PDF Document Viewer"></iframe>
         </div>
     </div>
 </div>
-<script defer src="./assets/js/core/dock.js?v=2.2.32"></script>
-<script defer src="./assets/js/core/finder.js?v=2.2.40"></script>
+<script defer src="./assets/js/core/dock.js?v=2.2.33"></script>
+<script defer src="./assets/js/core/finder.js?v=2.2.41"></script>
 <script defer src="./assets/js/apps/gallery.js?v=2.2.35"></script>
-<script defer src="./assets/js/apps/terminal.js?v=2.2.33"></script>
-<script defer src="./assets/js/device.js?v=2.2.37"></script>
+<script defer src="./assets/js/apps/pdf.js?v=2.2.43"></script>
+<script defer src="./assets/js/apps/terminal.js?v=2.2.34"></script>
+<script defer src="./assets/js/device.js?v=2.2.41"></script>
 </body>
 </html>

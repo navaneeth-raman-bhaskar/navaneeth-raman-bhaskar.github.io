@@ -333,6 +333,34 @@
     justify-content: center;
     padding: 20px;
     overflow-y: auto;
+    box-sizing: border-box;
+    scrollbar-color: rgba(255, 255, 255, .26) transparent;
+    scrollbar-width: thin;
+}
+
+.modal::-webkit-scrollbar,
+.modal *::-webkit-scrollbar {
+    width: 8px !important;
+    height: 8px !important;
+}
+
+.modal::-webkit-scrollbar-track,
+.modal *::-webkit-scrollbar-track {
+    background: transparent !important;
+}
+
+.modal::-webkit-scrollbar-thumb,
+.modal *::-webkit-scrollbar-thumb {
+    border: 2px solid transparent !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, .26) !important;
+    background-clip: padding-box !important;
+}
+
+.modal::-webkit-scrollbar-thumb:hover,
+.modal *::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, .45) !important;
+    background-clip: padding-box !important;
 }
 
 .modal.active {
