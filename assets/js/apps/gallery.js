@@ -94,13 +94,14 @@ function initializeGallery({ body, initialApp, initialOpenAsApp, openApp, buildF
             if (!card.hidden) visibleCount += 1;
         });
         galleryFilterControls.forEach((control) => {
-            const selected = control.dataset.galleryFilter === activeGalleryFilter;
+            const filter = control.dataset.galleryFilter;
+            const selected = filter === activeGalleryFilter;
             control.classList.toggle("selected", selected);
             control.setAttribute("aria-pressed", String(selected));
         });
-        const labels = { all: "All Photos", photos: "Photos", videos: "Videos", events: "Community Events" };
+        const labels = { all: "All", photos: "Photos", videos: "Videos", events: "Events" };
         if (galleryViewTitle) galleryViewTitle.textContent = labels[activeGalleryFilter] || labels.all;
-        if (gallerySectionLabel) gallerySectionLabel.textContent = activeGalleryFilter === "events" ? "Community Events" : "Highlights";
+        if (gallerySectionLabel) gallerySectionLabel.textContent = activeGalleryFilter === "events" ? "Events" : activeGalleryFilter === "videos" ? "Videos" : activeGalleryFilter === "photos" ? "Photos" : "Highlights";
         if (galleryViewCount) galleryViewCount.textContent = `${visibleCount} ${visibleCount === 1 ? "item" : "items"}`;
         if (galleryEmpty) galleryEmpty.hidden = visibleCount > 0;
     }
@@ -183,8 +184,16 @@ function initializeGallery({ body, initialApp, initialOpenAsApp, openApp, buildF
             galleryGrid.append(card);
         });
         const videoCount = galleryItems.filter((item) => item.type === "video").length;
-        document.getElementById("galleryTotalCount").textContent = String(galleryItems.length);
-        document.getElementById("galleryVideoCount").textContent = String(videoCount);
+        const photoCount = galleryItems.filter((item) => item.type === "image").length;
+        const eventCount = galleryItems.filter((item) => !/quest lead|gcp champ/i.test(`${item.title} ${item.description}`)).length;
+        const totalCountEl = document.getElementById("galleryTotalCount");
+        const photoCountEl = document.getElementById("galleryPhotoCount");
+        const videoCountEl = document.getElementById("galleryVideoCount");
+        const eventCountEl = document.getElementById("galleryEventCount");
+        if (totalCountEl) totalCountEl.textContent = String(galleryItems.length);
+        if (photoCountEl) photoCountEl.textContent = String(photoCount);
+        if (videoCountEl) videoCountEl.textContent = String(videoCount);
+        if (eventCountEl) eventCountEl.textContent = String(eventCount);
         applyGalleryFilter();
         setGalleryItems(galleryItems);
         buildFolderBrowser("gallery");

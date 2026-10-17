@@ -20,7 +20,7 @@
         certifications: "Certifications",
         awards: "Awards",
         references: "References",
-        gallery: "Gallery",
+        gallery: "Media",
         contact: "Contact",
         terminal: "Terminal",
     };
@@ -142,7 +142,7 @@
         syncMaximizedDock();
         homeScreen.hidden = true;
         homeIndicator.hidden = false;
-        menuAppName.textContent = folderMode ? "Finder" : id === "gallery" && openAsApp ? "Photos" : labels[id] || "Finder";
+        menuAppName.textContent = folderMode ? "Finder" : id === "gallery" && openAsApp ? "Gallery" : labels[id] || "Finder";
         body.dataset.activeApp = id;
         const currentFinderFolder = id === "files"
             ? target.querySelector(".finder-root-main > .finder-browser")?.dataset.folderId

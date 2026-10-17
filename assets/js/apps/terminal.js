@@ -12,9 +12,10 @@ function initializeTerminal({ folderIds, labels, openApp }) {
         awards: ["honors.txt", "achievements.txt"],
         references: ["testimonials.txt", "recommendations.txt"],
         gallery: ["images.txt", "videos.txt"],
+        media: ["images.txt", "videos.txt"],
         contact: ["info.txt", "social.txt"],
     };
-    const appShortcuts = new Set(Object.keys(labels));
+    const appShortcuts = new Set([...Object.keys(labels), "media"]);
 
     function printTerminalLine(value, kind = "output") {
         const line = document.createElement("div");
@@ -79,16 +80,17 @@ function initializeTerminal({ folderIds, labels, openApp }) {
         } else if (name === "echo") {
             result = args.join(" ");
         } else if (name === "open") {
-            const requested = argument === "finder" ? "files" : argument;
-            if (!requested || !appShortcuts.has(requested)) {
-                result = "Usage: open <finder|terminal|experience|skills|education|certifications|awards|references|gallery|contact>";
+            const requested = argument === "finder" ? "files" : argument === "media" ? "gallery" : argument;
+            if (!requested || (!appShortcuts.has(requested) && requested !== "gallery")) {
+                result = "Usage: open <finder|terminal|experience|skills|education|certifications|awards|references|gallery|media|contact>";
             } else {
                 openApp(requested);
-                result = `Opening ${folderIds.has(requested) ? "Finder › " : ""}${labels[requested]}…`;
+                result = `Opening ${folderIds.has(requested) ? "Finder › " : ""}${labels[requested] || requested}…`;
             }
         } else if (appShortcuts.has(name)) {
-            openApp(name);
-            result = `Opening ${folderIds.has(name) ? "Finder › " : ""}${labels[name]}…`;
+            const target = name === "media" ? "gallery" : name;
+            openApp(target);
+            result = `Opening ${folderIds.has(target) ? "Finder › " : ""}${labels[target] || target}…`;
         } else {
             result = `Command not found: ${rawName}. Type 'help' for commands.`;
         }
