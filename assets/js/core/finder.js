@@ -1,9 +1,17 @@
-function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindows, folderIds, labels, openApp, setLastLauncher }) {
+function initializeFinder({ body, homeScreen, homeIndicator, menuAppName, appWindows, folderIds, labels, openApp, setLastLauncher }) {
     const folderBrowserViews = new Map();
     let galleryItems = [];
     let openFinderFolderView = null;
     let returnToFinderHome = null;
     let navigateFinderLocation = null;
+
+    function revealFinderPathEnd(path) {
+        requestAnimationFrame(() => {
+            if (path.scrollWidth > path.clientWidth) {
+                path.scrollTo({ left: path.scrollWidth, behavior: "smooth" });
+            }
+        });
+    }
 
     function buildFolderBrowser(id) {
         const win = appWindows.find((item) => item.dataset.window === id);
@@ -223,6 +231,7 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
                 else crumb.addEventListener("click", segment.onClick);
                 path.append(crumb);
             });
+            revealFinderPathEnd(path);
         }
 
         function navigateToFolderDepth(depth) {
@@ -544,10 +553,22 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
         main.className = "finder-root-main";
         const toolbar = document.createElement("div");
         toolbar.className = "finder-toolbar finder-root-toolbar";
+        const homeButton = document.createElement("button");
+        homeButton.className = "finder-nav-button";
+        homeButton.type = "button";
+        homeButton.dataset.openRoot = "true";
+        homeButton.innerHTML = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m2 9 8-7 8 7h-2v8h-5v-5H9v5H4V9H2Z"/></svg>';
+        homeButton.setAttribute("aria-label", "Go to Finder Home");
+        const parentButton = document.createElement("button");
+        parentButton.className = "finder-nav-button finder-up-button";
+        parentButton.type = "button";
+        parentButton.textContent = "‹";
+        parentButton.setAttribute("aria-label", "Go to parent folder");
+        parentButton.title = "Go to parent folder";
         const nav = document.createElement("nav");
         nav.className = "finder-path";
         nav.setAttribute("aria-label", "Folder path");
-        toolbar.append(nav);
+        toolbar.append(homeButton, parentButton, nav);
         const rootItems = [...rootFinderContent.children].filter((child) => !child.classList.contains("finder-heading"));
         const homeView = document.createElement("div");
         homeView.className = "finder-home-view";
@@ -635,11 +656,22 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
             users: [{ label: "Macintosh HD", location: "macintosh-hd" }, { label: "Users", location: "users" }],
             home: [{ label: "Macintosh HD", location: "macintosh-hd" }, { label: "Users", location: "users" }, { label: "Navaneeth", location: "home" }],
         };
+        let currentLocation = "home";
+        parentButton.addEventListener("click", () => {
+            const parentLocation = { home: "users", users: "macintosh-hd" }[currentLocation];
+            if (parentLocation) showFinderLocation(parentLocation);
+        });
         function showFinderLocation(location) {
+            currentLocation = location;
             main.replaceChildren(toolbar, homeView, disk.view, users.view, aboutFileView);
             const views = { home: homeView, "macintosh-hd": disk.view, users: users.view };
             Object.entries(views).forEach(([key, view]) => { view.hidden = key !== location; });
             aboutFileView.hidden = true;
+            parentButton.hidden = location === "macintosh-hd";
+            parentButton.setAttribute("aria-label", location === "home" ? "Go to Users" : "Go to Macintosh HD");
+            parentButton.title = parentButton.getAttribute("aria-label");
+            if (location === "home") homeButton.setAttribute("aria-current", "page");
+            else homeButton.removeAttribute("aria-current");
             sidebar.querySelectorAll("[data-finder-location]").forEach((button) => {
                 const selected = button.dataset.finderLocation === (location === "home" ? "home" : "macintosh-hd");
                 button.classList.toggle("selected", selected);
@@ -674,6 +706,7 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
                 else crumb.addEventListener("click", () => showFinderLocation(segment.location));
                 nav.append(crumb);
             });
+            revealFinderPathEnd(nav);
         }
         navigateFinderLocation = showFinderLocation;
         function showAboutFile() {
@@ -711,7 +744,7 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
             body.dataset.activeApp = "files";
             body.dataset.activeKind = "folder";
             homeScreen.hidden = true;
-            homeButton.hidden = false;
+            homeIndicator.hidden = false;
             menuAppName.textContent = "Finder";
             setLastLauncher(opener);
             const title = document.querySelector("#files .window-title");

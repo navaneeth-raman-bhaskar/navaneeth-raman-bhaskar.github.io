@@ -2,7 +2,7 @@
     const body = document.body;
     const html = document.documentElement;
     const homeScreen = document.getElementById("desktopHome");
-    const homeButton = document.getElementById("homeButton");
+    const homeIndicator = document.getElementById("homeIndicator");
     const themeButton = document.getElementById("themeToggle");
     const statusTime = document.getElementById("statusTime");
     const statusDate = document.getElementById("statusDate");
@@ -48,7 +48,7 @@
     const finder = initializeFinder({
         body,
         homeScreen,
-        homeButton,
+        homeIndicator,
         menuAppName,
         appWindows,
         folderIds,
@@ -97,7 +97,7 @@
         });
         syncMaximizedDock();
         homeScreen.hidden = false;
-        homeButton.hidden = true;
+        homeIndicator.hidden = true;
         menuAppName.textContent = "Finder";
         delete body.dataset.activeApp;
         delete body.dataset.activeKind;
@@ -141,7 +141,7 @@
         });
         syncMaximizedDock();
         homeScreen.hidden = true;
-        homeButton.hidden = false;
+        homeIndicator.hidden = false;
         menuAppName.textContent = folderMode ? "Finder" : id === "gallery" && openAsApp ? "Photos" : labels[id] || "Finder";
         body.dataset.activeApp = id;
         const currentFinderFolder = id === "files"
@@ -171,7 +171,21 @@
         }
     }
 
-    homeButton.addEventListener("click", () => goHome());
+    homeIndicator.addEventListener("click", () => goHome());
+    let homeSwipeStartY = null;
+    window.addEventListener("pointerdown", (event) => {
+        if (event.pointerType !== "touch" || !body.dataset.activeApp || !window.matchMedia("(max-width: 820px)").matches) {
+            homeSwipeStartY = null;
+            return;
+        }
+        homeSwipeStartY = event.clientY >= window.innerHeight - 90 ? event.clientY : null;
+    }, { passive: true });
+    window.addEventListener("pointerup", (event) => {
+        if (homeSwipeStartY === null) return;
+        if (homeSwipeStartY - event.clientY > 70 && body.dataset.activeApp) goHome();
+        homeSwipeStartY = null;
+    }, { passive: true });
+    window.addEventListener("pointercancel", () => { homeSwipeStartY = null; }, { passive: true });
     initializeDock(labels);
 
     document.addEventListener("click", (event) => {
@@ -227,7 +241,7 @@
     });
 
     homeScreen.hidden = false;
-    homeButton.hidden = true;
+    homeIndicator.hidden = true;
     const initialApp = window.location.hash.slice(1).toLowerCase();
     const initialOpenAsApp = history.state?.portfolioApp === initialApp
         ? history.state.openAsApp === true

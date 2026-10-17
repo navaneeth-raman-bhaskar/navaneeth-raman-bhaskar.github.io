@@ -52,7 +52,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
 
     <link rel="stylesheet" href="./assets/css/os.css?v=1.0.3">
-    <link rel="stylesheet" href="./assets/css/device.css?v=2.2.37">
+    <link rel="stylesheet" href="./assets/css/device.css?v=2.2.42">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D32039T5VP"></script>
 
@@ -134,7 +134,7 @@
     <div class="floating-orb orb-3"></div>
 </div>
 
-<div class="top-bar" role="banner" aria-label="macOS menu bar">
+<div class="top-bar" role="banner" aria-label="System status and controls">
     <div class="menu-bar-left">
         <span class="apple-menu" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="M18.3 12.7c0-2.2 1.8-3.3 1.9-3.4-1-1.5-2.6-1.7-3.2-1.7-1.4-.1-2.7.8-3.4.8s-1.8-.8-2.9-.8c-1.5 0-2.9.9-3.7 2.2-1.6 2.7-.4 6.8 1.1 9 .7 1.1 1.6 2.3 2.8 2.2 1.1 0 1.6-.7 3-.7s1.8.7 3 .7c1.2 0 2-1.1 2.8-2.2.9-1.3 1.3-2.5 1.3-2.6 0 0-2.7-1-2.7-3.5ZM16 5.9c.6-.7 1-1.7.9-2.7-.9 0-2 .6-2.6 1.3-.6.6-1 1.6-.9 2.5 1 .1 2-.5 2.6-1.1Z"/></svg>
@@ -143,12 +143,9 @@
         <div class="menu-items" aria-hidden="true">
             <span>File</span><span>Edit</span><span>View</span><span>Go</span><span>Window</span><span>Help</span>
         </div>
-        <button class="home-button" id="homeButton" type="button" aria-label="Return to desktop" hidden>
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-6v-7h-4v7H4a1 1 0 0 1-1-1z"/></svg>
-            <span>Desktop</span>
-        </button>
     </div>
     <div class="top-bar-right">
+        <span class="status-glyph cellular-glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 20h3v-4H3zm5 0h3v-7H8zm5 0h3V9h-3zm5 0h3V4h-3z" fill="currentColor" stroke="none"/></svg></span>
         <span class="status-glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 8.8a15.2 15.2 0 0 1 20 0M5.5 12.4a10 10 0 0 1 13 0M9 16a4.7 4.7 0 0 1 6 0M12 19.5h.01"/></svg></span>
         <span class="status-glyph battery-glyph" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2.5" y="7" width="18" height="10" rx="2"/><path d="M22 10v4M5.5 10v4M8.5 10v4M11.5 10v4M14.5 10v4M17.5 10v4"/></svg></span>
         <button class="theme-switch" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="false">
@@ -1155,6 +1152,7 @@
         <img class="dock-maps-icon" src="https://thumb.wikimedia.org/wikipedia/commons/thumb/a/a3/Google_Maps_icon_%282026%29.svg/500px-Google_Maps_icon_%282026%29.svg.png" alt="" aria-hidden="true" width="44" height="44">
     </a>
 </div>
+<button class="ios-home-indicator" id="homeIndicator" type="button" aria-label="Return to Home" hidden></button>
 
 <!-- Modal for full media view -->
 <div class="modal" id="mediaModal" role="dialog" aria-modal="true" aria-label="Gallery media" aria-hidden="true">
@@ -1171,9 +1169,9 @@
     </div>
 </div>
 <script defer src="./assets/js/core/dock.js?v=2.2.32"></script>
-<script defer src="./assets/js/core/finder.js?v=2.2.35"></script>
+<script defer src="./assets/js/core/finder.js?v=2.2.39"></script>
 <script defer src="./assets/js/apps/gallery.js?v=2.2.32"></script>
 <script defer src="./assets/js/apps/terminal.js?v=2.2.32"></script>
-<script defer src="./assets/js/device.js?v=2.2.32"></script>
+<script defer src="./assets/js/device.js?v=2.2.34"></script>
 </body>
 </html>
