@@ -797,7 +797,8 @@ body[data-maximized-app] .dock { opacity: 0; visibility: hidden; pointer-events:
 .dock-item.dock-gallery svg { width: 44px; height: 44px; fill: none; stroke: none; }
 .dock-link { position: relative; isolation: isolate; overflow: visible; border: 0; border-radius: 14px; background: transparent; box-shadow: none; color: #fff; text-decoration: none; }
 .dock-link::before { position: absolute; z-index: 0; inset: 0; border: 1px solid rgba(255, 255, 255, .38); border-radius: inherit; background: var(--dock-link-tile); box-shadow: 0 3px 8px rgba(0, 0, 0, .25), 0 1px 0 rgba(255, 255, 255, .35) inset; content: ""; pointer-events: none; }
-.dock-location::before { display: none; }
+.dock-location { --dock-link-tile: #fff; }
+.dock-location::before { display: block; border-color: rgba(255, 255, 255, .92); }
 .dock-email::before { border-color: #e2e5ea; box-shadow: 0 1px 2px rgba(0, 0, 0, .12); }
 @media (min-width: 821px) {
     .dock-link + .dock-link { margin-inline-start: 3px; }
@@ -868,12 +869,12 @@ body[data-maximized-app] .dock { opacity: 0; visibility: hidden; pointer-events:
     .finder-list-panel { border-right: 0; }
     .finder-preview { display: none; }
     .finder-file-view { padding: 14px 18px 28px; }
-    .dock { --dock-item-size: clamp(20px, 8vw, 32px); bottom: calc(8px + env(safe-area-inset-bottom)); gap: clamp(2px, 1vw, 4px); padding: 6px; max-width: calc(100vw - 24px); }
-    .dock-item { display: grid; flex: 0 0 var(--dock-item-size); width: var(--dock-item-size); height: var(--dock-item-size); }
+    .dock { --dock-item-size: clamp(22px, 7.7vw, 30px); bottom: calc(8px + env(safe-area-inset-bottom)); gap: clamp(2px, .65vw, 4px); padding: 6px; max-width: calc(100vw - 24px); }
+    .dock-item { display: grid; min-width: 0; min-height: 0; flex: 0 0 var(--dock-item-size); width: var(--dock-item-size); height: var(--dock-item-size); }
     .dock-item:nth-child(n+3):not(:nth-last-child(-n+2)) { display: grid; }
     .dock-item svg { width: 21px; height: 21px; }
     .dock-link svg { width: 21px; height: 21px; }
-    .dock-separator { height: 27px; margin: 0 1px; }
+    .dock-separator { flex: 0 0 1px; height: 27px; margin: 0 1px; }
     .dock-item,
     .dock-item.active,
     .dock-item:hover,
