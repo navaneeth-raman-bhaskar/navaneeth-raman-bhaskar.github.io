@@ -27,6 +27,8 @@
     --menu-ink: rgba(255, 255, 255, .94);
     --dock-glass: rgba(220, 222, 232, .24);
     --icon-label: #fff;
+    --window-bg: #1e1e1e;
+    --card-bg: rgba(255, 255, 255, .04);
 }
 
 body[data-theme="light"] {
@@ -53,6 +55,8 @@ body[data-theme="light"] {
     --menu-ink: rgba(24, 25, 28, .96);
     --dock-glass: rgba(242, 243, 247, .48);
     --icon-label: #fff;
+    --window-bg: #ffffff;
+    --card-bg: #ffffff;
 }
 
 /* --- Base Layout --- */
@@ -5987,6 +5991,314 @@ body[data-theme="light"] .textedit-paper {
     border: 0;
     display: block;
     background: #2b2d31;
+}
+
+/* ==========================================================================
+   Adobe Acrobat Reader & PDF Viewer — Light Theme
+   ========================================================================== */
+body[data-theme="light"] .acrobat-content {
+    background: #ffffff;
+    color: var(--text-primary);
+}
+
+body[data-theme="light"] .acrobat-sidebar {
+    background: #f4f5f8;
+    border-right: 1px solid rgba(0, 0, 0, .08);
+}
+
+body[data-theme="light"] .acrobat-brand-text strong {
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .acrobat-brand-text small {
+    color: #86868b;
+}
+
+body[data-theme="light"] .acrobat-sidebar-heading {
+    color: #86868b;
+}
+
+body[data-theme="light"] .acrobat-sidebar-item {
+    color: #3a3a3c;
+}
+
+body[data-theme="light"] .acrobat-sidebar-item svg {
+    stroke: #6e6e73;
+}
+
+body[data-theme="light"] .acrobat-sidebar-item small {
+    background: rgba(0, 0, 0, .06);
+    color: #6e6e73;
+}
+
+body[data-theme="light"] .acrobat-sidebar-item:not(.selected):hover {
+    background: rgba(235, 16, 0, .08);
+    color: #eb1000;
+}
+
+body[data-theme="light"] .acrobat-sidebar-item:not(.selected):hover svg {
+    stroke: #eb1000;
+}
+
+body[data-theme="light"] .acrobat-sidebar-item.selected {
+    background: #eb1000;
+    color: #ffffff;
+}
+
+body[data-theme="light"] .acrobat-sidebar-item.selected svg {
+    stroke: #ffffff;
+}
+
+body[data-theme="light"] .acrobat-sidebar-item.selected small {
+    background: rgba(255, 255, 255, .28);
+    color: #ffffff;
+}
+
+body[data-theme="light"] .acrobat-sidebar-footer {
+    border-top: 1px solid rgba(0, 0, 0, .08);
+    color: #86868b;
+}
+
+body[data-theme="light"] .acrobat-toolbar {
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+}
+
+body[data-theme="light"] .acrobat-view-title {
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .acrobat-view-badge {
+    color: #86868b;
+}
+
+body[data-theme="light"] .acrobat-search svg {
+    color: #86868b;
+}
+
+body[data-theme="light"] .acrobat-search input {
+    background: #f4f5f8;
+    border: 1px solid rgba(0, 0, 0, .14);
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .acrobat-search input::placeholder {
+    color: #86868b;
+}
+
+body[data-theme="light"] .acrobat-search input:focus {
+    background: #ffffff;
+    border-color: #eb1000;
+    box-shadow: 0 0 0 2px rgba(235, 16, 0, .16);
+}
+
+body[data-theme="light"] .acrobat-view-toggle {
+    background: #f4f5f8;
+    border: 1px solid rgba(0, 0, 0, .12);
+}
+
+body[data-theme="light"] .acrobat-view-btn {
+    color: #86868b;
+}
+
+body[data-theme="light"] .acrobat-view-btn:hover {
+    background: rgba(0, 0, 0, .06);
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .acrobat-view-btn.selected {
+    background: #eb1000;
+    color: #ffffff;
+}
+
+body[data-theme="light"] .acrobat-table-head {
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+    color: #86868b;
+}
+
+body[data-theme="light"] .acrobat-group-name {
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .acrobat-group-path {
+    color: #86868b;
+}
+
+body[data-theme="light"] .acrobat-group-rule {
+    background: rgba(0, 0, 0, .08);
+}
+
+body[data-theme="light"] .acrobat-group-badge {
+    color: #86868b;
+}
+
+body[data-theme="light"] .acrobat-row {
+    border-bottom: 1px solid rgba(0, 0, 0, .05);
+}
+
+body[data-theme="light"] .acrobat-row:hover {
+    background: rgba(0, 0, 0, .035);
+}
+
+body[data-theme="light"] .acrobat-row-title {
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .acrobat-row-desc {
+    color: #6e6e73;
+}
+
+body[data-theme="light"] .acrobat-cell-loc {
+    color: #6e6e73;
+}
+
+body[data-theme="light"] .acrobat-cell-date,
+body[data-theme="light"] .acrobat-cell-size {
+    color: #86868b;
+}
+
+body[data-theme="light"] .acrobat-row-btn {
+    background: rgba(0, 0, 0, .04);
+    border: 1px solid rgba(0, 0, 0, .12);
+    color: #3a3a3c;
+}
+
+body[data-theme="light"] .acrobat-row-btn:hover {
+    background: rgba(0, 0, 0, .08);
+    border-color: rgba(0, 0, 0, .22);
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .acrobat-row-btn.primary {
+    background: #eb1000;
+    border-color: #eb1000;
+    color: #ffffff;
+}
+
+body[data-theme="light"] .acrobat-row-btn.primary:hover {
+    background: #d00e00;
+    color: #ffffff;
+}
+
+body[data-theme="light"] .acrobat-grid-card {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, .1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .05);
+}
+
+body[data-theme="light"] .acrobat-grid-card:hover {
+    background: #ffffff;
+    border-color: rgba(235, 16, 0, .4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, .12);
+}
+
+body[data-theme="light"] .acrobat-grid-thumb {
+    background: #f4f5f8;
+    border-bottom: 1px solid rgba(0, 0, 0, .06);
+}
+
+body[data-theme="light"] .acrobat-grid-title {
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .acrobat-grid-meta {
+    color: #86868b;
+}
+
+body[data-theme="light"] .acrobat-grid-badge {
+    background: rgba(0, 0, 0, .08);
+    color: #6e6e73;
+}
+
+/* Independent PDF Viewer Modal Light Theme */
+body[data-theme="light"] .pdf-viewer-modal {
+    background: rgba(0, 0, 0, .45);
+}
+
+body[data-theme="light"] .pdf-modal-container {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, .14);
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .25);
+}
+
+body[data-theme="light"] .pdf-modal-header {
+    background: #f7f7f9;
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+}
+
+body[data-theme="light"] .pdf-modal-title {
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .pdf-modal-location {
+    color: #6e6e73;
+}
+
+body[data-theme="light"] .pdf-modal-btn {
+    background: rgba(0, 0, 0, .04);
+    border: 1px solid rgba(0, 0, 0, .14);
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .pdf-modal-btn:hover {
+    background: rgba(235, 16, 0, .08);
+    border-color: #eb1000;
+    color: #eb1000;
+}
+
+body[data-theme="light"] .pdf-modal-btn.primary {
+    background: #eb1000;
+    border-color: #eb1000;
+    color: #ffffff;
+}
+
+body[data-theme="light"] .pdf-modal-btn.primary:hover {
+    background: #d00e00;
+    color: #ffffff;
+}
+
+body[data-theme="light"] .pdf-modal-body {
+    background: #eaedf1;
+}
+
+body[data-theme="light"] .pdf-modal-iframe {
+    background: #eaedf1;
+}
+
+body[data-theme="light"] .pdf-viewer-toolbar {
+    background: #f7f7f9;
+    border-bottom: 1px solid rgba(0, 0, 0, .08);
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .pdf-toolbar-btn {
+    background: rgba(0, 0, 0, .04);
+    border: 1px solid rgba(0, 0, 0, .12);
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .pdf-toolbar-btn:hover {
+    background: rgba(0, 0, 0, .08);
+    border-color: rgba(0, 0, 0, .2);
+    color: #1d1d1f;
+}
+
+body[data-theme="light"] .pdf-toolbar-btn.active {
+    background: #eb1000;
+    border-color: #eb1000;
+    color: #ffffff;
+}
+
+body[data-theme="light"] .pdf-zoom-level {
+    color: #3a3a3c;
+}
+
+body[data-theme="light"] .pdf-page-indicator {
+    color: #6e6e73;
+}
+
+body[data-theme="light"] .pdf-viewer-stage {
+    background: #eaedf1;
+    scrollbar-color: rgba(0, 0, 0, .26) transparent !important;
 }
 
 @media print {
