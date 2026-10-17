@@ -409,6 +409,7 @@ body[data-theme="light"] .theme-switch .moon-icon {
 }
 
 .desktop-folder-icon {
+    position: relative;
     display: grid;
     width: 62px;
     height: 58px;
@@ -432,6 +433,25 @@ body[data-theme="light"] .theme-switch .moon-icon {
     fill: none;
     stroke: rgba(255, 255, 255, .7);
     stroke-width: 1.5;
+}
+
+/* macOS-style Folder Shortcut / Alias Badge */
+.desktop-folder-icon::after {
+    content: "";
+    position: absolute;
+    bottom: 3px;
+    left: 4px;
+    width: 18px;
+    height: 18px;
+    border-radius: 4.5px;
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3.5 12c0-3.3 2.2-5 5.5-5h3' fill='none' stroke='%231d1d1f' stroke-width='2.2' stroke-linecap='round'/%3E%3Cpath d='M9.5 4.5l3 2.5-3 2.5' fill='none' stroke='%231d1d1f' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12px 12px;
+    box-shadow: 0 1.5px 3.5px rgba(0, 0, 0, 0.4), 0 0 0 0.5px rgba(0, 0, 0, 0.12);
+    pointer-events: none;
+    z-index: 2;
 }
 
 .desktop-file-icon {
@@ -464,6 +484,10 @@ body[data-theme="light"] .theme-switch .moon-icon {
     fill: none;
     stroke: #ee3e49;
     stroke-width: 2.3;
+}
+
+.desktop-about-icon svg path:last-child {
+    stroke: #5b8ee8;
 }
 
 .icon-files { background: linear-gradient(145deg, #60c8ff, #2272dc 75%); }
@@ -3217,6 +3241,35 @@ body[data-theme="light"] .finder-highlight-index {
         height: clamp(40px, 11.5vw, 48px);
         border-radius: 14px;
         font-size: 22px;
+    }
+
+    .desktop-folder-icon {
+        width: clamp(42px, 12vw, 50px);
+        height: clamp(38px, 11vw, 46px);
+    }
+
+    .desktop-folder-icon svg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .desktop-folder-icon::after {
+        width: 13px;
+        height: 13px;
+        bottom: 2px;
+        left: 2px;
+        border-radius: 3px;
+        background-size: 9px 9px;
+    }
+
+    .desktop-file-icon {
+        width: clamp(36px, 10vw, 44px);
+        height: clamp(40px, 11vw, 48px);
+    }
+
+    .desktop-file-icon svg {
+        width: 100%;
+        height: 100%;
     }
 
     /* Windows on Mobile */

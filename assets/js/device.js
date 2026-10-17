@@ -226,6 +226,16 @@
             else openApp("files");
             return;
         }
+        const fileTarget = event.target.closest("[data-finder-file]");
+        if (fileTarget) {
+            lastLauncher = fileTarget;
+            const fileId = fileTarget.dataset.finderFile;
+            if (fileId === "about-me") {
+                openApp("files", true, fileTarget);
+                finder.showAboutFile?.();
+            }
+            return;
+        }
         const folderTarget = event.target.closest("[data-open-folder]");
         if (folderTarget) {
             lastLauncher = folderTarget;
@@ -235,6 +245,9 @@
         const appTarget = event.target.closest("[data-open-app]");
         if (appTarget) {
             lastLauncher = appTarget;
+            if (appTarget.dataset.openApp === "files" && body.dataset.activeApp !== "files") {
+                finder.returnToFinderHome?.();
+            }
             openApp(appTarget.dataset.openApp, true, appTarget, appTarget.dataset.openMode === "app");
         }
     });
@@ -272,7 +285,12 @@
     const initialOpenAsApp = history.state?.portfolioApp === initialApp
         ? history.state.openAsApp === true
         : initialApp === "gallery";
-    if (appIds.includes(initialApp)) openApp(initialApp, false, null, initialOpenAsApp);
+    if (initialApp === "about-me" || initialApp === "about") {
+        openApp("files", false, null);
+        finder.showAboutFile?.();
+    } else if (appIds.includes(initialApp)) {
+        openApp(initialApp, false, null, initialOpenAsApp);
+    }
 
     document.addEventListener("keydown", (event) => {
         if (event.key === "Escape" && !document.querySelector("#mediaModal.active") && body.dataset.activeApp) goHome();

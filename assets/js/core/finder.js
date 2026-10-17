@@ -768,6 +768,7 @@ function initializeFinder({ body, homeScreen, homeIndicator, menuAppName, appWin
         getFolderView: (id) => folderBrowserViews.get(id),
         openFinderFolderView,
         returnToFinderHome,
+        showAboutFile,
         setGalleryItems: (items) => { galleryItems = items; },
     };
 }
