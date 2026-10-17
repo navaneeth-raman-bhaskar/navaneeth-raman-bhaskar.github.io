@@ -24,6 +24,7 @@
         contact: "Contact",
         terminal: "Terminal",
         pdf: "Adobe Acrobat",
+        textedit: "TextEdit",
     };
 
     // Portfolio sections are Finder folders. Their existing cards become files inside them.
@@ -295,7 +296,7 @@
     }
 
     document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && !document.querySelector("#mediaModal.active, #pdfModal.active") && body.dataset.activeApp) goHome();
+        if (event.key === "Escape" && !document.querySelector("#mediaModal.active, #pdfModal.active, #textEditModal.active") && body.dataset.activeApp) goHome();
         if (event.altKey && event.key === "ArrowLeft" && body.dataset.activeApp) {
             event.preventDefault();
             goHome();
@@ -329,6 +330,13 @@
     initializeTerminal({ folderIds, labels, openApp });
     if (typeof initializePdfViewer === "function") {
         initializePdfViewer({ openApp });
+    }
+    if (typeof initializeTextEdit === "function") {
+        initializeTextEdit({ openApp });
+    }
+
+    if (initialApp === "about-me" || initialApp === "about") {
+        window.openRichTextDocument?.();
     }
 
     if ("serviceWorker" in navigator) {

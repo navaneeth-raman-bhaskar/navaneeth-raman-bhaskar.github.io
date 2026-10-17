@@ -52,7 +52,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
 
     <link rel="stylesheet" href="./assets/css/os.css?v=1.0.7">
-    <link rel="stylesheet" href="./assets/css/device.css?v=2.3.22">
+    <link rel="stylesheet" href="./assets/css/device.css?v=2.3.26">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D32039T5VP"></script>
 
@@ -186,7 +186,7 @@
                     <div class="window-control control-minimize"></div>
                     <div class="window-control control-maximize"></div>
                 </div>
-            <div class="window-title">Navaneeth</div>
+            <div class="window-title">Documents</div>
                 <div class="window-version" aria-hidden="true"></div>
             </div>
             <div class="window-content finder-content">
@@ -1344,11 +1344,49 @@
         </div>
     </div>
 </div>
+
+<!-- Independent TextEdit Rich Text Document Modal -->
+<div class="modal textedit-modal" id="textEditModal" role="dialog" aria-modal="true" aria-label="TextEdit — Rich Text Document" aria-hidden="true">
+    <div class="textedit-modal-container">
+        <div class="textedit-modal-header">
+            <button class="textedit-modal-back-btn" id="textEditModalBackBtn" type="button" aria-label="Close TextEdit" title="Back">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+            <div class="window-controls textedit-modal-controls">
+                <button class="window-control control-close" id="textEditModalClose" type="button" aria-label="Close"></button>
+                <button class="window-control control-minimize" id="textEditModalMinimize" type="button" aria-label="Minimize"></button>
+                <button class="window-control control-maximize" id="textEditModalMaximize" type="button" aria-label="Maximize"></button>
+            </div>
+            <div class="textedit-modal-info">
+                <span class="textedit-modal-badge" aria-hidden="true">RTF</span>
+                <div class="textedit-modal-title-wrap">
+                    <h3 class="textedit-modal-title" id="textEditModalTitle">About Me.rtf</h3>
+                    <p class="textedit-modal-location" id="textEditModalLocation">~/Documents/About Me.rtf</p>
+                </div>
+            </div>
+            <div class="textedit-modal-actions">
+                <button class="textedit-modal-btn" id="textEditCopyBtn" type="button" title="Copy Document Text">
+                    <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="6" width="10" height="10" rx="2"/><path d="M14 6V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>
+                    <span class="copy-text">Copy</span>
+                </button>
+                <button class="textedit-modal-btn primary" id="textEditPrintBtn" type="button" title="Print Document">
+                    <svg viewBox="0 0 20 20" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 7V3h10v4M5 14h10v4H5z"/><rect x="3" y="7" width="14" height="7" rx="2"/></svg>
+                    <span>Print</span>
+                </button>
+            </div>
+        </div>
+        <div class="textedit-modal-body" id="textEditModalBody">
+            <!-- Rendered paper canvas content -->
+        </div>
+    </div>
+</div>
+
 <script defer src="./assets/js/core/dock.js?v=2.2.33"></script>
-<script defer src="./assets/js/core/finder.js?v=2.2.41"></script>
+<script defer src="./assets/js/core/finder.js?v=2.2.45"></script>
 <script defer src="./assets/js/apps/gallery.js?v=2.2.35"></script>
 <script defer src="./assets/js/apps/pdf.js?v=2.2.44"></script>
 <script defer src="./assets/js/apps/terminal.js?v=2.2.34"></script>
-<script defer src="./assets/js/device.js?v=2.2.41"></script>
+<script defer src="./assets/js/apps/textedit.js?v=2.2.45"></script>
+<script defer src="./assets/js/device.js?v=2.2.42"></script>
 </body>
 </html>

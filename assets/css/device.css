@@ -957,195 +957,701 @@ body[data-maximized-app] .dock {
     overflow-x: hidden;
 }
 
-.finder-root-layout {
+/* --- Macintosh Finder (Sonoma / Ventura Authentic Style) --- */
+.mac-finder-layout {
     display: flex;
-    min-height: 100%;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
     overflow: hidden;
+    background: var(--bg-window);
+    position: relative;
 }
 
-.finder-sidebar {
-    flex: 0 0 185px;
-    padding: 19px 12px;
+/* Sidebar */
+.mac-finder-sidebar {
+    flex: 0 0 196px;
+    width: 196px;
+    padding: 14px 10px;
+    background: rgba(128, 128, 128, 0.08);
     border-right: 1px solid var(--border);
-    background: rgba(128, 128, 128, .08);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    user-select: none;
+    transition: transform 0.22s ease-out;
 }
 
-.finder-sidebar h3 {
-    margin: 9px 9px 6px;
-    color: var(--text-muted);
-    font-size: 10px;
+body[data-theme="light"] .mac-finder-sidebar {
+    background: #f0f0f4;
+    border-color: rgba(0, 0, 0, 0.08);
+}
+
+.mac-finder-sidebar .sidebar-section-title {
+    font-size: 11px;
     font-weight: 600;
-    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 0 8px 4px;
+    letter-spacing: -0.1px;
 }
 
-.finder-sidebar button {
+.mac-finder-sidebar .sidebar-item {
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 10px;
     width: 100%;
-    margin: 2px 0;
-    padding: 6px 9px;
+    padding: 5px 8px;
     border: 0;
     border-radius: 6px;
     background: transparent;
     color: var(--text-secondary);
     font: inherit;
-    font-size: 12px;
+    font-size: 12.5px;
+    font-weight: 450;
+    cursor: pointer;
     text-align: left;
-    cursor: default;
+    transition: background 0.12s, color 0.12s;
 }
 
-.finder-sidebar button svg {
-    flex: 0 0 16px;
+.mac-finder-sidebar .sidebar-item svg {
     width: 16px;
     height: 16px;
-    opacity: .85;
+    color: #0a84ff;
+    flex-shrink: 0;
 }
 
-.finder-sidebar button.selected {
-    background: rgba(10, 132, 255, .85);
-    color: #fff;
-}
-
-.finder-sidebar button:not(.selected):hover {
-    background: rgba(10, 132, 255, .12);
+.mac-finder-sidebar .sidebar-item:hover {
+    background: rgba(128, 128, 128, 0.12);
     color: var(--text-primary);
 }
 
-.finder-root-main {
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-}
-
-.finder-root-toolbar {
-    min-height: 42px;
-}
-
-.finder-home-view,
-.finder-location-view {
-    padding: 23px 28px 26px;
-}
-
-.finder-home-view > h2,
-.finder-location-view > h2 {
-    margin: 0 0 7px;
-}
-
-.finder-home-view > p,
-.finder-location-view > p {
-    margin: 0 0 18px;
-    color: var(--text-secondary);
-}
-
-.finder-home-view > .folder-grid,
-.finder-location-view > .folder-grid {
-    margin: 0;
-}
-
-.finder-home-view {
-    min-height: 100%;
-    padding-top: 19px;
-}
-
-.finder-home-summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 2px 13px;
-}
-
-.finder-home-summary h2 {
-    margin: 0;
+.mac-finder-sidebar .sidebar-item.selected {
+    background: rgba(255, 255, 255, 0.14);
     color: var(--text-primary);
-    font-size: 13px;
     font-weight: 600;
 }
 
-.finder-item-count {
+body[data-theme="light"] .mac-finder-sidebar .sidebar-item.selected {
+    background: rgba(0, 0, 0, 0.09);
+    color: #000;
+}
+
+.mac-finder-sidebar .tag-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.mac-finder-sidebar .tag-dot.red { background: #ff453a; }
+.mac-finder-sidebar .tag-dot.orange { background: #ff9f0a; }
+.mac-finder-sidebar .tag-dot.yellow { background: #ffd60a; }
+
+/* Main Content */
+.mac-finder-main {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg-window);
+}
+
+body[data-theme="light"] .mac-finder-main {
+    background: #ffffff;
+}
+
+/* Toolbar */
+.mac-finder-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 46px;
+    min-height: 46px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+    background: rgba(128, 128, 128, 0.04);
+}
+
+.mac-finder-toolbar .toolbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mac-finder-toolbar .sidebar-toggle-btn {
+    display: none;
+}
+
+.mac-finder-toolbar .nav-arrows {
+    display: flex;
+    gap: 3px;
+}
+
+.mac-finder-toolbar .nav-btn {
+    width: 26px;
+    height: 24px;
+    border-radius: 5px;
+    border: 0;
+    background: transparent;
+    color: var(--text-muted);
+    display: grid;
+    place-items: center;
+    cursor: default;
+    transition: background 0.12s, color 0.12s;
+    opacity: 0.35;
+}
+
+.mac-finder-toolbar .nav-btn.active {
+    color: var(--text-primary);
+    cursor: pointer;
+    opacity: 1;
+}
+
+.mac-finder-toolbar .nav-btn.active:hover {
+    background: rgba(128, 128, 128, 0.12);
+}
+
+.mac-finder-toolbar .folder-title {
+    font-size: 13.5px;
+    font-weight: 650;
+    color: var(--text-primary);
+    margin-left: 2px;
+}
+
+.mac-finder-toolbar .toolbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mac-finder-toolbar .view-switchers {
+    display: flex;
+    background: rgba(128, 128, 128, 0.1);
+    border-radius: 6px;
+    padding: 2px;
+}
+
+.mac-finder-toolbar .view-btn {
+    width: 26px;
+    height: 22px;
+    border-radius: 4px;
+    border: 0;
+    background: transparent;
+    color: var(--text-muted);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s;
+}
+
+.mac-finder-toolbar .view-btn.selected {
+    background: var(--bg-window);
+    color: var(--text-primary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.mac-finder-toolbar .finder-search-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 26px;
+    padding: 0 8px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: rgba(128, 128, 128, 0.08);
+    color: var(--text-muted);
+    width: 130px;
+    transition: width 0.18s, border-color 0.18s;
+}
+
+.mac-finder-toolbar .finder-search-wrap:focus-within {
+    width: 175px;
+    border-color: #0a84ff;
+    outline: 2px solid rgba(10, 132, 255, 0.2);
+}
+
+.mac-finder-toolbar .finder-search-input {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 11.5px;
+    outline: 0;
+}
+
+/* View Container */
+.mac-finder-view-container {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    position: relative;
+}
+
+/* Icon Grid */
+.mac-finder-icon-grid {
+    padding: 22px 24px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    grid-auto-rows: max-content;
+    gap: 20px 16px;
+    align-content: start;
+}
+
+.mac-finder-icon-grid[hidden],
+.mac-finder-icon-grid.is-hidden {
+    display: none !important;
+}
+
+.mac-finder-list-view {
+    width: 100%;
+    min-height: 100%;
+}
+
+.mac-finder-list-view[hidden],
+.mac-finder-list-view.is-hidden {
+    display: none !important;
+}
+
+.mac-finder-icon-grid .finder-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    user-select: none;
+    cursor: pointer;
+    padding: 6px 4px;
+    border-radius: 8px;
+    transition: background 0.12s;
+    text-align: center;
+}
+
+.mac-finder-icon-grid .finder-item:hover {
+    background: rgba(128, 128, 128, 0.09);
+}
+
+.mac-finder-icon-grid .finder-item.selected {
+    background: rgba(10, 132, 255, 0.18);
+}
+
+.mac-finder-icon-grid .finder-item.selected .item-name {
+    background: #0a84ff;
+    color: #ffffff !important;
+    border-radius: 4px;
+    padding: 1px 5px;
+}
+
+.folder-icon-wrap {
+    width: 76px;
+    height: 62px;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.mac-folder-svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+}
+
+.mac-file-svg {
+    width: 48px;
+    height: 60px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.mac-image-thumb {
+    width: 60px;
+    height: 52px;
+    border-radius: 6px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    background: #202025;
+}
+
+.mac-image-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.mac-video-thumb {
+    position: relative;
+    width: 48px;
+    height: 60px;
+}
+
+.video-play-badge {
+    position: absolute;
+    bottom: 8px;
+    right: 2px;
+    width: 18px;
+    height: 18px;
+    background: #0a84ff;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 8px;
+    display: grid;
+    place-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.app-squircle {
+    width: 56px;
+    height: 56px;
+    border-radius: 17px;
+    display: grid;
+    place-items: center;
+    color: #ffffff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.app-squircle.phone { background: linear-gradient(145deg, #73e58d, #34c759 58%, #16853c); }
+.app-squircle.maps { background: #ffffff; border: 1px solid #e2e5ea; }
+.app-squircle.whatsapp { background: linear-gradient(145deg, #58e384, #25d366 56%, #0b9c56); }
+.app-squircle.mail { background: #ffffff; border: 1px solid #e2e5ea; }
+.app-squircle.terminal { background: linear-gradient(145deg, #3a3a3c, #1c1c1e); border: 1px solid rgba(255, 255, 255, 0.15); }
+.app-squircle.acrobat { background: linear-gradient(145deg, #ff3b30, #a80707); }
+.app-squircle.default { background: linear-gradient(145deg, #8e8e93, #636366); }
+
+.app-squircle svg {
+    width: 28px;
+    height: 28px;
+}
+
+/* Finder Application Icons matching Dock */
+.finder-app-icon {
+    width: 56px;
+    height: 56px;
+    display: block;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.28));
+}
+
+.dock-tile {
+    width: 56px;
+    height: 56px;
+    border-radius: 17px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.dock-tile svg {
+    width: 30px;
+    height: 30px;
+    fill: currentColor;
+    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.16));
+}
+
+.dock-tile-email,
+.dock-tile-maps {
+    background: #ffffff;
+    border: 1px solid #e2e5ea;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.dock-tile-img {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    display: block;
+}
+
+.dock-tile-whatsapp {
+    background: linear-gradient(145deg, #58e384, #25d366 56%, #0b9c56);
+    color: #ffffff;
+}
+
+.dock-tile-phone {
+    background: linear-gradient(145deg, #73e58d, #34c759 58%, #16853c);
+    color: #ffffff;
+}
+
+.dock-tile-linkedin {
+    background: #0a66c2;
+    color: #ffffff;
+}
+
+.dock-tile-github {
+    background: linear-gradient(145deg, #606773, #303540 58%, #171a20);
+    color: #ffffff;
+}
+
+/* In list view table, scale down gracefully */
+.mac-list-table .list-row-icon .finder-app-icon {
+    width: 18px;
+    height: 18px;
+}
+
+.mac-list-table .list-row-icon .dock-tile {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    box-shadow: none;
+}
+
+.mac-list-table .list-row-icon .dock-tile .dock-tile-img {
+    width: 13px;
+    height: 13px;
+}
+
+.mac-list-table .list-row-icon .dock-tile svg {
+    width: 11px;
+    height: 11px;
+}
+
+.item-name {
+    font-size: 11.5px;
+    font-weight: 500;
+    color: var(--text-primary);
+    line-height: 1.25;
+    max-width: 90px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+}
+
+/* List Table View */
+.mac-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+    table-layout: fixed;
+}
+
+.mac-list-table thead th {
+    text-align: left;
+    padding: 6px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg-window);
+    z-index: 1;
+    user-select: none;
+}
+
+.mac-list-table th.col-name,
+.mac-list-table td.col-name {
+    width: 44%;
+}
+
+.mac-list-table th.col-date,
+.mac-list-table td.col-date {
+    width: 20%;
+}
+
+.mac-list-table th.col-size,
+.mac-list-table td.col-size {
+    width: 16%;
+}
+
+.mac-list-table th.col-kind,
+.mac-list-table td.col-kind {
+    width: 20%;
+}
+
+.mac-list-table tbody tr {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.06);
+    cursor: pointer;
+    transition: background 0.1s;
+}
+
+.mac-list-table tbody tr:hover {
+    background: rgba(128, 128, 128, 0.08);
+}
+
+.mac-list-table tbody tr.selected {
+    background: #0a84ff;
+    color: #ffffff;
+}
+
+.mac-list-table tbody tr.selected td,
+.mac-list-table tbody tr.selected span {
+    color: #ffffff !important;
+}
+
+.mac-list-table td {
+    padding: 6px 14px;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mac-list-table .col-name-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    min-width: 0;
+}
+
+.mac-list-table .list-row-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mac-list-table .list-row-icon {
+    width: 18px;
+    height: 18px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.mac-list-table .list-row-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.mac-list-table .col-date,
+.mac-list-table .col-size,
+.mac-list-table .col-kind {
     color: var(--text-muted);
     font-size: 11px;
 }
 
-.finder-home-view > .finder-icon-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(88px, 112px));
-    align-content: start;
-    justify-content: start;
-    gap: 8px 10px;
-    margin: 0;
+/* Document Reader View */
+.mac-finder-doc-view {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    background: rgba(128, 128, 128, 0.02);
 }
 
-.finder-home-view .finder-icon-grid .folder-card {
+.finder-doc-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 40px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(128, 128, 128, 0.05);
+}
+
+.finder-doc-back-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 0;
+    background: transparent;
+    color: #0a84ff;
+    font: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 5px;
+}
+
+.finder-doc-back-btn:hover {
+    background: rgba(10, 132, 255, 0.12);
+}
+
+.doc-type-label {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.finder-doc-body {
+    padding: 24px;
+    max-width: 800px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.finder-about-sheet.generic-doc {
+    background: var(--bg-window);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* Status Bar */
+.mac-finder-status-bar {
+    height: 25px;
+    min-height: 25px;
+    background: rgba(128, 128, 128, 0.06);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    user-select: none;
+}
+
+/* AirDrop View */
+.airdrop-view {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    gap: 6px;
-    width: 100%;
-    min-width: 0;
-    min-height: 102px;
-    padding: 9px 5px 7px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    background: transparent;
+    justify-content: center;
+    height: 100%;
+    min-height: 350px;
     text-align: center;
-    transform: none;
+    padding: 30px;
 }
 
-.finder-home-view .finder-icon-grid .folder-card:hover,
-.finder-home-view .finder-icon-grid .folder-card:focus-visible {
-    border-color: rgba(10, 132, 255, .28);
-    background: rgba(10, 132, 255, .12);
-    outline: none;
-}
-
-.finder-home-view .finder-icon-grid .folder-card > span {
+.airdrop-radar {
+    position: relative;
+    width: 140px;
+    height: 140px;
     display: grid;
-    flex: 0 0 54px;
-    width: 58px;
-    height: 54px;
     place-items: center;
+    margin-bottom: 20px;
 }
 
-.finder-home-view .finder-icon-grid .folder-card > span svg {
-    width: 52px;
-    height: 52px;
+.airdrop-circle {
+    position: absolute;
+    border: 1.5px solid rgba(10, 132, 255, 0.28);
+    border-radius: 50%;
 }
 
-.finder-home-view .finder-icon-grid .folder-card strong {
-    width: 100%;
+.airdrop-circle.c1 { width: 60px; height: 60px; }
+.airdrop-circle.c2 { width: 100px; height: 100px; }
+.airdrop-circle.c3 { width: 140px; height: 140px; }
+
+.airdrop-radar-icon {
+    width: 32px;
+    height: 32px;
+    color: #0a84ff;
+    position: relative;
+    z-index: 1;
+}
+
+.airdrop-view h3 {
+    font-size: 16px;
     color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.airdrop-view p {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.airdrop-view small {
     font-size: 11px;
-    font-weight: 500;
-    line-height: 1.25;
-    text-align: center;
-    overflow-wrap: anywhere;
-}
-
-.finder-home-view .finder-icon-grid .folder-card small {
-    display: none;
-}
-
-.finder-home-file-icon svg path:first-child {
-    fill: #f7f8fa;
-    stroke: #c3c8d1;
-    stroke-width: 1.4;
-}
-
-.finder-home-file-icon svg path:nth-child(2) {
-    fill: none;
-    stroke: #9ba2ad;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.5;
-}
-
-.finder-home-file-icon svg path:last-child {
-    fill: none;
-    stroke: #5b8ee8;
-    stroke-linecap: round;
-    stroke-width: 1.8;
+    color: var(--text-muted);
 }
 
 .finder-path {
@@ -3558,43 +4064,58 @@ body[data-theme="light"] .photos-filterbar button:active:not(.selected) {
         margin: 0;
     }
 
-    .finder-sidebar {
-        display: none;
+    /* Macintosh Finder on Mobile */
+    .mac-finder-sidebar {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 50;
+        width: 220px;
+        background: var(--bg-window);
+        transform: translateX(-100%);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4);
     }
 
-    .finder-home-view,
-    .finder-location-view {
-        padding-right: 17px;
-        padding-left: 17px;
+    .mac-finder-sidebar.mobile-open {
+        transform: translateX(0);
     }
 
-    .finder-home-view {
-        padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    .mac-finder-toolbar .sidebar-toggle-btn {
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 26px;
+        border: 0;
+        background: transparent;
+        color: var(--text-primary);
+        border-radius: 5px;
+        cursor: pointer;
     }
 
-    .finder-home-view > .finder-icon-grid {
+    .mac-finder-icon-grid {
+        padding: 16px 12px;
+        gap: 14px 10px;
         grid-template-columns: repeat(auto-fill, minmax(82px, 1fr));
-        gap: 7px 8px;
     }
 
-    .finder-root-toolbar {
-        margin: 0;
+    .folder-icon-wrap {
+        width: 64px;
+        height: 52px;
     }
 
-    .finder-toolbar {
-        min-height: 42px;
+    .finder-search-wrap {
+        width: 88px;
     }
 
-    .finder-browser-columns {
-        grid-template-columns: minmax(0, 1fr);
+    .finder-search-wrap:focus-within {
+        width: 130px;
     }
 
-    .finder-list-panel {
-        border-right: 0;
-    }
-
-    .finder-preview {
-        display: none;
+    .mac-finder-status-bar {
+        padding-bottom: calc(14px + env(safe-area-inset-bottom));
+        height: auto;
+        min-height: calc(30px + env(safe-area-inset-bottom));
     }
 
     .finder-file-view {
@@ -4714,6 +5235,416 @@ body[data-theme="light"] .photos-filterbar button:active:not(.selected) {
     display: flex;
 }
 
+/* ==========================================================================
+   TextEdit Rich Text Document Modal App
+   ========================================================================== */
+.textedit-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    background: rgba(0, 0, 0, 0.45);
+    display: none;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.textedit-modal.active {
+    display: flex;
+}
+
+.textedit-modal-container {
+    display: flex;
+    flex-direction: column;
+    width: min(92vw, 860px);
+    height: min(90vh, 840px);
+    background: var(--bg-window, #1e1e21);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .55), 0 0 0 1px rgba(255, 255, 255, .06);
+    overflow: hidden;
+    animation: modalZoom .22s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: width .2s ease, height .2s ease, border-radius .2s ease;
+}
+
+.textedit-modal-container.is-maximized {
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    border-radius: 0;
+    border: 0;
+}
+
+.textedit-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 52px;
+    padding: 0 16px;
+    background: var(--card-bg, rgba(255, 255, 255, .04));
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.textedit-modal-back-btn {
+    display: none;
+}
+
+.textedit-modal-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 64px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 10;
+}
+
+.textedit-modal-controls .window-control {
+    cursor: pointer;
+    pointer-events: auto;
+    position: relative;
+    z-index: 11;
+}
+
+.textedit-modal-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+}
+
+.textedit-modal-title-wrap {
+    min-width: 0;
+}
+
+.textedit-modal-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 7px;
+    border-radius: 5px;
+    background: #0a84ff;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .05em;
+    flex-shrink: 0;
+}
+
+.textedit-modal-badge.is-txt {
+    background: #10b981;
+}
+
+.textedit-modal-title {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 13.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.textedit-modal-location {
+    margin: 2px 0 0;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.textedit-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.textedit-modal-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 12px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text-primary);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .14s ease;
+}
+
+.textedit-modal-btn:hover {
+    border-color: #0a84ff;
+    color: #0a84ff;
+    background: rgba(10, 132, 255, .08);
+}
+
+.textedit-modal-btn.primary {
+    background: #0a84ff;
+    color: #fff;
+    border-color: #0a84ff;
+}
+
+.textedit-modal-btn.primary:hover {
+    background: #0070df;
+}
+
+.textedit-modal-body {
+    flex: 1 1 auto;
+    width: 100%;
+    height: calc(100% - 52px);
+    background: rgba(0, 0, 0, 0.25);
+    overflow-y: auto;
+    padding: 32px 24px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.textedit-paper {
+    width: 100%;
+    max-width: 740px;
+    margin: 0 auto;
+    background: var(--bg-window, #222226);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 36px 40px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.22);
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+.textedit-kicker {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #0a84ff;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.textedit-about-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+}
+
+.textedit-hero-title {
+    margin: 0 0 6px;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+}
+
+.textedit-role-badge {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.textedit-avatar-wrap {
+    width: 76px;
+    height: 76px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2.5px solid #0a84ff;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    flex-shrink: 0;
+}
+
+.textedit-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.textedit-lead {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text-primary);
+    margin: 0 0 24px;
+    font-weight: 400;
+}
+
+.textedit-facts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.textedit-fact-card {
+    background: rgba(128, 128, 128, 0.07);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.textedit-fact-label {
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--text-muted);
+    letter-spacing: 0.06em;
+}
+
+.textedit-fact-card strong {
+    font-size: 13.5px;
+    color: var(--text-primary);
+}
+
+.textedit-fact-card small {
+    font-size: 11.5px;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+.textedit-story-section {
+    padding: 20px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+}
+
+.textedit-story-section h2 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: var(--text-primary);
+}
+
+.textedit-story-section p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.textedit-skills-section h3,
+.textedit-highlights-block h3,
+.textedit-tags-section h4 {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0 0 12px;
+}
+
+.textedit-tags-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.textedit-tags-cloud span {
+    display: inline-block;
+    padding: 4px 10px;
+    font-size: 11.5px;
+    font-weight: 500;
+    border-radius: 6px;
+    background: rgba(10, 132, 255, 0.12);
+    color: #0a84ff;
+    border: 1px solid rgba(10, 132, 255, 0.22);
+}
+
+.textedit-doc-header {
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+}
+
+.textedit-doc-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 8px;
+    line-height: 1.25;
+}
+
+.textedit-doc-subtitle {
+    font-size: 14.5px;
+    color: var(--text-secondary);
+    margin: 0 0 8px;
+}
+
+.textedit-doc-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.textedit-quote-box {
+    position: relative;
+    margin: 20px 0;
+    padding: 18px 22px 18px 24px;
+    border-left: 3px solid #0a84ff;
+    background: rgba(10, 132, 255, 0.06);
+    border-radius: 0 8px 8px 0;
+    font-style: italic;
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.textedit-quote-icon {
+    color: #0a84ff;
+    opacity: 0.6;
+    margin-bottom: 6px;
+    display: block;
+}
+
+.textedit-points-list {
+    margin: 0;
+    padding-left: 20px;
+    line-height: 1.65;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+}
+
+.textedit-points-list li {
+    margin-bottom: 8px;
+}
+
+.app-squircle.textedit {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #ffffff;
+}
+
+body[data-theme="light"] .textedit-modal-body {
+    background: #eaecee;
+}
+
+body[data-theme="light"] .textedit-paper {
+    background: #ffffff;
+    border-color: #d1d5db;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
 .pdf-viewer-toolbar {
     display: flex;
     align-items: center;
@@ -5184,6 +6115,129 @@ body[data-theme="light"] .photos-filterbar button:active:not(.selected) {
 
     .pdf-modal-body {
         height: calc(100% - 52px - env(safe-area-inset-top));
+    }
+
+    /* --- Independent TextEdit Modal on Mobile --- */
+    .textedit-modal {
+        padding: 0;
+    }
+
+    .textedit-modal-container {
+        width: 100vw;
+        height: 100dvh;
+        max-width: 100vw;
+        max-height: 100dvh;
+        border-radius: 0;
+        border: 0;
+    }
+
+    .textedit-modal-header {
+        height: calc(52px + env(safe-area-inset-top));
+        min-height: 52px;
+        padding: env(safe-area-inset-top) calc(14px + env(safe-area-inset-right)) 0 calc(12px + env(safe-area-inset-left));
+        gap: 8px;
+    }
+
+    .textedit-modal-controls {
+        display: none !important;
+    }
+
+    .textedit-modal-back-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        min-width: 36px;
+        padding: 0;
+        margin: 0;
+        border-radius: 50%;
+        background: transparent;
+        border: 0;
+        color: rgba(255, 255, 255, .55);
+        cursor: pointer;
+        flex-shrink: 0;
+        transition: color .18s ease, background-color .18s ease, transform .12s ease;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .textedit-modal-back-btn:hover,
+    .textedit-modal-back-btn:active {
+        color: #ffffff;
+        background: rgba(255, 255, 255, .12);
+        transform: scale(0.94);
+    }
+
+    .textedit-modal-back-btn svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    body[data-theme="light"] .textedit-modal-back-btn {
+        color: rgba(0, 0, 0, .45);
+    }
+
+    body[data-theme="light"] .textedit-modal-back-btn:hover,
+    body[data-theme="light"] .textedit-modal-back-btn:active {
+        color: #000000;
+        background: rgba(0, 0, 0, .06);
+    }
+
+    .textedit-modal-info {
+        gap: 8px;
+        min-width: 0;
+        flex: 1;
+    }
+
+    .textedit-modal-title-wrap {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .textedit-modal-badge {
+        font-size: 9px;
+        padding: 2px 5px;
+    }
+
+    .textedit-modal-title {
+        font-size: 13px;
+    }
+
+    .textedit-modal-location {
+        font-size: 10.5px;
+    }
+
+    .textedit-modal-body {
+        padding: 16px 12px calc(24px + env(safe-area-inset-bottom));
+        height: calc(100% - 52px - env(safe-area-inset-top));
+    }
+
+    .textedit-paper {
+        padding: 24px 18px;
+        border-radius: 10px;
+    }
+
+    .textedit-facts-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .textedit-about-header {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .textedit-hero-title {
+        font-size: 22px;
+    }
+
+    .textedit-modal-actions .textedit-modal-btn:not(.primary) {
+        display: none;
+    }
+
+    .textedit-modal-actions .textedit-modal-btn.primary {
+        padding: 0 10px;
+        height: 30px;
     }
 
     /* --- Adobe Acrobat Explorer on Mobile --- */

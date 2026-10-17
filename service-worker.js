@@ -1,4 +1,4 @@
-const CACHE_NAME = "cache-v1.3.2";
+const CACHE_NAME = "cache-v1.3.7";
 const PRECACHE_ASSETS = [
     "./",
     "./index.html",
@@ -12,6 +12,7 @@ const PRECACHE_ASSETS = [
     "./assets/js/apps/gallery.js",
     "./assets/js/apps/pdf.js",
     "./assets/js/apps/terminal.js",
+    "./assets/js/apps/textedit.js",
     "./assets/images/dp.webp",
     "./assets/images/favicon.svg",
     "./assets/images/gmail.png",
