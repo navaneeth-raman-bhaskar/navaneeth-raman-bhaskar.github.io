@@ -578,8 +578,9 @@ body[data-theme="light"] .theme-switch .moon-icon {
 }
 
 .desktop .window.is-maximized {
-    inset: 43px 0 0;
+    inset: 30px 0 0;
     border-radius: 0;
+    border-top: none;
 }
 
 @keyframes app-launch {
