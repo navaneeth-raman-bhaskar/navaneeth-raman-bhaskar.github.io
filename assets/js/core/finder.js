@@ -3,6 +3,7 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
     let galleryItems = [];
     let openFinderFolderView = null;
     let returnToFinderHome = null;
+    let navigateFinderLocation = null;
 
     function buildFolderBrowser(id) {
         const win = appWindows.find((item) => item.dataset.window === id);
@@ -139,16 +140,17 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
         rootButton.className = "finder-nav-button";
         rootButton.type = "button";
         rootButton.dataset.openRoot = "true";
-        rootButton.textContent = "‹";
-        rootButton.setAttribute("aria-label", "Back to Home");
+        rootButton.innerHTML = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="m2 9 8-7 8 7h-2v8h-5v-5H9v5H4V9H2Z"/></svg>';
+        rootButton.setAttribute("aria-label", "Go to Finder Home");
         const folderUp = document.createElement("button");
         folderUp.className = "finder-nav-button finder-up-button";
         folderUp.type = "button";
         folderUp.textContent = "‹";
         folderUp.setAttribute("aria-label", "Back to parent folder");
-        folderUp.hidden = true;
-        const path = document.createElement("div");
+        folderUp.title = "Back to parent folder";
+        const path = document.createElement("nav");
         path.className = "finder-path";
+        path.setAttribute("aria-label", "Folder path");
         path.textContent = `Macintosh HD  ›  Users  ›  Navaneeth  ›  ${labels[id]}`;
         toolbar.append(rootButton, folderUp, path);
 
@@ -186,13 +188,54 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
         detailBack.addEventListener("click", () => {
             detail.hidden = true;
             listing.hidden = false;
-            path.textContent = `Macintosh HD  ›  Users  ›  Navaneeth  ›  ${labels[id]}${currentSubfolder ? `  ›  ${currentSubfolder}` : ""}`;
+            renderBrowserPath();
         });
 
         const stack = [];
         let currentRecords = records;
         let currentSubfolder = "";
         let selectedFolderItem = null;
+        function renderBrowserPath(fileName = "") {
+            const nestedFolders = [...stack.slice(1).map((entry) => entry.path), currentSubfolder].filter(Boolean);
+            const segments = [
+                { label: "Macintosh HD", onClick: () => navigateFinderLocation?.("macintosh-hd") },
+                { label: "Users", onClick: () => navigateFinderLocation?.("users") },
+                { label: "Navaneeth", onClick: () => navigateFinderLocation?.("home") },
+                { label: labels[id], onClick: () => resetFolderView() },
+                ...nestedFolders.map((label, index) => ({ label, onClick: () => navigateToFolderDepth(index + 1) })),
+            ];
+            if (fileName) segments.push({ label: fileName });
+
+            path.replaceChildren();
+            segments.forEach((segment, index) => {
+                if (index) {
+                    const separator = document.createElement("span");
+                    separator.className = "finder-crumb-separator";
+                    separator.setAttribute("aria-hidden", "true");
+                    separator.textContent = "›";
+                    path.append(separator);
+                }
+                const crumb = document.createElement("button");
+                crumb.type = "button";
+                crumb.className = "finder-crumb";
+                crumb.textContent = segment.label;
+                if (index === segments.length - 1) crumb.setAttribute("aria-current", "page");
+                else crumb.addEventListener("click", segment.onClick);
+                path.append(crumb);
+            });
+        }
+
+        function navigateToFolderDepth(depth) {
+            while (stack.length > depth) {
+                const parent = stack.pop();
+                currentRecords = parent.records;
+                currentSubfolder = parent.path;
+            }
+            selectedFolderItem = null;
+            detail.hidden = true;
+            listing.hidden = false;
+            renderRows(currentRecords, currentSubfolder);
+        }
         const itemIconMarkup = (record) => {
             if (record.kind === "folder") {
                 return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 6.4a2 2 0 0 1 2-2h5l2 2h8a2 2 0 0 1 2 2v1H2.5z"/><path d="M2.5 9h19l-1.8 10.2a2 2 0 0 1-2 1.7H5.1a2 2 0 0 1-2-1.7z"/></svg>';
@@ -214,14 +257,16 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
 
         function renderRows(items, subfolder = "") {
             currentSubfolder = subfolder;
-            folderUp.hidden = stack.length === 0;
+            folderUp.hidden = false;
+            folderUp.setAttribute("aria-label", stack.length ? "Back to parent folder" : "Back to Navaneeth home folder");
+            folderUp.title = stack.length ? "Back to parent folder" : "Back to Navaneeth home folder";
             list.replaceChildren();
             preview.replaceChildren();
             const empty = document.createElement("p");
             empty.className = "finder-preview-empty";
             empty.textContent = "Select a file to preview it.";
             preview.append(empty);
-            path.textContent = `Macintosh HD  ›  Users  ›  Navaneeth  ›  ${labels[id]}${subfolder ? `  ›  ${subfolder}` : ""}`;
+            renderBrowserPath();
             items.forEach((record) => {
                 const row = document.createElement("button");
                 row.className = `finder-row is-${record.kind}`;
@@ -453,7 +498,7 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
             }
             listing.hidden = true;
             detail.hidden = false;
-            path.textContent = "Macintosh HD  ›  Users  ›  Navaneeth  ›  " + labels[id] + "  ›  " + record.name + "." + record.extension;
+            renderBrowserPath(record.name + "." + record.extension);
             detailBody.replaceChildren();
             const heading = document.createElement("h2");
             heading.textContent = record.name + "." + record.extension;
@@ -466,10 +511,12 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
             appendRecordPreview(record, content, true);
         }
 
-        rootButton.addEventListener("click", () => openApp("files"));
         folderUp.addEventListener("click", () => {
             const parent = stack.pop();
-            if (!parent) return;
+            if (!parent) {
+                navigateFinderLocation?.("home");
+                return;
+            }
             detail.hidden = true;
             listing.hidden = false;
             currentRecords = parent.records;
@@ -505,6 +552,14 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
         const homeView = document.createElement("div");
         homeView.className = "finder-home-view";
         rootItems.forEach((child) => homeView.append(child));
+        const homeGrid = homeView.querySelector(".finder-icon-grid");
+        if (homeGrid) {
+            [...homeGrid.children]
+                .sort((first, second) => first.querySelector("strong")?.textContent.localeCompare(second.querySelector("strong")?.textContent) || 0)
+                .forEach((item) => homeGrid.append(item));
+            const itemCount = homeView.querySelector(".finder-item-count");
+            if (itemCount) itemCount.textContent = `${homeGrid.children.length} items`;
+        }
         main.append(toolbar, homeView);
         layout.append(sidebar, main);
         rootFinderContent.replaceChildren(layout);
@@ -537,7 +592,43 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
         addLocationFolder(disk.grid, "Users", "User folders", () => showFinderLocation("users"));
         const users = makeLocationView("Users", "Choose a user folder.");
         addLocationFolder(users.grid, "Navaneeth", "Home folder", () => showFinderLocation("home"));
-        main.append(disk.view, users.view);
+        const aboutFileView = document.createElement("section");
+        aboutFileView.className = "finder-about-file-view";
+        aboutFileView.hidden = true;
+        aboutFileView.innerHTML = `
+            <div class="finder-file-toolbar">
+                <button class="finder-file-back" type="button" data-return-to-home aria-label="Back to Navaneeth home folder">
+                    <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m12.5 3.5-7 6.5 7 6.5"/></svg>
+                    <span>Navaneeth</span>
+                </button>
+                <span>Rich Text Document</span>
+            </div>
+            <div class="finder-about-scroll">
+                <article class="finder-about-sheet">
+                    <header class="finder-about-header">
+                        <div>
+                            <p class="finder-about-kicker">ABOUT ME · RICH TEXT DOCUMENT</p>
+                            <h2>Navaneeth V</h2>
+                            <p class="finder-about-role">VP (Technical Lead) at Agribazaar</p>
+                        </div>
+                        <img src="./assets/images/dp.webp" alt="Navaneeth V">
+                    </header>
+                    <p class="finder-about-lede">I build scalable applications and backend platforms with thoughtful architecture and clear design. My work spans engineering leadership, microservices, payment systems, and real-time platforms.</p>
+                    <div class="finder-about-facts">
+                        <section><span>ROLE</span><strong>Technical leadership</strong><small>Leading engineering teams and technical strategy</small></section>
+                        <section><span>FOCUS</span><strong>Backend architecture</strong><small>Reliable, secure systems built to scale</small></section>
+                        <section><span>EXPERIENCE</span><strong>Production platforms</strong><small>Payments, bidding, and data services</small></section>
+                    </div>
+                    <section class="finder-about-story">
+                        <h3>What I do</h3>
+                        <p>I work across architecture and delivery: shaping technical direction, mentoring engineers, and building services that hold up under real production demands. I care about maintainable code, practical design patterns, and making complex systems easier for teams to evolve.</p>
+                    </section>
+                    <footer class="finder-about-skills" aria-label="Areas of expertise">
+                        <span>PHP</span><span>Node.js</span><span>Laravel</span><span>Microservices</span><span>Payments</span><span>System design</span>
+                    </footer>
+                </article>
+            </div>`;
+        main.append(disk.view, users.view, aboutFileView);
 
         const pathSegments = {
             "macintosh-hd": [{ label: "Macintosh HD", location: "macintosh-hd" }],
@@ -545,17 +636,29 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
             home: [{ label: "Macintosh HD", location: "macintosh-hd" }, { label: "Users", location: "users" }, { label: "Navaneeth", location: "home" }],
         };
         function showFinderLocation(location) {
-            main.replaceChildren(toolbar, homeView, disk.view, users.view);
+            main.replaceChildren(toolbar, homeView, disk.view, users.view, aboutFileView);
             const views = { home: homeView, "macintosh-hd": disk.view, users: users.view };
             Object.entries(views).forEach(([key, view]) => { view.hidden = key !== location; });
+            aboutFileView.hidden = true;
             sidebar.querySelectorAll("[data-finder-location]").forEach((button) => {
                 const selected = button.dataset.finderLocation === (location === "home" ? "home" : "macintosh-hd");
                 button.classList.toggle("selected", selected);
                 if (selected) button.setAttribute("aria-current", "page");
                 else button.removeAttribute("aria-current");
             });
+            renderFinderPath(pathSegments[location]);
+            const title = document.querySelector("#files .window-title");
+            if (title) title.textContent = location === "home" ? "Navaneeth" : location === "users" ? "Users" : "Macintosh HD";
+            const version = document.querySelector("#files .window-version");
+            if (version) version.textContent = "";
+            if (body.dataset.activeApp === "files") {
+                body.dataset.activeKind = "app";
+                history.replaceState({ portfolioApp: "files", openAsApp: false }, "", `${window.location.pathname}${window.location.search}#files`);
+            }
+        }
+        function renderFinderPath(segments) {
             nav.replaceChildren();
-            pathSegments[location].forEach((segment, index) => {
+            segments.forEach((segment, index) => {
                 if (index) {
                     const separator = document.createElement("span");
                     separator.className = "finder-crumb-separator";
@@ -567,19 +670,29 @@ function initializeFinder({ body, homeScreen, homeButton, menuAppName, appWindow
                 crumb.type = "button";
                 crumb.className = "finder-crumb";
                 crumb.textContent = segment.label;
-                if (index === pathSegments[location].length - 1) crumb.setAttribute("aria-current", "page");
+                if (index === segments.length - 1) crumb.setAttribute("aria-current", "page");
                 else crumb.addEventListener("click", () => showFinderLocation(segment.location));
                 nav.append(crumb);
             });
+        }
+        navigateFinderLocation = showFinderLocation;
+        function showAboutFile() {
+            main.replaceChildren(toolbar, aboutFileView);
+            aboutFileView.hidden = false;
+            renderFinderPath([...pathSegments.home, { label: "About Me.rtf" }]);
             const title = document.querySelector("#files .window-title");
-            if (title) title.textContent = location === "home" ? "Navaneeth" : location === "users" ? "Users" : "Macintosh HD";
+            if (title) title.textContent = "About Me.rtf";
             const version = document.querySelector("#files .window-version");
             if (version) version.textContent = "";
             if (body.dataset.activeApp === "files") {
-                body.dataset.activeKind = "app";
+                body.dataset.activeKind = "file";
                 history.replaceState({ portfolioApp: "files", openAsApp: false }, "", `${window.location.pathname}${window.location.search}#files`);
             }
         }
+        homeView.addEventListener("click", (event) => {
+            if (event.target.closest('[data-finder-file="about-me"]')) showAboutFile();
+        });
+        aboutFileView.querySelector("[data-return-to-home]").addEventListener("click", () => showFinderLocation("home"));
         returnToFinderHome = () => {
             showFinderLocation("home");
         };
