@@ -25,6 +25,7 @@
         terminal: "Terminal",
         pdf: "Adobe Acrobat",
         textedit: "TextEdit",
+        settings: "System Settings",
     };
 
     // Portfolio sections are Finder folders. Their existing cards become files inside them.
@@ -65,6 +66,9 @@
         body.dataset.theme = value;
         themeButton.setAttribute("aria-label", `Switch to ${value === "dark" ? "light" : "dark"} appearance`);
         themeButton.setAttribute("aria-pressed", String(value === "light"));
+        if (typeof window.syncSettingsTheme === "function") {
+            window.syncSettingsTheme(value);
+        }
     }
 
     function syncMaximizedDock() {
@@ -88,6 +92,9 @@
             localStorage.setItem("theme", nextTheme);
         } catch {
             // Theme selection remains active for this page session.
+        }
+        if (typeof window.playSystemSound === "function") {
+            window.playSystemSound("switch");
         }
     });
 
@@ -333,6 +340,9 @@
     }
     if (typeof initializeTextEdit === "function") {
         initializeTextEdit({ openApp });
+    }
+    if (typeof initializeSettings === "function") {
+        initializeSettings({ openApp, applyTheme });
     }
 
     if (initialApp === "about-me" || initialApp === "about") {

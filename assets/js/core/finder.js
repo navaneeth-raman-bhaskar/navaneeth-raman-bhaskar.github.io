@@ -164,6 +164,92 @@ function initializeFinder({ body, homeScreen, homeIndicator, menuAppName, appWin
         </svg>
     `;
 
+    const SVG_DOCK_SETTINGS = `
+        <svg viewBox="0 0 64 64" class="finder-app-icon" aria-hidden="true">
+            <defs>
+                <linearGradient id="finderSettingsSqBg" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#808793"/>
+                    <stop offset="35%" stop-color="#5c6370"/>
+                    <stop offset="75%" stop-color="#383d47"/>
+                    <stop offset="100%" stop-color="#242831"/>
+                </linearGradient>
+                <linearGradient id="finderSettingsTopSheen" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#ffffff" stop-opacity="0.28"/>
+                    <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+                </linearGradient>
+                <linearGradient id="finderSettingsGearMetal" x1="0" y1="0" x2="0.8" y2="1">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="22%" stop-color="#e9edf2"/>
+                    <stop offset="55%" stop-color="#bcc4ce"/>
+                    <stop offset="100%" stop-color="#7e8693"/>
+                </linearGradient>
+                <linearGradient id="finderSettingsGearBackMetal" x1="0" y1="0" x2="0.8" y2="1">
+                    <stop offset="0%" stop-color="#eef1f6"/>
+                    <stop offset="40%" stop-color="#bcc4ce"/>
+                    <stop offset="100%" stop-color="#69717e"/>
+                </linearGradient>
+                <linearGradient id="finderSettingsGearRecess" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#2a2e36"/>
+                    <stop offset="100%" stop-color="#3d434e"/>
+                </linearGradient>
+                <linearGradient id="finderSettingsGearHub" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="50%" stop-color="#d8dde5"/>
+                    <stop offset="100%" stop-color="#9ea6b3"/>
+                </linearGradient>
+                <filter id="finderSettingsGearShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2.5" stdDeviation="2" flood-color="#000" flood-opacity="0.48"/>
+                </filter>
+                <filter id="finderSettingsFrontGearShadow" x="-30%" y="-30%" width="160%" height="160%">
+                    <feDropShadow dx="-1" dy="2" stdDeviation="1.8" flood-color="#000" flood-opacity="0.45"/>
+                </filter>
+                <clipPath id="finderSettingsSqClip"><rect x="3.5" y="3.5" width="57" height="57" rx="17.5"/></clipPath>
+                
+                <g id="finderSettingsCog8">
+                    <circle r="14.5" fill="inherit"/>
+                    <rect x="-2.8" y="-17.2" width="5.6" height="34.4" rx="1.2" fill="inherit"/>
+                    <rect x="-2.8" y="-17.2" width="5.6" height="34.4" rx="1.2" fill="inherit" transform="rotate(45)"/>
+                    <rect x="-2.8" y="-17.2" width="5.6" height="34.4" rx="1.2" fill="inherit" transform="rotate(90)"/>
+                    <rect x="-2.8" y="-17.2" width="5.6" height="34.4" rx="1.2" fill="inherit" transform="rotate(135)"/>
+                    <circle r="14" fill="inherit"/>
+                </g>
+                
+                <g id="finderSettingsCog6">
+                    <circle r="10.2" fill="inherit"/>
+                    <rect x="-2.2" y="-12.8" width="4.4" height="25.6" rx="1" fill="inherit"/>
+                    <rect x="-2.2" y="-12.8" width="4.4" height="25.6" rx="1" fill="inherit" transform="rotate(60)"/>
+                    <rect x="-2.2" y="-12.8" width="4.4" height="25.6" rx="1" fill="inherit" transform="rotate(120)"/>
+                    <circle r="9.8" fill="inherit"/>
+                </g>
+            </defs>
+            <rect x="3.5" y="3.5" width="57" height="57" rx="17.5" fill="url(#finderSettingsSqBg)"/>
+            <g clip-path="url(#finderSettingsSqClip)">
+                <rect x="3.5" y="3.5" width="57" height="26" fill="url(#finderSettingsTopSheen)"/>
+                
+                <!-- Back Secondary Gear -->
+                <g transform="translate(41.5 22.5) rotate(15)" filter="url(#finderSettingsGearShadow)" fill="url(#finderSettingsGearBackMetal)">
+                    <use href="#finderSettingsCog6"/>
+                    <circle r="6.6" fill="url(#finderSettingsGearRecess)"/>
+                    <circle r="6.6" fill="none" stroke="#ffffff" stroke-opacity="0.2" stroke-width="0.5"/>
+                    <circle r="4" fill="url(#finderSettingsGearHub)"/>
+                    <circle r="1.8" fill="#181a1f"/>
+                </g>
+                
+                <!-- Front Primary Gear -->
+                <g transform="translate(27.5 36) rotate(-8)" filter="url(#finderSettingsFrontGearShadow)" fill="url(#finderSettingsGearMetal)">
+                    <use href="#finderSettingsCog8"/>
+                    <circle r="9.2" fill="url(#finderSettingsGearRecess)"/>
+                    <circle r="9.2" fill="none" stroke="#ffffff" stroke-opacity="0.22" stroke-width="0.5"/>
+                    <circle r="5.6" fill="url(#finderSettingsGearHub)"/>
+                    <circle r="5.6" fill="none" stroke="#ffffff" stroke-opacity="0.6" stroke-width="0.5"/>
+                    <circle r="2.6" fill="#181a1f"/>
+                    <circle r="2.6" fill="none" stroke="#000000" stroke-opacity="0.5" stroke-width="0.4"/>
+                </g>
+            </g>
+            <rect x="4" y="4" width="56" height="56" rx="17" fill="none" stroke="#ffffff" stroke-opacity=".34" stroke-width="1.1"/>
+        </svg>
+    `;
+
     const HTML_DOCK_MAIL = `
         <div class="dock-tile dock-tile-email">
             <img class="dock-tile-img" src="./assets/images/gmail.png" alt="Mail" aria-hidden="true">
@@ -364,6 +450,7 @@ function initializeFinder({ body, homeScreen, homeIndicator, menuAppName, appWin
 
     // Applications folder items
     const applicationsItems = [
+        { name: "System Settings", extension: "app", kind: "app", appId: "settings", meta: "Application", date: "Oct 2026", size: "34 MB" },
         { name: "TextEdit", extension: "app", kind: "app", appId: "textedit", meta: "Application", date: "Oct 2026", size: "16 MB" },
         { name: "Adobe Acrobat", extension: "app", kind: "app", appId: "pdf", meta: "Application", date: "Oct 2026", size: "42 MB" },
         { name: "Terminal", extension: "app", kind: "app", appId: "terminal", meta: "Application", date: "Oct 2026", size: "12 MB" },
@@ -578,6 +665,9 @@ function initializeFinder({ body, homeScreen, homeIndicator, menuAppName, appWin
             const type = (item.appType || "").toLowerCase();
             const name = (item.name || "").toLowerCase();
 
+            if (id === "settings" || name.includes("settings")) {
+                return SVG_DOCK_SETTINGS;
+            }
             if (id === "terminal" || name === "terminal") {
                 return SVG_DOCK_TERMINAL;
             }

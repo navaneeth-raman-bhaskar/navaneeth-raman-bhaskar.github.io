@@ -45,12 +45,24 @@ function initializeDock(labels) {
     let dockPointerX = 0;
     let dockMagnificationFrame = 0;
 
+    function updateDockOffsets() {
+        dockItems.forEach((item) => {
+            dockOffsets.set(item, item.offsetLeft + item.offsetWidth / 2);
+        });
+    }
+    updateDockOffsets();
+
+    if (window.MutationObserver) {
+        const dockObserver = new MutationObserver(() => {
+            updateDockOffsets();
+        });
+        dockObserver.observe(dock, { attributes: true, attributeFilter: ["class", "style"] });
+    }
+
     dockItems.forEach((item) => {
         const label = item.getAttribute("title") || item.getAttribute("aria-label") || "App";
         item.dataset.dockLabel = label;
         item.removeAttribute("title");
-        const itemBounds = item.getBoundingClientRect();
-        dockOffsets.set(item, itemBounds.left + itemBounds.width / 2 - dock.getBoundingClientRect().left);
 
         item.addEventListener("focus", () => {
             item.dataset.dockTooltip = "visible";
@@ -87,9 +99,11 @@ function initializeDock(labels) {
     });
 
     function setDockMagnification(clientX) {
+        if (dock.classList.contains("dock-no-magnify")) return;
         const dockLeft = dock.getBoundingClientRect().left;
         const scales = dockItems.map((item) => {
-            const distance = Math.abs(clientX - (dockLeft + dockOffsets.get(item)));
+            const itemOffset = dockOffsets.get(item) ?? (item.offsetLeft + item.offsetWidth / 2);
+            const distance = Math.abs(clientX - (dockLeft + itemOffset));
             const proximity = Math.max(0, 1 - distance / 105);
             return 1 + 0.18 * proximity ** 2.1;
         });
@@ -134,6 +148,8 @@ function initializeDock(labels) {
         window.addEventListener("resize", () => {
             if (!window.matchMedia("(min-width: 821px) and (hover: hover) and (pointer: fine)").matches) {
                 resetDockMagnification();
+            } else {
+                updateDockOffsets();
             }
         });
     }
