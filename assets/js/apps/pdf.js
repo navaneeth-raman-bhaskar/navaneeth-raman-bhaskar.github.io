@@ -251,14 +251,20 @@ function initializePdfViewer({ openApp } = {}) {
     const pdfModalClose = document.getElementById("pdfModalClose");
     const pdfModalMinimize = document.getElementById("pdfModalMinimize");
     const pdfModalMaximize = document.getElementById("pdfModalMaximize");
+    const pdfModalBackBtn = document.getElementById("pdfModalBackBtn");
     const pdfModalContainer = document.querySelector(".pdf-modal-container");
 
-    // Location count counters in sidebar
+    // Location count counters in sidebar & mobile filters
     const allCountEl = document.getElementById("acrobatAllCount");
     const desktopCountEl = document.getElementById("acrobatDesktopCount");
     const docCountEl = document.getElementById("acrobatDocCount");
     const certCountEl = document.getElementById("acrobatCertCount");
     const awardCountEl = document.getElementById("acrobatAwardCount");
+    const mobileAllCountEl = document.getElementById("acrobatMobileAllCount");
+    const mobileDesktopCountEl = document.getElementById("acrobatMobileDesktopCount");
+    const mobileDocCountEl = document.getElementById("acrobatMobileDocCount");
+    const mobileCertCountEl = document.getElementById("acrobatMobileCertCount");
+    const mobileAwardCountEl = document.getElementById("acrobatMobileAwardCount");
 
     const sidebarItems = [...document.querySelectorAll("[data-acrobat-location]")];
     const quickButtons = [...document.querySelectorAll("[data-acrobat-quick]")];
@@ -281,6 +287,11 @@ function initializePdfViewer({ openApp } = {}) {
         if (docCountEl) docCountEl.textContent = String(docCount);
         if (certCountEl) certCountEl.textContent = String(certCount);
         if (awardCountEl) awardCountEl.textContent = String(awardCount);
+        if (mobileAllCountEl) mobileAllCountEl.textContent = String(pdfDocuments.length);
+        if (mobileDesktopCountEl) mobileDesktopCountEl.textContent = String(desktopCount);
+        if (mobileDocCountEl) mobileDocCountEl.textContent = String(docCount);
+        if (mobileCertCountEl) mobileCertCountEl.textContent = String(certCount);
+        if (mobileAwardCountEl) mobileAwardCountEl.textContent = String(awardCount);
     }
     refreshCounts();
 
@@ -355,6 +366,13 @@ function initializePdfViewer({ openApp } = {}) {
         });
     }
 
+    if (pdfModalBackBtn) {
+        pdfModalBackBtn.addEventListener("click", (event) => {
+            event.stopPropagation();
+            closePdfModal();
+        });
+    }
+
     // Modal background click to close
     if (pdfModal) {
         pdfModal.addEventListener("click", (event) => {
@@ -392,6 +410,7 @@ function initializePdfViewer({ openApp } = {}) {
                 <div class="acrobat-row-text">
                     <span class="acrobat-row-title">${doc.name}</span>
                     <span class="acrobat-row-desc">${doc.description}</span>
+                    <span class="acrobat-row-meta-mobile">${doc.badge} • ${doc.size}${doc.date ? ' • ' + doc.date : ''}</span>
                 </div>
             </div>
             <div class="acrobat-cell-loc" title="${doc.locationPath}">${doc.locationPath}</div>

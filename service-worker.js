@@ -1,4 +1,4 @@
-const CACHE_NAME = "cache-v1.2.7";
+const CACHE_NAME = "cache-v1.3.0";
 const PRECACHE_ASSETS = [
     "./",
     "./index.html",

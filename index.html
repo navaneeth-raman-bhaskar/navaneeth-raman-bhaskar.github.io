@@ -52,7 +52,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
 
     <link rel="stylesheet" href="./assets/css/os.css?v=1.0.7">
-    <link rel="stylesheet" href="./assets/css/device.css?v=2.3.17">
+    <link rel="stylesheet" href="./assets/css/device.css?v=2.3.20">
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D32039T5VP"></script>
 
@@ -1095,6 +1095,25 @@
                             </div>
                         </div>
 
+                        <!-- Mobile Location Filter Pills -->
+                        <div class="acrobat-mobile-filters" id="acrobatMobileFilters" role="tablist" aria-label="Filter documents by location">
+                            <button class="acrobat-mobile-filter-btn selected" type="button" data-acrobat-location="all" aria-pressed="true">
+                                <span>All</span><small id="acrobatMobileAllCount">13</small>
+                            </button>
+                            <button class="acrobat-mobile-filter-btn" type="button" data-acrobat-location="desktop" aria-pressed="false">
+                                <span>Desktop</span><small id="acrobatMobileDesktopCount">1</small>
+                            </button>
+                            <button class="acrobat-mobile-filter-btn" type="button" data-acrobat-location="documents" aria-pressed="false">
+                                <span>Documents</span><small id="acrobatMobileDocCount">1</small>
+                            </button>
+                            <button class="acrobat-mobile-filter-btn" type="button" data-acrobat-location="certifications" aria-pressed="false">
+                                <span>Certifications</span><small id="acrobatMobileCertCount">5</small>
+                            </button>
+                            <button class="acrobat-mobile-filter-btn" type="button" data-acrobat-location="awards" aria-pressed="false">
+                                <span>Awards</span><small id="acrobatMobileAwardCount">6</small>
+                            </button>
+                        </div>
+
                         <div class="acrobat-files-container" id="acrobatFilesContainer"></div>
                     </div>
                 </main>
@@ -1294,6 +1313,9 @@
 <div class="modal pdf-viewer-modal" id="pdfModal" role="dialog" aria-modal="true" aria-label="PDF Document Viewer" aria-hidden="true">
     <div class="pdf-modal-container">
         <div class="pdf-modal-header">
+            <button class="pdf-modal-back-btn" id="pdfModalBackBtn" type="button" aria-label="Close PDF Viewer" title="Back">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
             <div class="window-controls pdf-modal-controls">
                 <button class="window-control control-close" id="pdfModalClose" type="button" aria-label="Close"></button>
                 <button class="window-control control-minimize" id="pdfModalMinimize" type="button" aria-label="Minimize"></button>
@@ -1325,7 +1347,7 @@
 <script defer src="./assets/js/core/dock.js?v=2.2.33"></script>
 <script defer src="./assets/js/core/finder.js?v=2.2.41"></script>
 <script defer src="./assets/js/apps/gallery.js?v=2.2.35"></script>
-<script defer src="./assets/js/apps/pdf.js?v=2.2.43"></script>
+<script defer src="./assets/js/apps/pdf.js?v=2.2.44"></script>
 <script defer src="./assets/js/apps/terminal.js?v=2.2.34"></script>
 <script defer src="./assets/js/device.js?v=2.2.41"></script>
 </body>
