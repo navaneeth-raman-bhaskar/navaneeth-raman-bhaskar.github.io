@@ -186,6 +186,32 @@
         homeSwipeStartY = null;
     }, { passive: true });
     window.addEventListener("pointercancel", () => { homeSwipeStartY = null; }, { passive: true });
+
+    let headerSwipeStartY = null;
+    let headerSwipeStartX = null;
+    window.addEventListener("pointerdown", (event) => {
+        if (!body.dataset.activeApp || !window.matchMedia("(max-width: 820px)").matches) return;
+        if (event.target.closest(".desktop .window-header")) {
+            headerSwipeStartY = event.clientY;
+            headerSwipeStartX = event.clientX;
+        }
+    }, { passive: true });
+    window.addEventListener("pointerup", (event) => {
+        if (headerSwipeStartY !== null) {
+            const dy = event.clientY - headerSwipeStartY;
+            const dx = Math.abs(event.clientX - (headerSwipeStartX ?? event.clientX));
+            if (dy > 50 && dy > dx && body.dataset.activeApp) {
+                goHome();
+            }
+            headerSwipeStartY = null;
+            headerSwipeStartX = null;
+        }
+    }, { passive: true });
+    window.addEventListener("pointercancel", () => {
+        headerSwipeStartY = null;
+        headerSwipeStartX = null;
+    }, { passive: true });
+
     initializeDock(labels);
 
     document.addEventListener("click", (event) => {

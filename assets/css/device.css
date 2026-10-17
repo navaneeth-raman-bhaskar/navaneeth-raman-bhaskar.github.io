@@ -3152,15 +3152,15 @@ body[data-theme="light"] .finder-highlight-index {
         display: block;
         box-sizing: border-box;
         width: 100%;
-        padding: 20px 16px;
-        border-radius: 24px;
+        padding: 16px 14px;
+        border-radius: 20px;
     }
 
     .home-avatar {
-        width: 54px;
-        height: 54px;
-        margin-bottom: 9px;
-        border-radius: 18px;
+        width: 50px;
+        height: 50px;
+        margin-bottom: 7px;
+        border-radius: 16px;
     }
 
     .home-eyebrow {
@@ -3169,7 +3169,7 @@ body[data-theme="light"] .finder-highlight-index {
     }
 
     .home-welcome h1 {
-        font-size: clamp(23px, 7vw, 32px);
+        font-size: clamp(22px, 6.5vw, 30px);
     }
 
     .home-welcome > p:not(.home-eyebrow) {
@@ -3179,17 +3179,17 @@ body[data-theme="light"] .finder-highlight-index {
     }
 
     .primary-launch {
-        margin-top: 13px;
-        padding: 9px 14px;
+        margin-top: 11px;
+        padding: 8px 14px;
         font-size: 12px;
     }
 
     .desktop-home {
-        inset: calc(64px + env(safe-area-inset-top)) 18px calc(93px + env(safe-area-inset-bottom));
+        inset: calc(56px + env(safe-area-inset-top)) 16px calc(80px + env(safe-area-inset-bottom));
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        gap: 12px;
+        gap: 8px;
     }
 
     .desktop-icon-grid {
@@ -3197,26 +3197,26 @@ body[data-theme="light"] .finder-highlight-index {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
         grid-auto-rows: auto;
-        gap: 3px;
+        gap: 2px 4px;
         width: 100%;
         max-height: none;
         overflow: visible;
-        padding: 0 0 3px;
+        padding: 0;
         box-sizing: border-box;
     }
 
     .desktop-icon {
-        min-height: 75px;
-        gap: 5px;
-        padding: 4px 1px;
+        min-height: 66px;
+        gap: 4px;
+        padding: 2px 1px;
         font-size: 10px;
     }
 
     .app-icon {
-        width: clamp(43px, 13vw, 55px);
-        height: clamp(43px, 13vw, 55px);
-        border-radius: 16px;
-        font-size: 24px;
+        width: clamp(40px, 11.5vw, 48px);
+        height: clamp(40px, 11.5vw, 48px);
+        border-radius: 14px;
+        font-size: 22px;
     }
 
     /* Windows on Mobile */
@@ -3245,11 +3245,108 @@ body[data-theme="light"] .finder-highlight-index {
     .desktop .window-header {
         flex-basis: 52px;
         height: 52px;
-        padding: 0 13px;
+        padding: 0 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .desktop .window-title {
+        order: 1;
+        font-weight: 600;
+        font-size: 16px;
+        letter-spacing: -0.2px;
+        color: var(--text-primary);
+        text-align: left;
+        flex: 1;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .desktop .window-controls {
-        display: none;
+        order: 2;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        min-width: 0;
+        gap: 0;
+    }
+
+    .desktop .window-version,
+    .desktop .window-header > div:not(.window-controls):not(.window-title) {
+        display: none !important;
+    }
+
+    .desktop .window-control.control-minimize,
+    .desktop .window-control.control-maximize {
+        display: none !important;
+    }
+
+    .desktop .window-control.control-close {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.65);
+        cursor: pointer;
+        padding: 0;
+        margin: 0;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        transition: background-color 0.18s ease, transform 0.12s ease, color 0.18s ease, border-color 0.18s ease;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .desktop .window-control.control-close:hover {
+        background: rgba(255, 255, 255, 0.14);
+        border-color: rgba(255, 255, 255, 0.2);
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    .desktop .window-control.control-close:active {
+        background: rgba(255, 255, 255, 0.22);
+        transform: scale(0.92);
+        color: #ffffff;
+    }
+
+    .desktop .window-control.control-close::after {
+        content: "" !important;
+        display: block;
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid currentColor;
+        border-bottom: 2px solid currentColor;
+        transform: translateY(-2px) rotate(45deg);
+        border-radius: 1px;
+        opacity: 1 !important;
+        font-size: 0;
+        line-height: 0;
+    }
+
+    body[data-theme="light"] .desktop .window-control.control-close {
+        background: rgba(0, 0, 0, 0.05);
+        border-color: rgba(0, 0, 0, 0.08);
+        color: rgba(0, 0, 0, 0.55);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    body[data-theme="light"] .desktop .window-control.control-close:hover {
+        background: rgba(0, 0, 0, 0.09);
+        border-color: rgba(0, 0, 0, 0.14);
+        color: rgba(0, 0, 0, 0.85);
+    }
+
+    body[data-theme="light"] .desktop .window-control.control-close:active {
+        background: rgba(0, 0, 0, 0.14);
+        color: rgba(0, 0, 0, 0.95);
     }
 
     .desktop .window-content {
@@ -3428,17 +3525,20 @@ body[data-theme="light"] .finder-highlight-index {
 
     /* Dock on Mobile */
     .dock {
-        --dock-item-size: clamp(48px, 13vw, 56px);
-        bottom: calc(12px + env(safe-area-inset-bottom));
-        gap: clamp(7px, 2vw, 10px);
-        padding: 9px;
-        border-radius: 27px;
-        background: rgba(238, 241, 248, .24);
-        box-shadow: 0 10px 32px rgba(0, 0, 0, .2), 0 1px 0 rgba(255, 255, 255, .26) inset;
+        --dock-item-size: clamp(40px, 11vw, 46px);
+        bottom: calc(10px + env(safe-area-inset-bottom));
+        gap: clamp(8px, 2.2vw, 13px);
+        padding: 7px 12px;
+        border-radius: 24px;
+        background: rgba(238, 241, 248, .26);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .24), 0 1px 0 rgba(255, 255, 255, .28) inset;
+        border: 1px solid rgba(255, 255, 255, .25);
     }
 
     body[data-theme="light"] .dock {
-        background: rgba(255, 255, 255, .46);
+        background: rgba(255, 255, 255, .52);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, .14), 0 1px 0 rgba(255, 255, 255, .6) inset;
+        border: 1px solid rgba(255, 255, 255, .6);
     }
 
     .dock .dock-item {
@@ -3446,28 +3546,53 @@ body[data-theme="light"] .finder-highlight-index {
         flex: 0 0 var(--dock-item-size);
         width: var(--dock-item-size);
         height: var(--dock-item-size);
-        border-radius: 15px;
+        border-radius: 12px;
         transform: none !important;
         filter: none !important;
     }
 
-    .dock .dock-item:not(.dock-email):not(.dock-whatsapp):not(.dock-phone):not(.dock-gallery) {
+    .dock .dock-item:not(.dock-finder):not(.dock-email):not(.dock-whatsapp):not(.dock-phone):not(.dock-gallery) {
         display: none;
     }
 
+    .dock .dock-item.dock-finder,
     .dock .dock-item.dock-email,
     .dock .dock-item.dock-whatsapp,
     .dock .dock-item.dock-phone,
     .dock .dock-item.dock-gallery {
         display: grid;
+        place-items: center;
     }
 
-    .dock .dock-item.dock-email { order: 1; }
-    .dock .dock-item.dock-whatsapp { order: 2; }
-    .dock .dock-item.dock-phone { order: 3; }
-    .dock .dock-item.dock-gallery { order: 4; }
+    .dock .dock-item.dock-finder { order: 1; }
+    .dock .dock-item.dock-email { order: 2; }
+    .dock .dock-item.dock-whatsapp { order: 3; }
+    .dock .dock-item.dock-phone { order: 4; }
+    .dock .dock-item.dock-gallery { order: 5; }
+
+    .dock .dock-item.dock-finder svg,
+    .dock .dock-item.dock-gallery svg {
+        width: 100%;
+        height: 100%;
+        max-width: 100%;
+        max-height: 100%;
+        display: block;
+        border-radius: 12px;
+    }
+
+    .dock .dock-email-icon {
+        width: calc(var(--dock-item-size) * 0.78);
+        height: calc(var(--dock-item-size) * 0.78);
+        border-radius: 7px;
+    }
+
+    .dock .dock-link svg {
+        width: calc(var(--dock-item-size) * 0.72);
+        height: calc(var(--dock-item-size) * 0.72);
+    }
 
     .dock-item::after { display: none; }
+    .dock .dock-item.active::before { display: none; }
     .dock-item.is-launching { animation: none; }
     .dock-separator { display: none; }
 
@@ -3534,7 +3659,15 @@ body[data-theme="light"] .finder-highlight-index {
     }
 
     .desktop-icon {
+        min-height: 60px;
         font-size: 9px;
+    }
+
+    .dock {
+        --dock-item-size: 38px;
+        gap: 7px;
+        padding: 6px 10px;
+        border-radius: 20px;
     }
 
     .status-time {
