@@ -4,6 +4,7 @@ function initializeFinder({ body, homeScreen, homeIndicator, menuAppName, appWin
     let openFinderFolderView = null;
     let returnToFinderHome = null;
     let navigateFinderLocation = null;
+    let lastFocusedElement = null;
 
     function revealFinderPathEnd(path) {
         requestAnimationFrame(() => {
@@ -212,7 +213,7 @@ function initializeFinder({ body, homeScreen, homeIndicator, menuAppName, appWin
                 { label: labels[id], onClick: () => resetFolderView() },
                 ...nestedFolders.map((label, index) => ({ label, onClick: () => navigateToFolderDepth(index + 1) })),
             ];
-            if (fileName) segments.push({ label: fileName });
+            if (fileName) segments.push({ label: fileName, onClick: null });
 
             path.replaceChildren();
             segments.forEach((segment, index) => {
